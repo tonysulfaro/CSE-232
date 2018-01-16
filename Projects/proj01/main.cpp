@@ -16,22 +16,11 @@ int main(){
     double monthly_rate;
 
     //get user input
-    //cout << "Enter the car price.";
     cin >> car_price;
-
-    //cout << "Enter the sales tax rate.";
     cin >> sales_tax_rate;
-
-    //cout << "Enter the down payment.";
     cin >> down_payment;
-
-    //cout << "Enter the title and fees.";
     cin >> title_and_fees;
-
-    //cout << "Enter the yearly interest.";
     cin >> yearly_interest;
-
-    //cout << "Enter the Number of months for payment.";
     cin >> month_duration;
 
     //calculate monthly payment
