@@ -9,6 +9,8 @@
 C:/Users/Tony/ClionProjects/CSE-232/Projects/proj01/main.cpp
 iostream
 -
-math.h
+iomanip
+-
+cmath
 -
 
