@@ -13,7 +13,6 @@ int main(){
     double title_and_fees;
     double yearly_interest;
     double month_duration;
-    double monthly_rate;
 
     //get user input
     cin >> car_price;
@@ -23,8 +22,12 @@ int main(){
     cin >> yearly_interest;
     cin >> month_duration;
 
+    double monthly_rate = yearly_interest/12;
+
     //calculate monthly payment
-    double monthly_payment_minus_fees = car_price - down_payment * ((monthly_rate * pow((1 + monthly_rate), month_duration)/ pow((1+ monthly_rate),month_duration-1)));
+    double monthly_payment_minus_fees = (car_price - down_payment) *
+            ((monthly_rate * pow((1+monthly_rate),month_duration))/(pow((1+monthly_rate),month_duration)-1));
+
     cout << fixed << setprecision(2) << monthly_payment_minus_fees;
     return 0;
 }
