@@ -18,9 +18,22 @@ int main() {
     //mainloop
     for (beginning; beginning <= end; beginning++){
 
-        for (int i = beginning; beginning!= 1; beginning++){
-            cout << "ok";
+        int temp = beginning;
+
+        while (temp != 1){
+            if (temp % 2 == 0){
+                temp = long(floor(pow(temp, .5)));
+            }
+            else{
+                temp = long(floor(pow(temp, 1.5)));
+            }
+            cout << temp << " ";
+            if (temp == 1){
+                cout << endl;
+            }
         }
+
+
     }
 
     return 0;
