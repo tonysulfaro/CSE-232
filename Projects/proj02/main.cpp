@@ -13,7 +13,7 @@ int main() {
     //get user input
     cin >> beginning;
     cin >> end;
-    cin >> print_condition;
+    cin >> print_condition; //1 for valid ones and 0 for not valid ones
 
     //mainloop
     for (beginning; beginning <= end; beginning++){
@@ -29,15 +29,11 @@ int main() {
             else{
                 temp = long(floor(pow(temp, 1.5)));
             }
-
-
             cout << temp << ",";
             if (temp == 1){
                 cout << endl;
             }
         }
-
-
     }
 
     return 0;
