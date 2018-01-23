@@ -20,6 +20,8 @@ int main() {
 
         int temp = beginning;
 
+        cout << beginning << ": ";
+
         while (temp != 1){
             if (temp % 2 == 0){
                 temp = long(floor(pow(temp, .5)));
@@ -27,7 +29,9 @@ int main() {
             else{
                 temp = long(floor(pow(temp, 1.5)));
             }
-            cout << temp << " ";
+
+
+            cout << temp << ",";
             if (temp == 1){
                 cout << endl;
             }
