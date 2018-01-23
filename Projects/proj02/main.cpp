@@ -29,9 +29,12 @@ int main() {
             else{
                 temp = long(floor(pow(temp, 1.5)));
             }
-            cout << temp << ",";
-            if (temp == 1){
+            if (temp == 1) {
+                cout << temp;
                 cout << endl;
+            }
+            else{
+                cout << temp << ",";
             }
         }
     }
