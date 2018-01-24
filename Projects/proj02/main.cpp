@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 
-using namespace std;
+using std::cout; using std::cin; using std::endl;
 
 //main function that juggles
 int main() {
