@@ -11,6 +11,7 @@ int main(){
     long sum = 0;
 
     cin >> number_input;
+    additive = number_input;
 
     //break if its less than 0
     if(number_input <= 0){
@@ -22,23 +23,24 @@ int main(){
         //cout << "SECOND";
         persistence = 0;
         additive = number_input;
-        cout << persistence << "  " << additive;
+        cout << persistence << "  " << additive << endl;
     }
     else{
-        while(additive == 0){
-            additive = sum;
-                //cout << "THIRD";
-            while(number_input !=0){
-                sum = sum + number_input % 10;
-                number_input = number_input / 10;
+        while(additive > 9){
+
+            while(additive !=0){
+                sum += additive % 10;
+                additive /= 10;
                 //cout << "Number:" << number_input << endl;
-                cout << "SUM:" << sum << endl;
 
-                additive = sum;
+
             }
+            additive = sum;
             persistence++;
+            sum = 0;
 
-        }
-    cout << persistence << "  " << additive;
     }
+    cout << persistence << "  " << additive << endl;
+}
+
 }
