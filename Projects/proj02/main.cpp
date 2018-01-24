@@ -6,8 +6,7 @@ using std::cout; using std::cin; using std::endl;
 //main function that juggles
 int main() {
 
-    long beginning;
-    long end;
+    long beginning, end, largest_number, digit_count;
     int print_condition;
 
     //get user input
@@ -29,6 +28,12 @@ int main() {
             else{
                 temp = long(floor(pow(temp, 1.5)));
             }
+
+            //determine which is the largest number in a sequence and how many
+            if (temp >= largest_number){
+                largest_number = temp;
+            }
+
             if (temp == 1) {
                 cout << temp;
                 cout << endl;
