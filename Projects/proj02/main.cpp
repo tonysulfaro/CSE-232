@@ -14,13 +14,14 @@ int main() {
     cin >> end;
     cin >> print_condition; //1 for valid ones and 0 for not valid ones
 
-    //mainloop
+    //mainloop for each number in the range
     for (beginning; beginning <= end; beginning++){
 
         int temp = beginning;
 
         cout << beginning << ": ";
 
+        //find sequence for each number
         while (temp != 1){
             if (temp % 2 == 0){
                 temp = long(floor(pow(temp, .5)));
@@ -30,9 +31,6 @@ int main() {
             }
 
             //determine which is the largest number in a sequence and how many
-            if (temp >= largest_number){
-                largest_number = temp;
-            }
 
             if (temp == 1) {
                 cout << temp;
@@ -41,8 +39,9 @@ int main() {
             else{
                 cout << temp << ",";
             }
+            digit_count++;
         }
+        digit_count = 0;
     }
-
     return 0;
 }
