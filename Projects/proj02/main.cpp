@@ -14,6 +14,11 @@ int main() {
     cin >> end;
     cin >> print_condition; //1 for valid ones and 0 for not valid ones
 
+    //error handling
+    if(beginning > end){
+        cout << "Error";
+    }
+
     //mainloop for each number in the range
     for (beginning; beginning <= end; beginning++){
 
