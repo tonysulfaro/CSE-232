@@ -58,7 +58,6 @@ int main() {
                 largest_number = temp;
                 largest_number_location = beginning;
             }
-<<<<<<< Updated upstream
         }
         //find longest sequence
         if(temp_digit_count > digit_count){
@@ -66,14 +65,6 @@ int main() {
             digit_count_location = beginning;
         }
         temp_digit_count = 0;
-=======
-            digit_count++;
-            if(number_count > digit_count){
-                digit_count = number_count;
-            }
-        }
-        number_count = 0;
->>>>>>> Stashed changes
     }
     cout << digit_count_location << ", " << digit_count << endl;
     cout << largest_number_location << ", " << largest_number << endl;
