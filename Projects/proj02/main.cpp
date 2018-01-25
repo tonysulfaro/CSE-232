@@ -45,13 +45,13 @@ int main() {
             if(print_condition == 1){
                 if (temp == 1) {
                     cout << temp << endl;
-                    temp_digit_count++;
                 }
                 else{
                     cout << temp << ",";
-                    temp_digit_count++;
                 }
             }
+
+            temp_digit_count++;
 
             //highest number
             if(temp > largest_number){
