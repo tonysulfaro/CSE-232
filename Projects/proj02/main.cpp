@@ -6,8 +6,8 @@ using std::cout; using std::cin; using std::endl;
 //main function that juggles
 int main() {
 
-    long beginning, end, largest_number, largest_number_location, digit_count, temp_digit_count, digit_count_location;
-    int print_condition;
+    int beginning, end, largest_number, largest_number_location, digit_count, digit_count_location;
+    int print_condition, temp_digit_count;
 
     //get user input
     cin >> beginning;
@@ -16,7 +16,8 @@ int main() {
 
     //error handling
     if(beginning > end){
-        cout << "Error";
+        cout << "Error" << endl;
+        return 0;
     }
 
     //mainloop for each number in the range
@@ -30,7 +31,7 @@ int main() {
 
         //find sequence for each number
         while (temp != 1){
-            temp_digit_count++;
+
             if (temp % 2 == 0){
                 temp = long(floor(pow(temp, .5)));
             }
@@ -38,18 +39,21 @@ int main() {
                 temp = long(floor(pow(temp, 1.5)));
             }
 
+            //cout << "DIGIT COUNT " << temp_digit_count << endl;
+
             //only print if user specifies
             if(print_condition == 1){
                 if (temp == 1) {
-                    cout << temp;
-                    cout << endl;
+                    cout << temp << endl;
+                    temp_digit_count++;
                 }
                 else{
                     cout << temp << ",";
+                    temp_digit_count++;
                 }
             }
 
-            //find largest number
+            //highest number
             if(temp > largest_number){
                 largest_number = temp;
                 largest_number_location = beginning;
