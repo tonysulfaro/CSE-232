@@ -6,8 +6,8 @@ using std::cout; using std::cin; using std::endl;
 //main function that juggles
 int main() {
 
-    int beginning, end, largest_number, largest_number_location, digit_count, digit_count_location;
-    int print_condition, temp_digit_count;
+    long beginning, end, largest_number, largest_number_location, digit_count, digit_count_location;
+    long print_condition, temp_digit_count;
 
     //get user input
     cin >> beginning;
@@ -23,7 +23,7 @@ int main() {
     //mainloop for each number in the range
     for (beginning; beginning <= end; beginning++){
 
-        int temp = beginning;
+        long temp = beginning;
 
         if(print_condition == 1){   //only print if user says to
             cout << beginning << ": ";
@@ -33,10 +33,10 @@ int main() {
         while (temp != 1){
 
             if (temp % 2 == 0){
-                temp = int(floor(pow(temp, .5)));
+                temp = long(floor(pow(temp, .5)));
             }
             else{
-                temp = int(floor(pow(temp, 1.5)));
+                temp = long(floor(pow(temp, 1.5)));
             }
             //cout << "DIGIT COUNT " << temp_digit_count << endl;
 
