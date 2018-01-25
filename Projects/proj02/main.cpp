@@ -33,10 +33,10 @@ int main() {
         while (temp != 1){
 
             if (temp % 2 == 0){
-                temp = long(floor(pow(temp, .5)));
+                temp = int(floor(pow(temp, .5)));
             }
             else{
-                temp = long(floor(pow(temp, 1.5)));
+                temp = int(floor(pow(temp, 1.5)));
             }
 
             //cout << "DIGIT COUNT " << temp_digit_count << endl;
