@@ -6,8 +6,8 @@ using std::cout; using std::cin; using std::endl;
 //main function that juggles
 int main() {
 
-    long beginning, end, largest_number = 0, largest_number_location = 0, digit_count = 0, digit_count_location = 0;
-    long print_condition, temp_digit_count = 0;
+    long beginning, end, print_condition;
+    long largest_number = 0, largest_number_location = 0, digit_count = 0, temp_digit_count = 0, digit_count_location = 0;
 
     //get user input
     cin >> beginning;
