@@ -20,6 +20,9 @@ int main() {
         return 0;
     }
 
+    // if (start < end && end-start >= 2)
+    //condition from the rubric to have
+
     //mainloop for each number in the range
     for (beginning; beginning <= end; beginning++){
 
