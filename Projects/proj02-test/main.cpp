@@ -15,7 +15,7 @@ int main() {
     cin >> print_condition; //1 for valid ones and 0 for not valid ones
 
     //error handling
-    if(beginning > end){
+    if(beginning > end or end-beginning >= 2){
         cout << "Error" << endl;
         return 0;
     }
