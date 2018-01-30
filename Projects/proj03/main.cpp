@@ -11,7 +11,6 @@ int main() {
     return 0;
 }
 
-
 //return divisor sum
 long divisor_sum(long number){
 
@@ -20,7 +19,6 @@ long divisor_sum(long number){
 
     return sum;
 }
-
 
 //returns greatest common divisor
 long gcd(long first_num, long second_num){
@@ -38,6 +36,7 @@ bool is_solidary(long number){
     return condition;
 }
 
+//checks limits
 long friendly_check(long integrer_number, long upper_limit){
 
     long adbIndex = 0;
