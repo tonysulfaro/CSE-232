@@ -10,7 +10,6 @@ double fn(double x){
     //cout << "function";
 
     x = 6*(pow(x,2))+(5*x)+3;
-    x = -x;
 
     return x;
 }
@@ -21,7 +20,6 @@ int integral(double x){
     //cout << "integral";
 
     x = 2*(pow(x,3))+(5*pow(x,2)/2)+(3*x);
-    x = -x;
 
     return x;
 }
@@ -36,10 +34,12 @@ int trapezoid(double point_a, double point_b, long trap_count){
     double delta_x = range/trap_count;
 
     //add sum of sides
-    for(double i = point_a; i <= point_b; i+=delta_x){
+    for(int i = 0; i <= trap_count; i++){
 
-        area_sum += (delta_x)*(fn(i)+fn(i+delta_x))/2;
-        cout << area_sum;
+        area_sum += (range)*(fn(i)+fn(i+delta_x))/2;
+        cout << "i; " << i << endl;
+        cout << "point b;" << point_b <<endl;
+        cout << area_sum << endl;
     }
 
     return area_sum;
@@ -66,7 +66,7 @@ int main(){
 
     integral_area = integral(1);
 
-    cout << integral_area;
+    cout << "Integral area" << integral_area;
 
     function_area = trapezoid(point_a, point_b, number_guess_traps);
     actual_tolerance = abs(integral_area-function_area);
@@ -80,9 +80,10 @@ int main(){
         function_area = trapezoid(point_a, point_b, number_actual_traps);
         actual_tolerance = abs(integral_area-function_area);
         number_actual_traps++;
-        cout << function_area << actual_tolerance << number_actual_traps << endl;
+
     }
 
+    cout << function_area << actual_tolerance << number_actual_traps << endl;
     //cout number of traps, area values, and given tolerance
 
     return 0;
