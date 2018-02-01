@@ -22,7 +22,10 @@ int trapezoid(double point_a, double point_b, long trap_count){
 }
 
 //main method
-int main(float tolerance, int number_guess){
+int main(float tolerance, int trap_count){
+
+    double x = 0.0;
+    difference_value = integral(x);
 
     return 0;
 }
