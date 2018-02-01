@@ -1,7 +1,13 @@
-#include <iostream>
-#include <string>
+#include<iostream>
+using std::cout; using std::cin; using std::endl; using std::boolalpha;
+#include<cmath>
+#include<string>
+using std::to_string; using std::string;
 
-using std::cout; using std::cin; using std::endl;
+string abIndex_friend(long ab_numerator, long ab_denominator, long f_pair){
+    return to_string(ab_numerator) + "/" + to_string(ab_denominator) +
+           ":" + to_string(f_pair);
+}
 
 //return divisor sum
 long divisor_sum(long number){
@@ -52,25 +58,40 @@ long friendly_check(long integrer_number, long upper_limit){
 }
 
 //adds up all the divisors of a number
-int main() {
-    
-    long input = 0;
-    long first_num = 0;
-    long second_num = 0;
+int main (){
+    cout << boolalpha;   // print true or false for bools
+    int test;
+    cin >> test;
+    switch (test) {
+        case 1 : {   // divisor sum test
+            long input;
+            cin >> input;
+            cout << divisor_sum(input) << endl;
+            break;
+        } // of case 1
 
-    //divisor sum
-    cout << "input a number to get divisor sum: ";
-    cin >> input;
+        case 2:{    // gcd test
+            long first, second;
+            cin >> first >> second;
+            cout << gcd(first, second) << endl;
+            break;
+        } // of case 2
 
-    long sum = divisor_sum(input);
+        case 3: {    // is_solitary test
+            long input;
+            cin >> input;
+            cout << is_solitary(input) << endl;
+            break;
+        } // of case 3
 
-    cout << "The divisor sum is: " << sum << endl;
+        case 4: {
+            // friend check. Make sure the return value is the
+            // result of calling abIndex_friend, a string!
+            long input, limit;
+            cin >> input >> limit;
+            cout << friendly_check(input, limit) << endl;
+            break;
+        } // of case 4
 
-    //gcd
-    cout << "input two numbers to find their GCD seperated by a space: ";
-    cin >> first_num >> second_num;
-    long greatest_divisor = gcd(first_num, second_num);
-    cout << "the greatest divisor of those two is: " << greatest_divisor << endl;
-
-    return 0;
-}
+    } // of switch
+} // of main
