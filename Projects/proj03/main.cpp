@@ -54,14 +54,14 @@ bool is_solitary(long number){
 }
 
 //checks limits
-long friendly_check(long integrer_number, long upper_limit){
+string friendly_check(long integrer_number, long upper_limit){
 
     long abIndex = 0;
     long numer = 0;
     long denom = 0;
-    string friend = abIndex_friend(numer, denom, integrer_number);
+    long test = 0;
 
-    return abIndex(numer, denom, friend);
+    return abIndex_friend(numer, denom, test);
 }
 
 //adds up all the divisors of a number
