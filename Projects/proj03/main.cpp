@@ -29,7 +29,7 @@ long divisor_sum(long number){
 //returns greatest common divisor
 long gcd(long first_num, long second_num){
 
-    return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
+    //return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
                                             // for this but I have my own code down below
     long greatest_divisor = 0;
 
@@ -57,22 +57,24 @@ bool is_solitary(long number){
 string friendly_check(long number, long upper_limit){
 
     long numer = divisor_sum(number);
-    long denom = number;
-    long temp_numer = 0;
-    long temp_denom = 0;
+    //long denom = number;
+    long other_numer = 0;
+    long other_denom = 0;
 
     long test = 0;
 
+    //this works just have to reduce the fraction after it is done
     for(int i = 0; i <= upper_limit; i++){
 
         long temp_numer = divisor_sum(i);
         long temp_denom = i;
-        if(temp_denom == demom and temp_numer == numer){
-            match_ab_index = temp_ab_index;
+        if(temp_denom == number and temp_numer == numer){
+            other_numer = temp_numer;
+            other_denom = temp_denom;
         }
     }
 
-    return abIndex_friend(numer, denom, test);
+    return abIndex_friend(numer, number, test);
 }
 
 //adds up all the divisors of a number
