@@ -54,12 +54,23 @@ bool is_solitary(long number){
 }
 
 //checks limits
-string friendly_check(long integrer_number, long upper_limit){
+string friendly_check(long number, long upper_limit){
 
-    long abIndex = 0;
-    long numer = 0;
-    long denom = 0;
+    long numer = divisor_sum(number);
+    long denom = number;
+    long temp_numer = 0;
+    long temp_denom = 0;
+
     long test = 0;
+
+    for(int i = 0; i <= upper_limit; i++){
+
+        long temp_numer = divisor_sum(i);
+        long temp_denom = i;
+        if(temp_denom == demom and temp_numer == numer){
+            match_ab_index = temp_ab_index;
+        }
+    }
 
     return abIndex_friend(numer, denom, test);
 }
