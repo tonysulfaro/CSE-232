@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 using std::cout; using std::cin; using std::endl; using std::boolalpha;
 #include<cmath>
 #include<string>
@@ -28,6 +29,8 @@ long divisor_sum(long number){
 //returns greatest common divisor
 long gcd(long first_num, long second_num){
 
+    return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
+                                            // for this but I have my own code down below
     long greatest_divisor = 0;
 
     for(int i = 0; i <= first_num+second_num; i++){
@@ -42,19 +45,23 @@ long gcd(long first_num, long second_num){
 }
 
 //if arguments and divisor sum have their gcd 1
-bool is_solidary(long number){
+bool is_solitary(long number){
 
-    bool condition = false; //initialized to be false
+    long number_gcd = gcd(number, number);
+    long number_divisor_sum = divisor_sum(number);
 
-    return condition;
+    return (number_gcd == number and number_divisor_sum == 1);
 }
 
 //checks limits
 long friendly_check(long integrer_number, long upper_limit){
 
-    long adbIndex = 0;
+    long abIndex = 0;
+    long numer = 0;
+    long denom = 0;
+    string friend = abIndex_friend(numer, denom, integrer_number);
 
-    return adbIndex;
+    return abIndex(numer, denom, friend);
 }
 
 //adds up all the divisors of a number
