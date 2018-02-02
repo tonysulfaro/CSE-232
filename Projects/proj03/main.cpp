@@ -13,8 +13,9 @@ string abIndex_friend(long ab_numerator, long ab_denominator, long f_pair){
 //return divisor sum
 long divisor_sum(long number){
 
-    long i = 0;
+
     long sum = 0;
+    long i = 0;
 
     while(i <= number){
 
