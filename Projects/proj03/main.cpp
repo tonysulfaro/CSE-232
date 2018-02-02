@@ -29,28 +29,20 @@ long divisor_sum(long number){
 //returns greatest common divisor
 long gcd(long first_num, long second_num){
 
-    return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
-                                            // for this but I have my own code down below
-    long greatest_divisor = 0;
-
-    for(int i = 0; i <= first_num+second_num; i++){
-
-        i++;
-        if(first_num%i == 0 and second_num%i ==0){
-
-            greatest_divisor = i;
-        }
+    while ( second_num != 0) {
+        long r = first_num % second_num;
+        first_num = second_num;
+        second_num = r;
     }
-    return greatest_divisor;
+    return first_num;
 }
 
 //if arguments and divisor sum have their gcd 1
 bool is_solitary(long number){
 
-    long number_gcd = gcd(number, number);
-    long number_divisor_sum = divisor_sum(number);
+    long gcd_div_sum = gcd(divisor_sum(number),number);
 
-    return (number_gcd == number and number_divisor_sum == 1);
+    return (gcd_div_sum == 1);
 }
 
 //checks limits
