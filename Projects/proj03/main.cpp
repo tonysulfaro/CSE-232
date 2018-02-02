@@ -29,7 +29,7 @@ long divisor_sum(long number){
 //returns greatest common divisor
 long gcd(long first_num, long second_num){
 
-    //return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
+    return std::__gcd(first_num, second_num); //found out there was a function in the algorithm library
                                             // for this but I have my own code down below
     long greatest_divisor = 0;
 
@@ -56,25 +56,47 @@ bool is_solitary(long number){
 //checks limits
 string friendly_check(long number, long upper_limit){
 
-    long numer = divisor_sum(number);
-    //long denom = number;
-    long other_numer = 0;
-    long other_denom = 0;
+    long numerator = divisor_sum(number);
+    long denominator = number;
+    long pair_value = 0;
+    long n = 2;
 
-    long test = 0;
-
-    //this works just have to reduce the fraction after it is done
-    for(int i = 0; i <= upper_limit; i++){
-
-        long temp_numer = divisor_sum(i);
-        long temp_denom = i;
-        if(temp_denom == number and temp_numer == numer){
-            other_numer = temp_numer;
-            other_denom = temp_denom;
+    //reduce numerator and denominator
+    for (int i = denominator * numerator; i > 1; i--) {
+        if ((denominator % i == 0) && (numerator % i == 0)) {
+            denominator /= i;
+            numerator /= i;
         }
     }
 
-    return abIndex_friend(numer, number, test);
+    //this works just have to reduce the fraction after it is done
+    while(n <= upper_limit){
+
+        n++;
+
+        long loop_numerator = divisor_sum(n);
+        long loop_denominator = n;
+
+        //reduce loop values
+        for (int i = loop_denominator * numerator; i > 1; i--) {
+            if ((loop_denominator % i == 0) && (loop_numerator % i == 0)) {
+                loop_denominator /= i;
+                loop_numerator /= i;
+            }
+        }
+
+        if(loop_numerator == numerator && loop_denominator == denominator){
+            pair_value = n;
+        }
+    }
+
+    //check if pair was found or not then print if so
+    if(pair_value == 0){
+        return abIndex_friend(numerator, denominator, -1);
+    }
+    else{
+        return abIndex_friend(numerator, denominator, pair_value);
+    }
 }
 
 //adds up all the divisors of a number
