@@ -13,17 +13,19 @@ string abIndex_friend(long ab_numerator, long ab_denominator, long f_pair){
 //return divisor sum
 long divisor_sum(long number){
 
+    long sum = 1;
 
-    long sum = 0;
-    long i = 0;
+    for(long i = 2; i <= int(sqrt(number)); i++){
 
-    while(i <= number){
-
-        i++;
         if(number%i == 0){
             sum += i;
+            int d = number/i;
+            if(d!=i){
+                sum +=d;
+            }
         }
     }
+    sum += number;
     return sum;
 }
 
@@ -54,6 +56,7 @@ string friendly_check(long number, long upper_limit){
     long pair_value = 0;
     long n = 2;
 
+    /*
     //reduce numerator and denominator
     for (int i = denominator * numerator; i > 1; i--) {
         if ((denominator % i == 0) && (numerator % i == 0)) {
@@ -61,6 +64,10 @@ string friendly_check(long number, long upper_limit){
             numerator /= i;
         }
     }
+    */
+    long gcd_reducer = gcd(numerator, denominator);
+    numerator /= gcd_reducer;
+    denominator /= gcd_reducer;
 
     //this works just have to reduce the fraction after it is done
     while(n <= upper_limit){
@@ -70,6 +77,7 @@ string friendly_check(long number, long upper_limit){
         long loop_numerator = divisor_sum(n);
         long loop_denominator = n;
 
+
         //reduce loop values
         for (int i = loop_denominator * numerator; i > 1; i--) {
             if ((loop_denominator % i == 0) && (loop_numerator % i == 0)) {
@@ -77,7 +85,11 @@ string friendly_check(long number, long upper_limit){
                 loop_numerator /= i;
             }
         }
-
+        /*/
+        long loop_gcd_reducer = gcd(numerator, denominator);
+        loop_numerator /= loop_gcd_reducer;
+        loop_denominator /= loop_gcd_reducer;
+        */
         if(loop_numerator == numerator && loop_denominator == denominator){
             pair_value = n;
         }
