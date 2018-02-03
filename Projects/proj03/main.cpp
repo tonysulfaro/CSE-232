@@ -16,7 +16,7 @@ long divisor_sum(long number){
     long sum = 1;
 
     for(long i = 2; i <= int(sqrt(number)); i++){
-
+        //cout << "Divisor Sum" << endl;
         if(number%i == 0){
             sum += i;
             int d = number/i;
@@ -33,6 +33,7 @@ long divisor_sum(long number){
 long gcd(long first_num, long second_num){
 
     while ( second_num != 0) {
+        //cout << "GCD" << endl;
         long r = first_num % second_num;
         first_num = second_num;
         second_num = r;
@@ -71,15 +72,17 @@ string friendly_check(long number, long upper_limit){
 
     //this works just have to reduce the fraction after it is done
     while(n <= upper_limit){
+        //cout << "Friendly check" << endl;
 
         n++;
 
         long loop_numerator = divisor_sum(n);
         long loop_denominator = n;
 
-
+        /*
         //reduce loop values
         for (int i = loop_denominator * numerator; i > 1; i--) {
+            cout << "Friendly Check Reduction" << endl;
             if ((loop_denominator % i == 0) && (loop_numerator % i == 0)) {
                 loop_denominator /= i;
                 loop_numerator /= i;
@@ -89,8 +92,10 @@ string friendly_check(long number, long upper_limit){
         long loop_gcd_reducer = gcd(numerator, denominator);
         loop_numerator /= loop_gcd_reducer;
         loop_denominator /= loop_gcd_reducer;
-        */
-        if(loop_numerator == numerator && loop_denominator == denominator){
+
+        //cout << n << endl;
+        //cout << pair_value << endl;
+        if(loop_numerator == numerator){ //add denominator as well
             pair_value = n;
         }
     }
