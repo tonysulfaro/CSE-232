@@ -79,7 +79,7 @@ string friendly_check(long number, long upper_limit){
     }
 
     //check if pair was found or not then print if so
-    if(pair_value == 0){
+    if(pair_value == 0 || pair_value == number){
         return abIndex_friend(numerator, denominator, -1);
     }
     else{
