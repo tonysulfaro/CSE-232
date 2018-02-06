@@ -13,7 +13,7 @@ using std::sort;
 
 //convert location arithmetic string to an integer
 long loc_to_dec(string loc){
-
+	return int(loc);
 }
 
 //take location string and reduce to abbreviated form
