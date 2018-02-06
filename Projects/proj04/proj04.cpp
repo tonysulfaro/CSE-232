@@ -11,13 +11,17 @@ const string the_chars = "0123456789abcdef";
 //reverses string
 string reverse_str(string s){
 
+    s = reversed(s.rbeginning(),s.rend());
+
     return s;
 }
 
 //checks if is palindrome
 bool is_palindrome(string s){
 
-    return true;
+    string reverse_string = reverse_str(s);
+
+    return reverse_string == s;
 }
 
 //converts provided long to a string where string represents the long converted to the provided base.
@@ -37,10 +41,7 @@ bool is_prime(long number){
 //determine if the long argument is both prime and a palindrome in one of three bases: binary, decimal or hexadecimal
 string is_pal_prime(long number){
 
-    string s = "one of following 4 strings binary-pal-prime
-                o decimal-pal-prime
-                o hex-pal-prime
-                o not-pal-prime";
+    string s = "one of following 4 strings binary-pal-prime o decimal-pal-prime o hex-pal-prime o not-pal-prime";
 
     return s;
 }
@@ -56,7 +57,7 @@ int main (){
   case 1: {
     string input;
     cin >> input;
-    cout << reverse_string(input);
+    cout << reverse_str(input);
     break;
   }
 
