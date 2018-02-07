@@ -11,7 +11,7 @@ long loc_to_dec(string loc){
    long counter = 0;
    for(auto chr:loc){
        for(unsigned int i = 0; i < alphabet.size(); i++){
-           if(chr == alphabet[c]){
+           if(chr == alphabet[i]){
                counter += pow(2.0, i);
            }
        }
