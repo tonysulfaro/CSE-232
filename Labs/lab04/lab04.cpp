@@ -1,83 +1,92 @@
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <cmath>
-using std::sort; using std::string;
-using std::cout; using std::cin; using std::endl;
+#include<iostream>
+using std::cout; using std::endl;
+#include<string>
+#include<cmath>
+using std::string;
 
-string _alpha = "abcdefghijklmnopqrstuvwxyz";
+// note you need algorithm and sort
+#include<algorithm>
+using std::sort;
 
+/*
+  sort individual characters of a string
+*/
+string alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+//convert location arithmetic string to an integer
 long loc_to_dec(string loc){
-   long vert = 0;
-       for(unsigned int i = 0; i < loc.size(); i++){
-           for(unsigned int c = 0; c < _alpha.size(); c++){
-               if(loc[i] == _alpha[c]){
-                   vert += pow(2.0, c);
-               }
 
-           }
-       }
-   return vert;
+	long counter = 0;
+	string s;
+
+	for(auto chr:loc){
+		for(int i = 0; i < alphabet.size(); i++){
+			if(chr == alphabet[i]){
+				counter += pow(2.0,loc.find(chr));
+			}
+		}
+		cout << loc << endl;
+		if(loc[i]==loc[i+1]){
+			s+= alphabet[alphabet.find(loc[i])];
+		}
+	}
+
+	//cout << s << endl;
+	for(auto chr: s){
+		counter += pow(2,loc.find(chr));
+	}
+	return counter;
 }
 
-bool single(string loc){
-       for(unsigned int i = 0; i < loc.size(); i++){
-           if(loc[i] == loc[i+1]){
-               return false;
-           }
-       }
-       return true;
-
-}
-
+//take location string and reduce to abbreviated form
+//dont convert to int first, have to abbreviate directly
 string abbreviate(string loc){
 
-   string l = loc, oldl ="";
-   string::size_type indx=1;
-   while(indx < l.size()){
-       sort(l.begin(), l.end());
-       if(l[indx] == l[indx-1]){
-           oldl = l;
-           l = oldl.substr(0, indx-1);
-           l.push_back(static_cast<char>(oldl[indx]+1));
-           l+=oldl.substr(indx+1);
-       }
-       else{
-           indx += 1;
-       }
-   }
-   return l;
+	string s;
+
+	for(auto chr : loc){
+		if(s.find(chr)==string::npos){
+			s += chr;
+		}
+	}
+	sort(s.begin(), s.end());
+	return s;
 }
 
+//convert integer to abbreviated location string
 string dec_to_loc(long dec){
-   string str = "";
-   for(int i = 0; i < dec; i++){
-       str.push_back('a');
-   }
-   sort(str.begin(), str.end());
-   str = abbreviate(str);
-   return str;
+
 }
 
-long add_loc(string loc1, string loc2){
-   string ns = loc1 + loc2;
-   sort(ns.begin(), ns.end());
-   ns = abbreviate(ns);
-   return loc_to_dec(ns);
+//take two location strings, add them, provide the integer result
+long add_loc (string loc1, string loc2){
+
+	long num = 0;
+
+	string s = loc1 + loc2;
+	sort(s.begin(), s.end());
+	s = abbreviate(s);
+	//num = loc_to_dec(num);
 }
 
-int main(){
-   string loc;
-   int i;
-   //cout<<"Location String: ";
-   cin>>loc;
-   //cout<<"Integer: ";
-   cin>>i;
-   //cout<<loc<<" "<<loc_to_dec(loc)<<endl;
-   //cout<<loc<<" "<<abbreviate(loc)<<endl;
-   //cout<<i<<" "<<dec_to_loc(i)<<endl;
-   //cout<<add_loc(loc, loc)<<endl;
+int main (){
 
-   cout<<loc_to_dec(loc) << " " << abbreviate(loc) << " " << dec_to_loc(i) << " "<< add_loc(loc, loc) << endl;
-   return 0;
+	string location_string;
+	long number = 0;
+
+  	//string test = abbreviate("lksdflkddddjsdf");
+  	//cout << test << endl;
+	long test = loc_to_dec("aaabbbcccdddeeefffggghhh");
+	cout << test << endl;
+
+  	//cin >> location_string;
+	//cin >> number;
+
+	long to_decimal = loc_to_dec(location_string);
+	string abb = abbreviate(location_string);
+	string dec_long = dec_to_loc(to_decimal);
+	long add_itself = add_loc(location_string,location_string);
+
+	cout<<loc_to_dec(loc) << " " << abbreviate(loc) << " " << dec_to_loc(i) << " "<< add_loc(loc, loc) << endl;
+
 }
