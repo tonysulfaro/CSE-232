@@ -43,7 +43,7 @@ string long_to_base(long number, long base){
             output += the_chars[remain];
             number /= 10;
         }
-        return output;
+        return reverse_str(output);
     }
     else if(base == 2){ //binary
         string output;
@@ -63,7 +63,7 @@ string long_to_base(long number, long base){
             output += the_chars[remain];
             number /= 16;
         }
-        return output;
+        return reverse_str(output);
     }
     return "Invalid Expression";
 }
