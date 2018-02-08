@@ -33,17 +33,46 @@ bool is_palindrome(string s){
 }
 
 //converts provided long to a string where string represents the long converted to the provided base.
-string long_to_base(long convert, long base){
+string long_to_base(long number, long base){
 
-    string s = "test";
+    if(base == 10){ //normal numbers
+        string output;
 
-    return s;
+        while(number != 0){
+            long remain = number % 10;
+            output += the_chars[remain];
+            number /= 10;
+        }
+        return output;
+    }
+    else if(base == 2){ //binary
+        string output;
+
+        while(number != 0){
+            long remain = number % 2;
+            output += the_chars[remain];
+            number /= 2;
+        }
+        return reverse_str(output);
+    }
+    else if(base == 16){ //hexadecimal
+        string output;
+
+        while(number != 0){
+            long remain = number % 16;
+            output += the_chars[remain];
+            number /= 16;
+        }
+        return output;
+    }
+    return "Invalid Expression";
 }
 
 //checks if number is prime
 bool is_prime(long number){
 
     for(int i = 2; i < number; i++){
+        //sees if any other number other than itself and 1 is a divisor
         if(number%i == 0){
             return false;
         }
@@ -56,7 +85,14 @@ string is_pal_prime(long number){
 
     string s = "one of following 4 strings binary-pal-prime o decimal-pal-prime o hex-pal-prime o not-pal-prime";
 
-    return s;
+    //get diff bases for numbers
+    string number_hex = long_to_base(number, 16);
+    string number_binary = long_to_base(number, 2);
+
+    //check if is prime or palindrome
+    bool decimal_pal_prime = is_prime(number);
+    bool binary_pal = is_palindrome(number_binary);
+    bool hex_pal = is_palindrome(number_hex);
 }
 
 //main method
