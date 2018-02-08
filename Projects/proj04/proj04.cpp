@@ -89,10 +89,30 @@ string is_pal_prime(long number){
     string number_hex = long_to_base(number, 16);
     string number_binary = long_to_base(number, 2);
 
-    //check if is prime or palindrome
-    bool decimal_pal_prime = is_prime(number);
+    //check if is prime
+    bool decimal_prime = is_prime(number);
+    //bool binary_prime = is_prime(long(number_binary));
+
+    //check if is palindrome
+    bool decimal_pal = is_palindrome(to_string(number));
     bool binary_pal = is_palindrome(number_binary);
     bool hex_pal = is_palindrome(number_hex);
+
+    /*
+    if(binary_pal and binary_prime){
+        return "binary-pal-prime";
+    }*/
+    if(decimal_prime and decimal_pal){
+        return "decimal-pal-prime";
+    }
+    else if(binary_pal and decimal_prime){
+        return "binary-pal-prime";
+    }
+    else if(hex_pal and decimal_prime){
+        return "hex-pal-prime";
+    }
+
+    return "not-pal-prime";
 }
 
 //main method
