@@ -43,6 +43,11 @@ string long_to_base(long convert, long base){
 //checks if number is prime
 bool is_prime(long number){
 
+    for(int i = 2; i < number; i++){
+        if(number%i == 0){
+            return false;
+        }
+    }
     return true;
 }
 
