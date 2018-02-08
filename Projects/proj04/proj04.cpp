@@ -4,16 +4,24 @@ using std::cout; using std::cin; using std::endl; using std::boolalpha;
 using std::string; using std::to_string;
 #include<cmath>
 
-const string the_chars = "0123456789abcdef";
+const string the_chars = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 //functions
 
 //reverses string
 string reverse_str(string s){
 
-    s = reversed(s.rbeginning(),s.rend());
+    //s = reverse(s.begin(),s.end());
+    string s_reversed;;
 
-    return s;
+    for(int i = s.size(); i != -1; i--){
+        for(auto chr: the_chars){
+            if(chr == s[i]){
+                s_reversed += s[i];
+            }
+        }
+    }
+    return s_reversed;
 }
 
 //checks if is palindrome
