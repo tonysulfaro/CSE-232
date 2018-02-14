@@ -9,7 +9,7 @@ using std::string;
 */
 char fn2(string str){
   char ch = str[0];
-  for (auto i = str.size(); i>=0; --i){
+  for (auto i = str.size()-1; i>=0; --i){
     cout << ch << endl;
     if (str[i] < ch)
       ch = str[i];
@@ -28,14 +28,19 @@ char fn2(string str){
 string fn1(string str){
   char ch = fn2(str);
   size_t indx = str.find(ch);
-  return str.substr(indx-1, 3);
+
+
+  if(indx == 0){
+      return str.substr(indx, 3);
+  }
+  else{
+      return str.substr(indx-1, 3);
+  }
 }
 
 int main (){
   string my_string = "abcdefg";
-  cout << fn2_fixed(my_string) << endl;  
+  cout << fn2(my_string) << endl;
   cout << fn1(my_string) << endl;
 
 }
-
-
