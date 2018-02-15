@@ -4,16 +4,17 @@ using std::cout; using std::cin; using std::endl; using std::boolalpha;
 using std::string; using std::to_string;
 #include<cmath>
 
-const string alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+//not needed for now, we will see
+//const string alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
 
 //clean string of all characters
 string clean_string(string s){
     string result;
 
     for(auto ch: s){
-        if(ch >= "a" && ch <= "z"){
-            result += s[i];
-            cout << s[i] << endl;
+        if(ch >= 'a' && ch <= 'z'){
+            result += ch;
+            cout << ch << endl;
         }
     }
 
