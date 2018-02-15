@@ -1,14 +1,30 @@
-#ifndef PROJ05_FOURSQUARE
-#define PROJ05_FOURSQUARE
-
+#include<iostream>
+using std::cout; using std::cin; using std::endl; using std::boolalpha;
 #include<string>
-using std:: string;
+using std::string; using std::to_string;
+#include<cmath>
 
-string clean_string(string s);
-string create_encoding(string key);
-string encode_digraph(string dg, string block1, string block2);
-string decode_digraph(string dg, string block1, string block2);
-string encode(string msg, string key1, string key2);
-string decode(string msg, string key1, string key2);
+const string alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-#endif
+//clean string of all characters
+string clean_string(string s){
+    string result;
+
+    for(auto ch: s){
+        if(ch >= "a" && ch <= "z"){
+            result += s[i];
+            cout << s[i] << endl;
+        }
+    }
+
+    return result;
+}
+
+int main(){
+
+    string s = "lksjdflkjde333399,x,33'kkd";
+    string result = clean_string(s);
+    cout << result << endl;
+
+    return 0;
+}
