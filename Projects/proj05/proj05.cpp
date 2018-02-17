@@ -7,12 +7,12 @@ using std::string; using std::to_string;
 using std::tolower;
 
 //not needed for now, we will see
-//const string alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+const string alphabet = "abcdefghijklmnoprstuvwxyz"; //without 'q'
 
 //clean string of all characters
 string clean_string(string s){
     string result;
-    s = std::tolower(s);
+
 
     for(auto ch: s){
         if(ch >= 'a' && ch <= 'z'){
@@ -27,7 +27,16 @@ string clean_string(string s){
 string create_encoding(string key){
     string keyword;
 
+    keyword += key;
 
+    for(auto ch: alphabet){
+        cout << keyword.find(ch) << endl;
+        if(keyword.find(ch)==-1){ //if its not in there add it in
+            keyword+=ch;
+        }
+    }
+    cout << keyword << endl;
+    cout << keyword.size() << endl;
     return keyword;
 }
 
@@ -61,9 +70,8 @@ string decode(string msg, string key1, string key2){
 
 int main(){
 
-    string s = "lksjdflkjde333399,x,33'kkd";
-    string result = clean_string(s);
-    cout << result << endl;
+    string s = "keyword";
+    string result = create_encoding(s);
 
     return 0;
 }
