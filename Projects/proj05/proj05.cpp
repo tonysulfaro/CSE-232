@@ -30,13 +30,15 @@ string create_encoding(string key){
     keyword += key;
 
     for(auto ch: alphabet){
-        cout << keyword.find(ch) << endl;
         if(keyword.find(ch)==-1){ //if its not in there add it in
             keyword+=ch;
         }
     }
-    cout << keyword << endl;
-    cout << keyword.size() << endl;
+    //add an 'x' if string isnt long enough
+    (keyword.size()<25) ? (keyword+="x"):(keyword = keyword);
+    //truncate string if greater than 25
+    (keyword.size()>25) ? (keyword = keyword.substr(0,25)) : (keyword = keyword);
+
     return keyword;
 }
 
@@ -76,6 +78,8 @@ int main(){
 
     string s = "keyword";
     string result = create_encoding(s);
+    s = "someduplicatewords";
+    result = create_encoding(s);
 
     return 0;
 }
