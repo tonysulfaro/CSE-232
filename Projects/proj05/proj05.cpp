@@ -41,6 +41,7 @@ string create_encoding(string key){
 }
 
 //generate that board son
+//encode_digraph("he", "example", "keyword") returns "fy"
 string encode_digraph(string dg, string block1, string block2){
     string fy;
 
@@ -57,6 +58,9 @@ string decode_digraph(string dg, string block1, string block2){
 //encode it up with basically SHA512
 string encode(string msg, string key1, string key2){
     string encoding;
+
+    string encode1 = create_encoding(key1);
+    string encode2 = create_encoding(key2);
 
     return encoding;
 }
