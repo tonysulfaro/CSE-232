@@ -1,10 +1,11 @@
 #include<iostream>
 using std::cout; using std::cin; using std::endl; using std::boolalpha;
 #include<string>
-using std::string; using std::to_string;
+using std::string; using std::to_string; using std::tolower;
 #include<cmath>
 #include <locale>
 using std::tolower;
+#include "proj05_functions.h"
 
 //not needed for now, we will see
 const string alphabet = "abcdefghijklmnoprstuvwxyz"; //without 'q'
@@ -15,8 +16,8 @@ string clean_string(string s){
 
 
     for(auto ch: s){
-        if(ch >= 'a' && ch <= 'z'){
-            result += ch;
+        if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')){
+            result += tolower(ch);
             cout << ch << endl;
         }
     }
@@ -76,7 +77,10 @@ string decode(string msg, string key1, string key2){
 
 int main(){
 
-    string s = "keyword";
+    string s = "Hello World";
+    string clean = clean_string(s);
+    cout << clean << endl;
+    s = "keyword";
     string result = create_encoding(s);
     s = "someduplicatewords";
     result = create_encoding(s);
