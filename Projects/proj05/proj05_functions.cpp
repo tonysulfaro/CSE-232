@@ -27,7 +27,7 @@ string create_encoding(string key){
     string keyword;
 
     for(auto ch: key){
-        if(keyword.find(ch)==-1){
+        if(keyword.find(ch)==-1 and alphabet.find(ch)!= -1){
             keyword+= ch;
         }
     }
