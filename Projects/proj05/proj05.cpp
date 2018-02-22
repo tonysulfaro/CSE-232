@@ -50,9 +50,49 @@ string create_encoding(string key){
 //generate that board son
 //encode_digraph("he", "example", "keyword") returns "fy"
 string encode_digraph(string dg, string block1, string block2){
-    string fy;
+    string result;
 
-    return fy;
+    char first_letter = dg[0];
+    char second_letter = dg[1];
+
+    cout << dg << endl;
+
+    /*  Location information:
+        row = index/5 (integer division)
+        col = index %5
+        index = row * 5 + col */
+
+    int first_location = alphabet.find(first_letter);
+    int first_row = first_location/5;
+    int first_col = first_location%5;
+    cout << first_location << endl;
+    cout << first_row << endl;
+    cout << first_col << endl;
+    cout << endl;
+
+    //cout << first_location << " " << first_row << " " << first_col << " " << first_new_index << endl;
+
+    int second_location = alphabet.find(second_letter);
+    int second_row = second_location/5;
+    int second_col = second_location%5;
+    cout << second_location << endl;
+    cout << second_row << endl;
+    cout << second_col << endl;
+    cout << endl;
+
+
+    int first_new_index = first_row * 5 + second_col;
+    int second_new_index = second_row * 5 + first_col;
+    cout << first_new_index << endl;
+    cout << second_new_index << endl;
+    cout << endl;
+
+    result += block1[first_new_index];
+    cout << result << endl;
+    result += block2[second_new_index];
+    cout << result << endl;
+
+    return result;
 }
 
 //decode it like MD5
@@ -88,13 +128,14 @@ int main(){
     string clean = clean_string(s);
     cout << clean << endl; */
 
+    //create encoding
+    string result = create_encoding("example");
 
-    s = "example";
-    string result = create_encoding(s);
+    //encode_digraph
+    string first_keyword = create_encoding("example");
+    string second_keyword = create_encoding("keyword");
+    result = encode_digraph("he", first_keyword, second_keyword);
     cout << result << endl;
-
-    s = "someduplicatewords";
-    result = create_encoding(s);
 
     return 0;
 }
