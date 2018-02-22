@@ -1,8 +1,13 @@
 #ifndef PROJ05_FOURSQUARE
 #define PROJ05_FOURSQUARE
 
+#include<iostream>
+using std::cout; using std::cin; using std::endl; using std::boolalpha;
 #include<string>
-using std:: string;
+using std::string; using std::to_string; using std::tolower;
+#include<cmath>
+#include <locale>
+using std::tolower;
 
 string clean_string(string s);
 string create_encoding(string key);
