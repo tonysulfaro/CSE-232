@@ -17,7 +17,6 @@ string clean_string(string s){
     for(auto ch: s){
         if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')){
             result += tolower(ch);
-            cout << ch << endl;
         }
     }
     return result;
@@ -28,7 +27,7 @@ string create_encoding(string key){
     string keyword;
 
     for(auto ch: key){
-        if(keyword.find(ch)==-1 || isalpha(ch) == 1024){
+        if(keyword.find(ch)==-1){
             keyword+= ch;
         }
     }
@@ -109,17 +108,52 @@ string decode_digraph(string dg, string block1, string block2){
 
 //encode it up with basically SHA512
 string encode(string msg, string key1, string key2){
-    string encoding;
+    string result;
+
+    msg = clean_string(msg);
 
     string encode1 = create_encoding(key1);
     string encode2 = create_encoding(key2);
 
-    return encoding;
+    for(int i = 0; i<= msg.size()-1; i+=2){
+        string pair;
+        cout << msg[i] << msg[i+1] << endl;
+        pair += msg[i];
+        pair += msg[i+1];
+
+        if(pair.size() == 1){
+            pair += 'x';
+        }
+
+        result += encode_digraph(pair,encode1,encode2);
+
+    }
+
+    return result;
 }
 
 //decrypt it
 string decode(string msg, string key1, string key2){
-    string decoding;
+    string result;
 
-    return decoding;
+    msg = clean_string(msg);
+
+    string encode1 = create_encoding(key1);
+    string encode2 = create_encoding(key2);
+
+    for(int i = 0; i<= msg.size()-1; i+=2){
+        string pair;
+        cout << msg[i] << msg[i+1] << endl;
+        pair += msg[i];
+        pair += msg[i+1];
+
+        if(pair.size() == 1){
+            pair += 'x';
+        }
+
+        result += decode_digraph(pair,encode1,encode2);
+
+    }
+
+    return result;
 }
