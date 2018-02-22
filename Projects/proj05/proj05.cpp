@@ -28,10 +28,14 @@ string clean_string(string s){
 string create_encoding(string key){
     string keyword;
 
-    keyword += key;
+    for(auto ch: key){
+        if(keyword.find(ch)==-1){
+            keyword+= ch;
+        }
+    }
 
     for(auto ch: alphabet){
-        if(keyword.find(ch)==-1){ //if its not in there add it in
+        if(keyword.find(ch)==-1 && key.find(ch) == -1){ //if its not in there add it in
             keyword+=ch;
         }
     }
@@ -77,11 +81,18 @@ string decode(string msg, string key1, string key2){
 
 int main(){
 
-    string s = "Hello World";
+    //here is some function testing, not included in mimir submission
+
+    //clean string
+    string s = "Hello World"; /*
     string clean = clean_string(s);
-    cout << clean << endl;
-    s = "keyword";
+    cout << clean << endl; */
+
+
+    s = "example";
     string result = create_encoding(s);
+    cout << result << endl;
+
     s = "someduplicatewords";
     result = create_encoding(s);
 
