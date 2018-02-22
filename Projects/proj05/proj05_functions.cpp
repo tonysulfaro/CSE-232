@@ -13,7 +13,7 @@ const string alphabet = "abcdefghijklmnoprstuvwxyz"; //without 'q'
 string clean_string(string s){
     string result;
 
-
+    //iterate and check if its in range
     for(auto ch: s){
         if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')){
             result += tolower(ch);
@@ -27,7 +27,7 @@ string create_encoding(string key){
     string keyword;
 
     for(auto ch: key){
-        if(keyword.find(ch)==-1 and alphabet.find(ch)!= -1){
+        if(keyword.find(ch)==-1 and alphabet.find(ch)!= -1){ //add char one at a time but no dupes in key or alphabet
             keyword+= ch;
         }
     }
@@ -106,29 +106,27 @@ string decode_digraph(string dg, string block1, string block2){
     return result;
 }
 
-//encode it up with basically SHA512
+//this is basically SHA512 /s
 string encode(string msg, string key1, string key2){
     string result;
 
     msg = clean_string(msg);
 
+    //create blocks for encrypting
     string encode1 = create_encoding(key1);
     string encode2 = create_encoding(key2);
 
+    //split string into pairs and then decrypt
     for(int i = 0; i<= msg.size()-1; i+=2){
         string pair;
-        cout << msg[i] << msg[i+1] << endl;
-        pair += msg[i];
-        pair += msg[i+1];
+        pair += msg[i]; //this part is kinda jank but it didnt
+        pair += msg[i+1]; // like adding that msg index straight to the result
 
         if(pair.size() == 1){
             pair += 'x';
         }
-
         result += encode_digraph(pair,encode1,encode2);
-
     }
-
     return result;
 }
 
@@ -138,9 +136,11 @@ string decode(string msg, string key1, string key2){
 
     msg = clean_string(msg);
 
+    //create blocks for encrypting
     string encode1 = create_encoding(key1);
     string encode2 = create_encoding(key2);
 
+    //split string into pairs and then decrypt
     for(int i = 0; i<= msg.size()-1; i+=2){
         string pair;
         cout << msg[i] << msg[i+1] << endl;
@@ -150,10 +150,7 @@ string decode(string msg, string key1, string key2){
         if(pair.size() == 1){
             pair += 'x';
         }
-
         result += decode_digraph(pair,encode1,encode2);
-
     }
-
     return result;
 }
