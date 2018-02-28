@@ -2,23 +2,38 @@
 using std::string;
 #include<vector>
 using std::vector;
+#include <iomanip>
+using std::setw;
+#include <iostream>
+using std::cout; using std::to_string; using std::endl;
+#include "lab07_functions.h"
 
 /*
 very convenient. If you want to change the type
 stored in the matrix, you only have to change the
 single template type in matrix_row
 */
-using matrix_row = vector<long>;
-using matrix = vector<matrix_row>;
+
 
 /*
 nicely print a matrix. Should have row/column alignment
 converts it to a string (doesn't print to cout!!!)
 uses width to space elements (setw). Default is 3
 */
-string matrix_to_str(const matrix &m1, size_t width=3){
+string matrix_to_str(const matrix &m1, size_t width){
 
-    return 0;
+    string s;
+
+    for(auto row: m1){
+        for(auto element: row){
+            for(int i = 0; i < width; i++){
+                s+= " ";
+            }
+            s+= to_string(element);
+        }
+        s+="\n";
+    }
+    return s;
 }
 
 /*
@@ -27,7 +42,22 @@ false otherwise
 */
 bool same_size(matrix &m1, matrix &m2){
 
-    return 0;
+    int count1 = 0;
+    int count2 = 0;
+
+    for(auto row: m1){
+        for(auto element: row){
+            count1++;
+        }
+    }
+
+    for(auto row: m2){
+        for(auto element: row){
+            count2++;
+        }
+    }
+
+    return count1==count2;
 }
 
 /*
@@ -37,7 +67,8 @@ matrices must not be empty and must be the same shape:
 */
 matrix add(matrix &m1, matrix &m2){
 
-    return 0;
+    return m1;
+
 }
 
 /*
@@ -46,6 +77,11 @@ matrix must not be empty:
 - if false, return empty matrix (no elements)
 */
 matrix scalar_multiply(matrix &m, long val){
-
-    return 0;
+    for(auto row: m){
+        for(auto element: row){
+            cout << element << endl;
+            element*=val;
+            cout << element << endl;
+        }
+    }
 }
