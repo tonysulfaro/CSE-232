@@ -41,12 +41,18 @@ vector<long> gen_nstep_vector (long limit, long nstep){
     //generate next of the sequence until it hits the limit
 
     while(next_element <= limit){
+        //have to make this a loop somehow
+        /*
+        for(int n = 0; i<nstep; n++){
+            next_element += generated[i];
+            i++;
+        } */ this is just being a huge pos
         next_element = generated[i]+generated[i+1];
         if(next_element <= limit){
             generated.push_back(next_element);
             next_element = 0;
         }
-        i++;
+        //i++;
     }
 
     return generated;
