@@ -13,7 +13,7 @@ int main(){
     //cout << s << endl;
 
     //gen_nstep_vector testing
-    vector<long> v = gen_nstep_vector(100,10);
+    vector<long> v = gen_nstep_vector(1000,2);
     for(auto element: v){
         cout << element << " " << endl;
     }
