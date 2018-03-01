@@ -36,7 +36,7 @@ vector<long> gen_nstep_vector (long limit, long nstep){
         generated.push_back(next_element);
         next_element = 0;
     }
-
+/*
     while(next_element <= limit){
         //go from last nstep position in generated to get next element
         for(int i = nstep-generated.size(); i <= generated.size(); i++){
@@ -45,7 +45,7 @@ vector<long> gen_nstep_vector (long limit, long nstep){
         if(next_element <= limit){
             generated.push_back(next_element);
         }
-    }
+    } */
 
     return generated;
 }
