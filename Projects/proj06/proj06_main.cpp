@@ -17,4 +17,9 @@ int main(){
     for(auto element: v){
         cout << element << " " << endl;
     }
+
+    vector<long> b = gen_nstep_vector(976, 6);
+    for(auto element: b){
+        cout << element << " " << endl;
+    }
 }

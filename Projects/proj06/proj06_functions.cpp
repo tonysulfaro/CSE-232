@@ -21,19 +21,32 @@ string vec_2_str(const vector<long>& v){
     return s;
 }
 
+//generate vector up to limit based on nstep fibonacci. nstep is how many elements to add to get next value
 vector<long> gen_nstep_vector (long limit, long nstep){
 
     vector<long> generated = {1,1};
-    int i = 0;
     long next_element = 0;
 
+    //generate nstep amount in generated vector
+    while(generated.size() < nstep){
+
+        for(int i = 0; i< generated.size(); i++){
+            next_element+=generated[i];
+        }
+        generated.push_back(next_element);
+        next_element = 0;
+    }
+
     while(next_element <= limit){
-        next_element = generated[i]+generated[i+1];
+        //go from last nstep position in generated to get next element
+        for(int i = nstep-generated.size(); i <= generated.size(); i++){
+            next_element += generated[i];
+        }
         if(next_element <= limit){
             generated.push_back(next_element);
         }
-        i++;
     }
+
     return generated;
 }
 
