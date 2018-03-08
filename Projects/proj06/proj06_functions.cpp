@@ -81,5 +81,11 @@ string num_to_nstep_coding(long num, long nstep){
 
 long nstep_coding_to_num(const string& coding, const vector<long>& nstep_sequence){
 
-    return 100;
+    long result = 0;
+
+    for(int i = 0; i <= coding.size(); i++){
+        (!coding[i]) ? (result += nstep_sequence[i]) : (result += 0);
+    }
+
+    return result;
 }
