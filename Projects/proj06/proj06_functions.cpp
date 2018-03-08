@@ -63,13 +63,10 @@ string num_to_nstep_coding(long num, long nstep){
 
     for(int i = nth_fibonacci.size()-1; i != 0; i--){
         if((remain - nth_fibonacci[i]) >= 0){
-
             remain -= nth_fibonacci[i];
-            //cout << nth_fibonacci[i] << " used" << " Remainder: " << remain<< endl;
             result += "1";
         }
         else{
-            //cout << nth_fibonacci[i] << " Not used" << " Remainder: " << remain<< endl;
             result += "0";
         }
     }
@@ -84,7 +81,9 @@ long nstep_coding_to_num(const string& coding, const vector<long>& nstep_sequenc
     long result = 0;
 
     for(int i = 0; i <= coding.size(); i++){
-        (!coding[i]) ? (result += nstep_sequence[i]) : (result += 0);
+        (coding[i] == '1') ? (result += nstep_sequence[i+1]) : (result += 0);
+        //cout << "coding: " << coding[i] << " num: " << nstep_sequence[i+1] << " result: " << result << endl;
+
     }
 
     return result;
