@@ -54,9 +54,29 @@ vector<long> gen_nstep_vector (long limit, long nstep){
     return generated;
 }
 
+//returns a binary string which represents num as the nstep sequence
 string num_to_nstep_coding(long num, long nstep){
 
-    return "string";
+    string result;
+    long remain = num;
+    vector <long> nth_fibonacci = gen_nstep_vector(num,nstep);
+
+    for(int i = nth_fibonacci.size()-1; i != 0; i--){
+        if((remain - nth_fibonacci[i]) >= 0){
+
+            remain -= nth_fibonacci[i];
+            //cout << nth_fibonacci[i] << " used" << " Remainder: " << remain<< endl;
+            result += "1";
+        }
+        else{
+            //cout << nth_fibonacci[i] << " Not used" << " Remainder: " << remain<< endl;
+            result += "0";
+        }
+    }
+    reverse(result.begin(), result.end());
+    //result += "1";
+    return result;
+    //return "string";
 }
 
 long nstep_coding_to_num(const string& coding, const vector<long>& nstep_sequence){

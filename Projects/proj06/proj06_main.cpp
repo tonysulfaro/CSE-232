@@ -13,13 +13,15 @@ int main(){
     //cout << s << endl;
 
     //gen_nstep_vector testing
-    vector<long> v = gen_nstep_vector(1000,2);
+
+    vector<long> v = gen_nstep_vector(143,2);
     for(auto element: v){
         cout << element << " " << endl;
     }
-/*
-    vector<long> b = gen_nstep_vector(976, 6);
-    for(auto element: b){
-        cout << element << " " << endl;
-    } */
+
+
+    //num_to_nstep_coding
+    string result = num_to_nstep_coding(143,2);
+    cout << result << endl;
+
 }
