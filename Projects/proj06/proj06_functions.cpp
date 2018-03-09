@@ -23,7 +23,7 @@ string vec_2_str(const vector<long>& v){
 //generate vector up to limit based on nstep fibonacci. nstep is how many elements to add to get next value
 vector<long> gen_nstep_vector (long limit, long nstep){
 
-    vector<long> generated = {1,1};
+    vector<long> generated = {1,1}; //this is kinda hardcoding but every nth_fibonacci has these first two elements
     long next_element = 0;
 
     //generate nstep amount in generated vector
@@ -43,6 +43,7 @@ vector<long> gen_nstep_vector (long limit, long nstep){
         for(int n = generated.size()-nstep; n<generated.size(); n++){
             next_element += generated[n];
         } // this is just being a huge pos
+        //check if number is within limit and add it to vector
         if(next_element <= limit){
             generated.push_back(next_element);
             next_element = 0;
@@ -78,6 +79,7 @@ long nstep_coding_to_num(const string& coding, const vector<long>& nstep_sequenc
 
     long result = 0;
 
+    //iterate over the coding string and generate number from sequence
     for(int i = 0; i <= coding.size(); i++){
         //if the char in the string is one add the element of the sequence to the result
         (coding[i] == '1') ? (result += nstep_sequence[i+1]) : (result += 0);
