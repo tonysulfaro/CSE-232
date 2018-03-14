@@ -6,6 +6,8 @@ using std::string; using std::to_string;
 using std::map;
 #include<utility>
 using std::pair;
+#include<stdexcept>
+using std::range_error;
 
 using Collatz = pair<long, vector<long> >;
 
@@ -18,10 +20,10 @@ long collatz_next(long n){
 
     //range error
     if (n <= 0){
-        throw std::range_error("number is not in range > 0.");
+        throw range_error("number is not in range > 0.");
     }
     //return next collatz (if isEven) : (if isOdd)
-    if(!n%2){
+    if(!(n%2)){
         return n/2;
     }
     return 3*n+1;
@@ -45,7 +47,7 @@ string Collatz_to_string(const Collatz &p){
     //add vector elements
     for(auto element: vec){
         result += to_string(element);
-        result += ", ";
+        result += ",";
     }
 
     result = result.substr(0, result.size()-1);
@@ -61,7 +63,16 @@ string Collatz_to_string(const Collatz &p){
 */
 string sequence_in_map_to_string(map<long, vector<long> > &m, long number){
 
-    return "test";
+    long key = m.count(number);
+
+    if(key == 0){
+        return "";
+    }
+    auto value = m.find(key);
+    vector <long> thing = value -> second;
+    pair <long, vector<long>> pair_thing = {number, thing};
+    string result = Collatz_to_string(pair_thing);
+    return result;
 }
 
 /*
@@ -74,7 +85,14 @@ string sequence_in_map_to_string(map<long, vector<long> > &m, long number){
 */
 vector<long> collatz_sequence(map<long, vector<long> > &m, long number){
 
-    return {1,2};
+    vector<long> sequence = {};
+
+    while(number > 1){
+        number = collatz_next(number);
+        sequence.push_back(number);
+    }
+
+    return sequence;
 }
 
 /*
