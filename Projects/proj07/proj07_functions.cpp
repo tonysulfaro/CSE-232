@@ -7,6 +7,7 @@
 #include <fstream>
 using std::string; using std::set; using std::map; using std::pair;
 using std::ifstream; using std::cout; using std::endl; using std::to_string;
+using std::invalid_argument;
 
 //map of a key of ServerName and value of set of UserNames
 using ServerData = map<string, set<string>>;
@@ -76,22 +77,30 @@ ServerData ParseServerData(const string &fname){
     bool result;
 
     //error handling
-    inFile.open(fname);
+    try{
+        inFile.open(fname);
+    }
+    catch(std::exception e){
+        throw std::invalid_argument("invalid argument");
+    }
 
     //use add and delete as users are read in
     if (inFile.is_open()){
         while (inFile >> line){ //each name/command one at a time
             i++;
+            cout << "Line: " << line << " I: " << i << '\n';
             if(i == 1){
                 user = line;
             }
             else if(i == 2){
                 command = line;
+                cout << "Command: " << command << '\n';
+                if(command != "join" && command != "leave"){
+                    throw std::domain_error("domain error");
+                }
             }
             else if(i == 3){
                 server = line;
-            }
-            else{
                 if(command == "join"){
                     result = AddConnection(sd, server, user);
                 }
@@ -130,7 +139,9 @@ set<string> AllUsers(const ServerData &sd){
 
     set<string> users;
     for(auto server: sd){
-        for(auto user: server){
+        set<string> user_list = server.second;
+        for(auto user: user_list){
+            cout << user;
             users.insert(user);
         }
     }
