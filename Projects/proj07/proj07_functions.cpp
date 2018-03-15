@@ -17,6 +17,7 @@ ServerData ParseServerData(const string &fname){
 
     string line;
     ifstream inFile;
+    ServerData sd;
 
     //error handling
     inFile.open(fname);
@@ -30,6 +31,7 @@ ServerData ParseServerData(const string &fname){
     inFile.close();
         }
     }
+    return sd;
 }
 
 void PrintAll(std::ostream &out, const ServerData &sd){
@@ -45,13 +47,14 @@ bool AddConnection(ServerData & sd, ServerName sn, UserName un){
 
     pair< map<string,set<string>>::iterator, bool> result;
 
-    long key = ServerData.count(ServerName);
+    long key = sd.count(sn);
 
     if(key == 0){
-        ServerData.insert({sn, set{un}});
+        //make new server entry
+        sd[sn].insert(un);
     }
     else{
-        ServerData[sn].insert(un)
+        sd[sn].insert(un);
     }
     return false;
 }

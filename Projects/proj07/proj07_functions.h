@@ -8,22 +8,20 @@
 #include <utility>
 #include <vector>
 #include <fstream>
-using std::string; using std::set; using std::map; using std::pair;
-using std::ifstream; using std::cout; using std::endl; using std::ostream;
 
-using ServerData = map<string, set<string>>;
+using ServerData = std::map<std::string, std::set<std::string>>;
 
-using UserName = const string &;
-using ServerName = const string &;
+using UserName = const std::string &;
+using ServerName = const std::string &;
 
-ServerData ParseServerData(const string &);
-void PrintAll(ostream &, const ServerData &);
+ServerData ParseServerData(const std::string &);
+void PrintAll(std::ostream &, const ServerData &);
 bool AddConnection(ServerData &, ServerName, UserName);
 bool DeleteConnection(ServerData &, ServerName, UserName);
-set<string> AllServers(const ServerData &);
-set<string> AllUsers(const ServerData &);
-set<string> HasConnections(const ServerData &, UserName);
-set<string> HasUsers(const ServerData &, ServerName);
+std::set<std::string> AllServers(const ServerData &);
+std::set<std::string> AllUsers(const ServerData &);
+std::set<std::string> HasConnections(const ServerData &, UserName);
+std::set<std::string> HasUsers(const ServerData &, ServerName);
 void BalanceServers(ServerData &, ServerName, ServerName);
 void CleanAndBalance(ServerData &);
 
