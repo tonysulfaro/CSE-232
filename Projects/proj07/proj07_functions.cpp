@@ -51,12 +51,20 @@ bool AddConnection(ServerData & sd, ServerName sn, UserName un){
 
     if(key == 0){
         //make new server entry
-        sd[sn].insert(un);
+        result = sd.insert({sn,{un}});
+        return result.second;
     }
     else{
+        //add user to existing host
+        for(auto person: sd[sn]){
+            if(person == un){
+                return false;
+            }
+        }
         sd[sn].insert(un);
+        return true;
     }
-    return false;
+    return result.second;
 }
 bool DeleteConnection(ServerData &sd, ServerName sn, UserName un){
     return false;

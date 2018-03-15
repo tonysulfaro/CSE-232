@@ -48,11 +48,12 @@ int main(){
   cout << endl;
 
   //insert things into the map
+  cout << "INSERT TO MAP" << endl;
   pair< map<string,string>::iterator, bool> result;
   result = phone_book.insert({"eric", "555-3434"});
   cout << result.second << endl;
   cout << pair_to_string( *(result.first) ) << endl;
-
+  cout << "INSERT TO MAP AGAIN" << endl;
   result = phone_book.insert(make_pair("eric", "555-4545") );
   cout << result.second << endl;
   cout << pair_to_string( *(result.first) ) << endl;
