@@ -32,7 +32,7 @@ rusty : alice gigi
 */
   std::cout << "Clean and Balance"<<std::endl;
   CleanAndBalance(server_data);
-  
+
   PrintAll(std::cout,server_data);
 /* should print
 arctic : alice fedor lily sonam
@@ -41,4 +41,3 @@ rusty : dhruv jose matus
 */
 
 }
-

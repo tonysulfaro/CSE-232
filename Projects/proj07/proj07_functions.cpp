@@ -68,7 +68,7 @@ bool DeleteConnection(ServerData &sd, ServerName sn, UserName un){
 ServerData ParseServerData(const string &fname){
 
     string line;
-    ifstream inFile;
+    ifstream inFile(fname);
     ServerData sd;
     int i = 0;
     string user;
@@ -76,11 +76,8 @@ ServerData ParseServerData(const string &fname){
     string server;
     bool result;
 
-    //error handling
-    try{
-        inFile.open(fname);
-    }
-    catch(std::exception e){
+    //error handling for no file found
+    if(!inFile){
         throw std::invalid_argument("invalid argument");
     }
 
@@ -89,16 +86,20 @@ ServerData ParseServerData(const string &fname){
         while (inFile >> line){ //each name/command one at a time
             i++;
             cout << "Line: " << line << " I: " << i << '\n';
+            //put user into temp variable
             if(i == 1){
                 user = line;
             }
+            //put command into temp veriable
             else if(i == 2){
                 command = line;
+                //if command isnt join or leave
                 cout << "Command: " << command << '\n';
                 if(command != "join" && command != "leave"){
                     throw std::domain_error("domain error");
                 }
             }
+            //when there is a user, command, and sever in temp variables
             else if(i == 3){
                 server = line;
                 if(command == "join"){
