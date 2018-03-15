@@ -6,37 +6,12 @@
 #include <vector>
 #include <fstream>
 using std::string; using std::set; using std::map; using std::pair;
-using std::ifstream; using std::cout;
+using std::ifstream; using std::cout; using std::endl; using std::to_string;
 
 //map of a key of ServerName and value of set of UserNames
 using ServerData = map<string, set<string>>;
 using UserName = const string &;
 using ServerName = const string &;
-
-ServerData ParseServerData(const string &fname){
-
-    string line;
-    ifstream inFile;
-    ServerData sd;
-
-    //error handling
-    inFile.open(fname);
-
-    //use add and delete as users are read in
-    if (inFile.is_open()){
-    while ( getline (inFile,line, ' ')){
-      cout << line[0] << '\n';
-      cout << line[1] << '\n';
-      cout << line[2] << '\n';
-    inFile.close();
-        }
-    }
-    return sd;
-}
-
-void PrintAll(std::ostream &out, const ServerData &sd){
-    cout << "test";
-}
 
 /*
 If the server exists, it adds un to that server.
@@ -88,13 +63,65 @@ bool DeleteConnection(ServerData &sd, ServerName sn, UserName un){
     return false;
 }
 
+//generate map
+ServerData ParseServerData(const string &fname){
+
+    string line;
+    ifstream inFile;
+    ServerData sd;
+    int i = 0;
+    string user;
+    string command;
+    string server;
+    bool result;
+
+    //error handling
+    inFile.open(fname);
+
+    //use add and delete as users are read in
+    if (inFile.is_open()){
+        while (inFile >> line){ //each name/command one at a time
+            i++;
+            if(i == 1){
+                user = line;
+            }
+            else if(i == 2){
+                command = line;
+            }
+            else if(i == 3){
+                server = line;
+            }
+            else{
+                if(command == "join"){
+                    result = AddConnection(sd, server, user);
+                }
+                else if(command == "leave"){
+                    result = DeleteConnection(sd, server, user);
+                }
+                i = 0;
+                user = "";
+                command = "";
+                server = "";
+            }
+        }
+        inFile.close();
+    }
+    return sd;
+}
+
+void PrintAll(std::ostream &out, const ServerData &sd){
+    cout << "test";
+}
+
 //returns set of all servers in map
 set<string> AllServers(const ServerData &sd){
 
     set<string> servers;
-    //for(auto server: sd){
-    //    servers.insert(server);
-    //}
+    for(auto server: sd){
+        string server_name = server.first;
+        cout << server_name << endl;
+        servers.insert(server_name);
+    }
     return servers;
 }
 
@@ -102,13 +129,11 @@ set<string> AllServers(const ServerData &sd){
 set<string> AllUsers(const ServerData &sd){
 
     set<string> users;
-    /*
     for(auto server: sd){
         for(auto user: server){
             users.insert(user);
         }
     }
-    */
     return users;
 }
 
