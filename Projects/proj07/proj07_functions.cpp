@@ -9,7 +9,8 @@ using std::vector;
 #include <algorithm>
 using std::string; using std::set; using std::map; using std::pair;
 using std::ifstream; using std::cout; using std::endl; using std::to_string;
-using std::invalid_argument; using std::transform; using std::set_intersection;
+using std::set_intersection; using std::set_symmetric_difference;
+using std::invalid_argument; using std::transform;
 
 //map of a key of ServerName and value of set of UserNames
 using ServerData = map<string, set<string>>;
@@ -196,18 +197,45 @@ void BalanceServers(ServerData &sd, ServerName sn1, ServerName sn2){
     std::ostream_iterator<string> os_itr (cout, ",");
     set<string> s1_users = HasUsers(sd,sn1);
     set<string> s2_users = HasUsers(sd,sn2);
-    //std::sort(s1_users.begin(), s1_users.end());
-    //std::sort(s2_users.begin(), s2_users.end());
+
+    //users in both servers
     set<string> no_move_users;
     std::set_intersection(s1_users.begin(), s1_users.end(),
                           s2_users.begin(), s2_users.end(),
                           std::inserter(no_move_users,no_move_users.begin()));
-    cout << "BALANCE LOAD" << '\n';
-    for(auto person: no_move_users){
-        cout << person << endl;
+    //users in only one server
+    set<string> move_users;
+    std::set_symmetric_difference(s1_users.begin(), s1_users.end(),
+                                  s2_users.begin(), s2_users.end(),
+                                  std::inserter(move_users,move_users.begin()));
+
+    //remove users from sets
+    s1_users = {};
+    s2_users = {};
+    for(auto user: no_move_users){
+        s1_users.insert(user);
+        s2_users.insert(user);
     }
 
+    //move users back to server
+    int i = 0;
+    for(auto user: move_users){
+        if(i%2 == 0){
+            cout << sn1 << " : " << user << "\n";
+            s1_users.insert(user);
+        }
+        else{
+            cout << sn2 << " : " << user << "\n";
+            s2_users.insert(user);
+        }
+        i++;
+    }
+    //modify map of changes
+    sd[sn1] = s1_users;
+    sd[sn2] = s2_users;
 }
+
+//clean and balance server load
 void CleanAndBalance(ServerData &sd){
     cout << "test";
 }
