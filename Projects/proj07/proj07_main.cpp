@@ -22,7 +22,7 @@ baron : alice bob dhruv lily loki sonam thor
 rusty : alice gigi
 */
   std::cout << "Balance "<<std::endl;
-  BalanceServers(server_data,"rusty","baron");
+  BalanceServers(server_data,"arctic","baron");
 
   PrintAll(std::cout,server_data);
 /* should print

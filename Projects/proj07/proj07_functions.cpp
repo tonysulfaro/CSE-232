@@ -88,7 +88,7 @@ ServerData ParseServerData(const string &fname){
     if (inFile.is_open()){
         while (inFile >> line){ //each name/command one at a time
             i++;
-            cout << "Line: " << line << " I: " << i << '\n';
+            //cout << "Line: " << line << " I: " << i << '\n';
             //put user into temp variable
             if(i == 1){
                 user = line;
@@ -140,7 +140,6 @@ set<string> AllServers(const ServerData &sd){
     set<string> servers;
     for(auto server: sd){
         string server_name = server.first;
-        cout << server_name << endl;
         servers.insert(server_name);
     }
     return servers;
@@ -153,7 +152,6 @@ set<string> AllUsers(const ServerData &sd){
     for(auto server: sd){
         set<string> user_list = server.second;
         for(auto user: user_list){
-            cout << user;
             users.insert(user);
         }
     }
@@ -218,16 +216,24 @@ void BalanceServers(ServerData &sd, ServerName sn1, ServerName sn2){
     }
 
     //move users back to server
-    int i = 0;
+    //this one just balances them from one to the other
+    int i = 0; /*
     for(auto user: move_users){
         if(i%2 == 0){
-            cout << sn1 << " : " << user << "\n";
+            //cout << sn1 << " : " << user << "\n";
             s1_users.insert(user);
         }
         else{
-            cout << sn2 << " : " << user << "\n";
+            //cout << sn2 << " : " << user << "\n";
             s2_users.insert(user);
         }
+        i++;
+    } */
+    //move users to new homes in server
+    int move_size = move_users.size();
+    int break_point = (move_size/2);
+    for(auto user: move_users){
+        (i <= break_point) ? (s1_users.insert(user)):(s2_users.insert(user));
         i++;
     }
     //modify map of changes
