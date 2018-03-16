@@ -4,10 +4,12 @@
 #include <string>
 #include <utility>
 #include <vector>
+using std::vector;
 #include <fstream>
+#include <algorithm>
 using std::string; using std::set; using std::map; using std::pair;
 using std::ifstream; using std::cout; using std::endl; using std::to_string;
-using std::invalid_argument;
+using std::invalid_argument; using std::transform; using std::set_intersection;
 
 //map of a key of ServerName and value of set of UserNames
 using ServerData = map<string, set<string>>;
@@ -94,7 +96,6 @@ ServerData ParseServerData(const string &fname){
             else if(i == 2){
                 command = line;
                 //if command isnt join or leave
-                cout << "Command: " << command << '\n';
                 if(command != "join" && command != "leave"){
                     throw std::domain_error("domain error");
                 }
@@ -119,8 +120,17 @@ ServerData ParseServerData(const string &fname){
     return sd;
 }
 
+//print entire map_element
 void PrintAll(std::ostream &out, const ServerData &sd){
-    cout << "test";
+    for(auto server: sd){
+        string server_name = server.first;
+        set<string> user_names = server.second;
+        cout << server_name << " : ";
+        for(auto name: user_names){
+            cout << name << " ";
+        }
+        cout << '\n';
+    }
 }
 
 //returns set of all servers in map
@@ -153,15 +163,15 @@ set<string> AllUsers(const ServerData &sd){
 set<string> HasConnections(const ServerData &sd, UserName un){
 
     set<string> connections;
-    /*
     for(auto server: sd){
-        for(auto user: server){
+        string server_name = server.first;
+        set<string> user_list = server.second;
+        for(auto user: user_list){
             if(user == un){
-                connections.insert(server); //this is alot of nesting
+                connections.insert(server_name); //this is alot of nesting
             }
         }
     }
-    */
     return connections;
 }
 
@@ -169,16 +179,34 @@ set<string> HasConnections(const ServerData &sd, UserName un){
 set<string> HasUsers(const ServerData &sd, ServerName sn){
 
     set<string> userList;
-    /*
-    for(auto user: sd[sn]){
-        userList.insert(user);
+    for(auto server: sd){
+        string server_name = server.first;
+        set<string> user_list = server.second;
+        if(server_name == sn){
+            for(auto user: user_list){
+                userList.insert(user);
+            }
+            continue;
+        }
     }
-    */
     return userList;
 }
 
 void BalanceServers(ServerData &sd, ServerName sn1, ServerName sn2){
-    cout << "test";
+    std::ostream_iterator<string> os_itr (cout, ",");
+    set<string> s1_users = HasUsers(sd,sn1);
+    set<string> s2_users = HasUsers(sd,sn2);
+    //std::sort(s1_users.begin(), s1_users.end());
+    //std::sort(s2_users.begin(), s2_users.end());
+    set<string> no_move_users;
+    std::set_intersection(s1_users.begin(), s1_users.end(),
+                          s2_users.begin(), s2_users.end(),
+                          std::inserter(no_move_users,no_move_users.begin()));
+    cout << "BALANCE LOAD" << '\n';
+    for(auto person: no_move_users){
+        cout << person << endl;
+    }
+
 }
 void CleanAndBalance(ServerData &sd){
     cout << "test";
