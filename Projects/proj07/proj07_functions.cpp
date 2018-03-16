@@ -121,16 +121,22 @@ ServerData ParseServerData(const string &fname){
     return sd;
 }
 
-//print entire map_element
+//print entire map
 void PrintAll(std::ostream &out, const ServerData &sd){
+    string s;
     for(auto server: sd){
         string server_name = server.first;
         set<string> user_names = server.second;
-        cout << server_name << " : ";
+        out << server_name << " : ";
         for(auto name: user_names){
-            cout << name << " ";
+            s += name; //i know to use ostream but it wasn't cooperating
+            s+= " ";
+            //out << name << " ";
         }
-        cout << '\n';
+        s = s.substr(0,s.size()-1);
+        out << s;
+        out << '\n';
+        s = "";
     }
 }
 
@@ -214,26 +220,12 @@ void BalanceServers(ServerData &sd, ServerName sn1, ServerName sn2){
         s1_users.insert(user);
         s2_users.insert(user);
     }
-
-    //move users back to server
-    //this one just balances them from one to the other
-    int i = 0; /*
-    for(auto user: move_users){
-        if(i%2 == 0){
-            //cout << sn1 << " : " << user << "\n";
-            s1_users.insert(user);
-        }
-        else{
-            //cout << sn2 << " : " << user << "\n";
-            s2_users.insert(user);
-        }
-        i++;
-    } */
+    int i = 0;
     //move users to new homes in server
     int move_size = move_users.size();
-    int break_point = (move_size/2);
+    int break_point = move_size - (move_size/2);
     for(auto user: move_users){
-        (i <= break_point) ? (s1_users.insert(user)):(s2_users.insert(user));
+        (i < break_point) ? (s1_users.insert(user)):(s2_users.insert(user));
         i++;
     }
     //modify map of changes
@@ -243,5 +235,26 @@ void BalanceServers(ServerData &sd, ServerName sn1, ServerName sn2){
 
 //clean and balance server load
 void CleanAndBalance(ServerData &sd){
-    cout << "test";
+
+    set<string> unique_users = AllUsers(sd);
+
+    int server_count = 0;
+    set<string> server_list;
+    for(auto server_data: sd){
+        string server_name = server_data.first;
+        server_list.insert(server_name);
+        server_count ++;
+        sd[server_name] = {};
+    }
+    //move users in round robin way
+    while(unique_users.size()>0){
+        for(set<string>::iterator i=server_list.begin(); i != server_list.end(); i++){
+            string temp_user = *unique_users.begin();
+            sd[*i].insert(temp_user);
+            unique_users.erase(temp_user);
+            if(unique_users.size() == 0){
+                break;
+            }
+        }
+    }
 }
