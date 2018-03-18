@@ -7,12 +7,14 @@
 using std::vector;
 #include <fstream>
 #include <algorithm>
+//dependances for data structure
 using std::string; using std::set; using std::map; using std::pair;
 using std::ifstream; using std::cout; using std::endl; using std::to_string;
+//set ops and exceptions
 using std::set_intersection; using std::set_symmetric_difference;
 using std::invalid_argument; using std::transform;
 
-//map of a key of ServerName and value of set of UserNames
+//define types for ServerData data structure
 using ServerData = map<string, set<string>>;
 using UserName = const string &;
 using ServerName = const string &;
@@ -47,6 +49,8 @@ bool AddConnection(ServerData & sd, ServerName sn, UserName un){
     }
     return result.second;
 }
+
+//delete person from server
 bool DeleteConnection(ServerData &sd, ServerName sn, UserName un){
 
     pair< map<string,set<string>>::iterator, bool> result;
@@ -85,10 +89,10 @@ ServerData ParseServerData(const string &fname){
     }
 
     //use add and delete as users are read in
+    //this is a ton of spaghetti im so sorry to whoever has to read this
     if (inFile.is_open()){
         while (inFile >> line){ //each name/command one at a time
             i++;
-            //cout << "Line: " << line << " I: " << i << '\n';
             //put user into temp variable
             if(i == 1){
                 user = line;
@@ -110,12 +114,13 @@ ServerData ParseServerData(const string &fname){
                 else if(command == "leave"){
                     result = DeleteConnection(sd, server, user);
                 }
+                //reset temp variables
                 i = 0;
                 user = "";
                 command = "";
                 server = "";
+                }
             }
-        }
         inFile.close();
     }
     return sd;
@@ -123,16 +128,19 @@ ServerData ParseServerData(const string &fname){
 
 //print entire map
 void PrintAll(std::ostream &out, const ServerData &sd){
+
     string s;
+    //iterate over entire map
     for(auto server: sd){
         string server_name = server.first;
         set<string> user_names = server.second;
         out << server_name << " : ";
+        //print out user names per server
         for(auto name: user_names){
             s += name; //i know to use ostream but it wasn't cooperating
             s+= " ";
-            //out << name << " ";
         }
+        //remove last space from string
         s = s.substr(0,s.size()-1);
         out << s;
         out << '\n';
@@ -144,6 +152,7 @@ void PrintAll(std::ostream &out, const ServerData &sd){
 set<string> AllServers(const ServerData &sd){
 
     set<string> servers;
+    //find all the servers and add them into set
     for(auto server: sd){
         string server_name = server.first;
         servers.insert(server_name);
@@ -155,7 +164,9 @@ set<string> AllServers(const ServerData &sd){
 set<string> AllUsers(const ServerData &sd){
 
     set<string> users;
+    //find all users in every sever
     for(auto server: sd){
+        //ectract user list from server entry
         set<string> user_list = server.second;
         for(auto user: user_list){
             users.insert(user);
@@ -168,10 +179,13 @@ set<string> AllUsers(const ServerData &sd){
 set<string> HasConnections(const ServerData &sd, UserName un){
 
     set<string> connections;
+    //finds servers where the user is and adds them to the list
     for(auto server: sd){
+        //extract name and user list from server data
         string server_name = server.first;
         set<string> user_list = server.second;
         for(auto user: user_list){
+            //find server user is in
             if(user == un){
                 connections.insert(server_name); //this is alot of nesting
             }
@@ -184,10 +198,13 @@ set<string> HasConnections(const ServerData &sd, UserName un){
 set<string> HasUsers(const ServerData &sd, ServerName sn){
 
     set<string> userList;
+    //finds a server and returns its user list
     for(auto server: sd){
+        //seperate elements from server pair
         string server_name = server.first;
         set<string> user_list = server.second;
         if(server_name == sn){
+            //add data from user list
             for(auto user: user_list){
                 userList.insert(user);
             }
@@ -240,6 +257,7 @@ void CleanAndBalance(ServerData &sd){
 
     int server_count = 0;
     set<string> server_list;
+    //count and add server names to list
     for(auto server_data: sd){
         string server_name = server_data.first;
         server_list.insert(server_name);
@@ -248,8 +266,11 @@ void CleanAndBalance(ServerData &sd){
     }
     //move users in round robin way
     while(unique_users.size()>0){
+        //some good iterator action from the video
+        //basicaly take the user_list then put them in a list then remove them one by one
         for(set<string>::iterator i=server_list.begin(); i != server_list.end(); i++){
             string temp_user = *unique_users.begin();
+            //insert then remove user from user list
             sd[*i].insert(temp_user);
             unique_users.erase(temp_user);
             if(unique_users.size() == 0){
