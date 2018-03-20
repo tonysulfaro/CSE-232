@@ -17,7 +17,7 @@ struct MathVector{
   MathVector(long, long);
 
   // 4 function members you must write
-  MathVector add (const MathVector&);
+  MathVector add(const MathVector&);
   MathVector mult(long);
   long mult(const MathVector&);
   double magnitude();
@@ -25,6 +25,5 @@ struct MathVector{
 
 // a function! You must write
 string vec_to_str(const MathVector&);
-
 
 #endif
