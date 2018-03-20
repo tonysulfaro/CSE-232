@@ -38,7 +38,6 @@ double MathVector::magnitude(){
 // prints out the vector
 string vec_to_str(const MathVector& v){
 	ostringstream oss;
-	oss << "Vector X : " << v.x
-	<< "Vector Y : " << v.y;
+	oss << v.x << ":" << v.y;
 	return oss.str();
 }
