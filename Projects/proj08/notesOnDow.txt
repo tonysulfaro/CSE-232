@@ -1,0 +1,49 @@
+Each line in the dow.txt file has 31 fields
+
+- the first is the date, in a format that can be read in as an integer.
+- the next 30 are the closing values for the 30 Dow Industrials on that date which can be read in as double. 
+- all field elements are space separated.
+- except for date, fields are in alphabetic order of their symbols
+
+For example, given the first line of dow.txt below
+
+20120831 8.53 58.10 71.40 7.98  84.82   18.94  112.16   49.75   49.47   20.55   56.75   16.75  194.85   24.83   67.43   36.87   41.21   37.15   89.49   92.60   42.64   30.82   23.86   66.64   36.22   64.28   79.85   42.47   72.60   87.30
+
+Date is 20120831 (that is, 8/31/2012)
+AA value is 8.53
+AXP value is  58.10 
+BA value is 71.40
+BAC value is 7.98
+CAT value is 84.82
+etc.
+
+30 stock symbols (alphabetical by symbol) and their associated companies.
+SYMBOL	FULLNAME
+AA		Alcoca Inc.
+AXP		American Express
+BA		Boeing
+BAC		Bank of America
+CAT		Catepillar
+CSCO	Cisco Systems
+DD		E.I. Dupont
+DIS		Walt Disney Company
+GE		General Electric
+HD		Home Depot
+HPQ		Hewlett-Packard
+IBM		International Business Machines Inc.
+INTC	Intel Corporation
+JNJ		Johnson & Johnson
+JPM		J.P. Morgan Chase
+KFT		Kraft Foods Inc.
+KO		Coca-Cola
+MCD	McDonald's
+MMM	3M Corporation
+MRK		Merck & Company
+MSFT	Microsoft
+PFE		Pfizer
+T		AT&T
+TRV		The Traverlers Company
+UTX		United Technologies
+VZ		Verizon Communications
+WMT	Wal-Mart Stores
+XOM	Exxon Mobil Corporation
