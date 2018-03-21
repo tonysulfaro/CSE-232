@@ -24,8 +24,8 @@ MathVector MathVector::mult(long scalar){
 
 //multiply vector by another vector
 long MathVector::mult(const MathVector & vec){
-	x+=vec.x;
-	y+=vec.y;
+	x*=vec.x;
+	y*=vec.y;
 	return x+y;
 }
 
