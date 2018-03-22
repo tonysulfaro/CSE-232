@@ -7,8 +7,9 @@ using std::string;
 #include<utility>
 using std::pair;
 //for output
+#include<iomanip>
+using std::string; using std::fixed; using std::setprecision;
 #include<sstream>
-using std::string;
 using std::ostringstream;
 
 //debugging
@@ -57,10 +58,11 @@ bool Player::sell(Market &m, string stock, long date, long quantity){
 //return string
 string Player::to_str(){
 	ostringstream oss;
+    oss << fixed << setprecision(1);
     oss << cash << ",";
     for(auto e: stocks)
     oss << e.first << ":" << e.second << ",";
-    return oss.str();
+    return oss.str().substr(0,oss.str().size()-1);
 }
 
 //combine both players
