@@ -6,6 +6,10 @@ using std::vector;
 using std::string;
 #include<utility>
 using std::pair;
+//for output
+#include<sstream>
+using std::string;
+using std::ostringstream;
 
 //debugging
 #include<iostream>
@@ -52,7 +56,11 @@ bool Player::sell(Market &m, string stock, long date, long quantity){
 
 //return string
 string Player::to_str(){
-    return "Test";
+	ostringstream oss;
+    oss << cash << ",";
+    for(auto e: stocks)
+    oss << e.first << ":" << e.second << ",";
+    return oss.str();
 }
 
 //combine both players
