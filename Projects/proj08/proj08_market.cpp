@@ -4,11 +4,12 @@ using std::map;
 using std::vector;
 #include<string>
 using std::string; using std::to_string;
-using std::istringstream;
 #include<utility>
 using std::pair; using std::make_pair;
 #include<fstream>
 using std::ifstream;
+#include <sstream>
+using std::istringstream;
 
 #include "proj08_market.h"
 
@@ -20,13 +21,18 @@ Market::Market(string file){
     ifstream inFile(file_name);
     string line;
     while(getline(inFile,line)){
-        istringstream iss(line);
+        istringstream iss (line);
 
         string date;
+        string value;
         iss >> date;
         long long_date = stol(date);
 
-        stocks.insert({long_date,vector<double>{} });
+        stocks.insert({long_date,{}});
+        for(int i = 0; i < symbol_list.size(); i++){
+            iss >> value;
+            stocks[long_date].push_back(stod(value));
+        }
     }
 }
 
