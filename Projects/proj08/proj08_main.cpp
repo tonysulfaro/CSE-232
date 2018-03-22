@@ -20,18 +20,19 @@ int next_date(int d){
 
 int main(){
   Market mark("dow.txt");
-  // if you want to dump the stocks map, uncomment the code below
-  // transform(mark.stocks.begin(), mark.stocks.end(), ostream_iterator<string>(cout, ", "),
-  // 	    [](pair<long, vector<double>> p){
-  // 	      ostringstream oss;
-  // 	      oss << p.first;
-  // 	      for(auto e : p.second)
-  // 		oss << e << ", ";
-  // 	      oss << "\n";
-  // 	      return oss.str();
-  // 	    }
-  // 	    );
-  
+  // if you want to dump the stocks map, uncomment the code below 
+  /*
+  transform(mark.stocks.begin(), mark.stocks.end(), ostream_iterator<string>(cout, ", "),
+   	    [](pair<long, vector<double>> p){
+   	      ostringstream oss;
+   	      oss << p.first;
+   	      for(auto e : p.second)
+   		oss << e << ", ";
+   	      oss << "\n";
+   	      return oss.str();
+   	    }
+   	    );
+  */
   cout << fixed << setprecision(2);
   cout << boolalpha;
   

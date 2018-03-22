@@ -5,6 +5,7 @@
         "vector": "cpp",
         "utility": "cpp",
         "memory": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "ostream": "cpp"
     }
 }

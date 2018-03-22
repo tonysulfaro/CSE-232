@@ -15,7 +15,7 @@ using std::istringstream;
 
 //constructor for market file
 Market::Market(string file){
-    string file_name = file;
+    file_name = file;
 
     //read in data and populate map
     ifstream inFile(file_name);
