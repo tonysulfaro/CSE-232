@@ -23,12 +23,15 @@ Market::Market(string file){
     while(getline(inFile,line)){
         istringstream iss (line);
 
+        //get values from stringstream then cast them
         string date;
         string value;
         iss >> date;
         long long_date = stol(date);
 
+        //add long key (date) into map
         stocks.insert({long_date,{}});
+        //add stock prices into the double vector
         for(int i = 0; i < symbol_list.size(); i++){
             iss >> value;
             stocks[long_date].push_back(stod(value));
@@ -46,14 +49,14 @@ double Market::get_price(string stock, long date) const{
         return -1.0;
     }
     else{
-        stock_index = distance(symbol_list.begin(), stock_location);
+        stock_index = distance(symbol_list.begin(), stock_location); //stock is found and is at index
     }
 
     //The prices of the 30 stocks on the date (the key)
     for(auto element: stocks){
         long date_entry = element.first;
         vector<double> prices = element.second;
-
+        //if dates match up fetch stock price
         if(date_entry == date){
             return prices[stock_index];
         }

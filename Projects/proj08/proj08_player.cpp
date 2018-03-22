@@ -12,10 +12,6 @@ using std::string; using std::fixed; using std::setprecision;
 #include<sstream>
 using std::ostringstream;
 
-//debugging
-#include<iostream>
-using std::cout; using std::endl;
-
 #include "proj08_player.h"
 
 //buy a stock and add to map
@@ -51,10 +47,10 @@ bool Player::sell(Market &m, string stock, long date, long quantity){
     return false;
 }
 
-//return string
+//return player as a string
 string Player::to_str(){
 	ostringstream oss;
-    oss << fixed << setprecision(2) << cash << ","; //print cash amount with one decimal place
+    oss << fixed << setprecision(2) << cash << ","; //print cash amount with two decimal places
     for(auto e: stocks)
     oss << e.first << ":" << e.second << ","; //print out rest of map elements
     return oss.str().substr(0,oss.str().size()-1); //remove trailing comma
@@ -63,6 +59,7 @@ string Player::to_str(){
 //combine both players
 Player Player::combine(Player & p2){
 
+    //initialize new player and assign attributes
     Player p;
     p.cash += cash;
     p.cash += p2.cash;
