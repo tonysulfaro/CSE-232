@@ -68,6 +68,12 @@ pair<double, double> Market::high_low_year(long year, string symbol){
     double high = 0.0;
     double low = 99999.0; //would rather use double.maxValue
 
+    //error handling for symbol
+    auto stock_location = find(symbol_list.begin(),symbol_list.end(), symbol);
+    if(stock_location == symbol_list.end()){ //stock not found
+        return make_pair(-1.0,-1.0);
+    }
+
     //iterate over map
     for(auto entry: stocks){
         long date = entry.first;
@@ -86,5 +92,10 @@ pair<double, double> Market::high_low_year(long year, string symbol){
             }
         }
     }
+    //error handling for invalid year
+    if(high == 0.0){
+        return make_pair(-1.0,-1.0);
+    }
+    //base case
     return make_pair(high, low);
 }
