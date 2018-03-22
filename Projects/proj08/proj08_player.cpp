@@ -58,8 +58,7 @@ bool Player::sell(Market &m, string stock, long date, long quantity){
 //return string
 string Player::to_str(){
 	ostringstream oss;
-    oss << fixed << setprecision(1);
-    oss << cash << ",";
+    oss << fixed << setprecision(1) << cash << ",";
     for(auto e: stocks)
     oss << e.first << ":" << e.second << ",";
     return oss.str().substr(0,oss.str().size()-1);
