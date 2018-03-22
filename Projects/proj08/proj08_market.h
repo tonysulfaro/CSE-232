@@ -16,13 +16,13 @@ struct Market{
 					"DIS","GE","HD","HPQ","IBM","INTC","JNJ","JPM",
 					"KFT","KO","MCD","MMM","MRK","MSFT","PFE",
 					"PG","T","TRV","UTX","VZ","WMT","XOM"};
-	map<long, vector<double>> stocks;
+	map<long, vector<double> > stocks;
 
 	Market()=default;
 	Market(string s);
 
 	double get_price(string, long) const;
-	pair<double, double> high_low_year(long year, string symbol);
+	pair<double, double> high_low_year(long, string);
 };
 
 #endif

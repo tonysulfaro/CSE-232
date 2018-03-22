@@ -3,6 +3,8 @@
         "iosfwd": "cpp",
         "iterator": "cpp",
         "vector": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "memory": "cpp",
+        "__locale": "cpp"
     }
 }
