@@ -67,5 +67,18 @@ string Player::to_str(){
 
 //combine both players
 Player Player::combine(Player & p2){
-    return p2;
+
+    Player p;
+    p.cash += cash;
+    p.cash += p2.cash;
+    p.stocks = p2.stocks;
+    p.stocks.insert(stocks.begin(),stocks.end());
+
+    //remove items from other players
+    cash = 0.0;
+    stocks = {};
+    p2.cash = 0.0;
+    p2.stocks = {};
+
+    return p;
 }
