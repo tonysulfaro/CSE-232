@@ -10,10 +10,10 @@ using std::initializer_list;
 
 class CircBuf{
  private:
-  int sz_;
-  int cnt_;
+  int sz_; //number of elements that can be in buffer
+  int cnt_; //number of active elements
   vector<long> buf_;
-  size_t head_;
+  size_t head_; 
   size_t tail_;
 
  public:

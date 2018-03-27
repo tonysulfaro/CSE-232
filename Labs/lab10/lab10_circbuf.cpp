@@ -12,13 +12,14 @@ using std::initializer_list;
 #include "lab10_circbuf.h"
 
 //default constructor
-CircBuf::CircBuf(size_t){
-	sz_ = size_t;
+CircBuf::CircBuf(long size){
+	sz_ = size;
 }
 
 //args constructor
-CircBuf(initializer_list<long> initialize_list, size_t){
-
+CircBuf(initializer_list<long> initialize_list, size_t size){
+	buf_= initializer_list;
+	
 }
 
 //output ovveride
