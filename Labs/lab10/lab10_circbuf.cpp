@@ -12,24 +12,37 @@ using std::initializer_list;
 #include "lab10_circbuf.h"
 
 //default constructor
-CircBuf::CircBuf(long size){
-	sz_ = size;
+CircBuf::CircBuf(size_t s){
+	sz_ = s;
+	cnt_ = 0;
+	vector<long> buf_(s,0);
+	head_ = buf_.front();
+	tail_ = buf_.back();
 }
 
 //args constructor
-CircBuf(initializer_list<long> initialize_list, size_t size){
-	buf_= initializer_list;
-	
+CircBuf::CircBuf(initializer_list<long> initialize_list, size_t s){
+
+	//error handling
+	if(s < 1){
+		throw std::runtime_error("Invalid Size");
+	}
+
+	sz_ = s;
+	cnt_ = 0;
+	buf_= initialize_list;
+	head_ = buf_.front();
+	tail_ = buf_.back();
 }
 
 //output ovveride
-/*
-ostream& operator<<(ostream&, const CircBuf &cb){
-	cout << "op<< function"<<endl;
-  	out << "Hours:"<<cb.hours_<<", Minutes:"
-    <<c.minutes_<<", Period:"<<cb.period_;
+ostream& operator<<(ostream& out, const CircBuf &cb){
+	vector<long> buffer = cb.buf_;
+	for(auto element: buffer){
+		cout << element;
+	}
   return out;
-} */
+} 
 
 //getter methods//
 //front

@@ -1,19 +1,26 @@
 {
-    "files.associations": {
-        "iosfwd": "cpp",
-        "iterator": "cpp",
-        "vector": "cpp",
-        "utility": "cpp",
-        "memory": "cpp",
-        "__locale": "cpp",
-        "ostream": "cpp",
-        "__bit_reference": "cpp",
-        "__split_buffer": "cpp",
-        "__tree": "cpp",
-        "initializer_list": "cpp",
-        "map": "cpp",
-        "set": "cpp",
-        "string": "cpp",
-        "string_view": "cpp"
-    }
+	"files.associations": {
+		"iosfwd": "cpp",
+		"iterator": "cpp",
+		"vector": "cpp",
+		"utility": "cpp",
+		"memory": "cpp",
+		"__locale": "cpp",
+		"ostream": "cpp",
+		"__bit_reference": "cpp",
+		"__split_buffer": "cpp",
+		"__tree": "cpp",
+		"initializer_list": "cpp",
+		"map": "cpp",
+		"set": "cpp",
+		"string": "cpp",
+		"string_view": "cpp",
+		"__config": "cpp",
+		"__nullptr": "cpp",
+		"exception": "cpp",
+		"new": "cpp",
+		"stdexcept": "cpp",
+		"typeinfo": "cpp",
+		"algorithm": "cpp"
+	}
 }
