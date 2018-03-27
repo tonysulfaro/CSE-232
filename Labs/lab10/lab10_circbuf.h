@@ -17,12 +17,18 @@ class CircBuf{
   size_t tail_;
 
  public:
+
+ //constructors
   CircBuf(size_t s=10);
   CircBuf(initializer_list<long>, size_t);
+
+  //getters
   long front() const;
   long back() const;  
   bool full() const;
   bool empty() const;
+
+  //setters
   void add(long);
   void remove();;
   
