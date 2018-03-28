@@ -14,9 +14,11 @@ int main(){
 
   CircBuf cb(4);
   cout << boolalpha;
+  cout << "CB:" << endl;
   cout << cb << endl;
 
   CircBuf cb_il({2,4,6,8}, 5);
+  cout << "CB-IL:" << endl;
   cout << cb_il << endl;
 
   try{
