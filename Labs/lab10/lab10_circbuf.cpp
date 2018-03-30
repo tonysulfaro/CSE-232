@@ -84,7 +84,7 @@ bool CircBuf::full() const{
 }
 //empty
 bool CircBuf::empty() const{ 
-	return (head_== tail_);
+	return (count(buf_.begin(),buf_.end(),0) == sz_ && head_ == tail_);
 }
 
 //setter methods//
