@@ -1,4 +1,9 @@
 // Let's assume I got the includes right
+#include<iostream>
+#include<string>
+using std::string; using std::to_string;
+#include<ostringstream>
+
 string fn1(long *a, int s){
   ostringstream oss;
   copy(a, a+s, ostream_iterator<long>(oss, ", ") );
