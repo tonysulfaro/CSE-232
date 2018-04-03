@@ -111,7 +111,7 @@ int MapSet::compare(MapSet &m){
 
 	//determines if any values are not equal
 	for(int i = 0; i <= smaller_size; i++){
-		if(v_[i] != m.v_[i]){
+		if(v_[i].first != m.v_[i].first){
 			if(v_[i].first > m.v_[i].first){ //compare first strings of set
 				return 1;
 			}
@@ -122,6 +122,9 @@ int MapSet::compare(MapSet &m){
 	if(size()>m.size()){ //calling is bigger
 		return 1;
 	}
+	else if(size() == m.size()){
+		return 0;
+	}
 
 	return -1; //param is bigger
 }
@@ -129,7 +132,14 @@ int MapSet::compare(MapSet &m){
 //join MapSets together via union
 MapSet MapSet::mapset_union(MapSet &m){
 
-	return m;
+	MapSet result;
+	for(auto pair: v_){
+		result.add(pair);
+	}
+	for(auto pair: m.v_){
+		result.add(pair);
+	}
+	return result;
 }
 
 //join MapSets together via intersection
