@@ -40,24 +40,38 @@ pair<string, long> MapSet::get(string s){
 		}
 	}
 
-	return make_pair(" ", 1);
+	return make_pair("", 1);
 }
 
-//update map
-bool MapSet::update(string name, long num)
-{
+//update map value
+bool MapSet::update(string s, long num){
+
+	pair<string,long> item = make_pair(s,num);
+
 	return false;
 }
 
-//remove a string
-bool MapSet::remove(string name)
-{
+//remove value from map
+bool MapSet::remove(string s){
+	if(get(s).first != ""){
+		v_.erase(v_.find(get(s)));
+		return true;
+	}
 	return false;
 }
 
-//add to map
-bool MapSet::add(pair<string, long> items)
-{
+//add to map if it doesn't exist
+bool MapSet::add(pair<string, long> item){
+	string s = item.first;
+	//if the first element of the pair is null
+	//indicates empty pair returned from get method
+	if(get(s).first == ""){
+		return false;
+	}
+	else{
+		v_.push_back(item); //add item to MapSet structure, should use add tho
+		return true;
+	}
 	return false;
 }
 
