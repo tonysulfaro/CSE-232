@@ -1,13 +1,20 @@
+//iostreams
 #include <iostream>
 using std::ostream;
+#include<sstream>
+using std::ostringstream;
+//types
 #include <string>
 using std::string;
 #include <vector>
 using std::vector;
-#include <utility>
-using std::pair; using std::make_pair;
 #include <initializer_list>
 using std::initializer_list;
+//stl algorithims
+#include <utility>
+using std::pair; using std::make_pair;
+#include<algorithm>
+using std::copy; using std::lower_bound;
 
 //debugging
 using std::cout; using std::endl;
@@ -16,7 +23,9 @@ using std::cout; using std::endl;
 
 //default constructor
 MapSet::MapSet(initializer_list<pair<string, long> > data_list){
-	v_ = data_list;
+	for(auto element: data_list){
+		add(element);
+	}
 	vector<pair<string, long> >::iterator find_key(string);
 }
 
@@ -72,7 +81,7 @@ bool MapSet::update(string s, long num){
 //remove value from map
 bool MapSet::remove(string s){
 
-	vector<pair<string, long> >::iterator vec_index = find_key(s);
+	vector<pair<string, long> >::iterator vec_index = find_key(s); //type is a vector iterator
 
 	if(get(s).first != ""){
 		v_.erase(vec_index); //remove item
@@ -87,7 +96,8 @@ bool MapSet::add(pair<string, long> item){
 	string s = item.first;
 	//if the first element of the pair is null
 	if(get(s).first == ""){ 	//indicates key not in there yet
-		v_.push_back(item);
+		vector<pair<string, long> >::iterator itr = lower_bound(v_.begin(), v_.end(), item);
+		v_.insert(itr, item);
 		return true;
 	}
 	return false;
@@ -114,6 +124,16 @@ MapSet MapSet::mapset_intersection(MapSet &m){
 //override << operator for printing mapset
 ostream &operator<<(ostream &out, MapSet &m){
 
-	out << "Hello";
+	ostringstream oss;
+
+	for(auto element: m.v_){
+		string name = element.first;
+		long num = element.second;
+
+		oss << name << ":" << num << ", ";
+	}
+	string s = oss.str();
+    s = s.substr(0,s.size()-2);
+    out << s;
 	return out;
 }
