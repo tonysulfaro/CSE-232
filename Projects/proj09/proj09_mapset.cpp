@@ -103,16 +103,20 @@ bool MapSet::add(pair<string, long> item){
 //compare items
 int MapSet::compare(MapSet &m){
 	
-	auto iter_this = v_.begin();
-	auto iter_param = m.v_.begin();
+	//auto iter_this = v_.begin();
+	//auto iter_param = m.v_.begin();
 	long smaller_size = 0;
 
 	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
 
+	//cout << "SMALLER SIZE------------" << smaller_size << endl;
+
 	//determines if any values are not equal
-	for(int i = 0; i <= smaller_size; i++){
+	for(int i = 0; i < smaller_size; i++){
+		//cout << "THIS: "<<v_[i].first << endl;
+		//cout << "M: "<<m.v_[i].first << endl;
 		if(v_[i].first != m.v_[i].first){
-			if(v_[i].first > m.v_[i].first){ //compare first strings of set
+			if(v_[i].first > m.v_[i].first){ //compare first strings of set that differ
 				return 1;
 			}
 			return -1;
@@ -122,7 +126,7 @@ int MapSet::compare(MapSet &m){
 	if(size()>m.size()){ //calling is bigger
 		return 1;
 	}
-	else if(size() == m.size()){
+	else if(size() == m.size()){ //if they are the same set
 		return 0;
 	}
 
@@ -146,15 +150,13 @@ MapSet MapSet::mapset_union(MapSet &m){
 MapSet MapSet::mapset_intersection(MapSet &m){
 
 	MapSet result;
-	auto iter_this = v_.begin();
-	auto iter_param = m.v_.begin();
 	long smaller_size = 0;
 
 	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
 
 	//determines if any values are not equal
 	for(int i = 0; i <= smaller_size; i++){
-		if(v_[i].first == m.v_[i].first){
+		if(v_[i].first == m.v_[i].first && v_[i].first != "" && m.v_[i].first != ""){ //error handling
 			result.add(v_[i]);
 		}
 	}
