@@ -32,15 +32,8 @@ MapSet::MapSet(initializer_list<pair<string, long> > data_list){
 //find key, return vector iterator
 vector<pair<string, long> >::iterator MapSet::find_key(string s){
 
-	int loc = 0;
-	for(auto element: v_){
-		string key = element.first;
-		loc++;
-		if(key == s){
-			return v_.begin()+loc;
-		}
-	}
-	return v_.end();
+	pair<string, long> item = get(s);
+	return lower_bound(v_.begin(), v_.end(), item);
 }
 
 //mapset size

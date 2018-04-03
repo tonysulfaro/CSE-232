@@ -29,6 +29,7 @@ int main (){
   cout << "ms_copy: " << ms_copy << endl;
 
   cout << "remove fred: " << ms_copy.remove("fred") << endl;
+  cout << "AFTER REMOVE: " << ms_copy << endl;
   cout << "remove george: " << ms_copy.remove("george") << endl;  
 
   cout << "ms:"<< ms << endl;  
