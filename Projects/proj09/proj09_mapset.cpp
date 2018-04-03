@@ -7,7 +7,7 @@ using std::ostringstream;
 #include <string>
 using std::string;
 #include <vector>
-using std::vector;
+using std::vector; using std::iterator;
 #include <initializer_list>
 using std::initializer_list;
 //stl algorithims
@@ -102,8 +102,28 @@ bool MapSet::add(pair<string, long> item){
 
 //compare items
 int MapSet::compare(MapSet &m){
+	
+	auto iter_this = v_.begin();
+	auto iter_param = m.v_.begin();
+	long smaller_size = 0;
 
-	return 0;
+	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
+
+	//determines if any values are not equal
+	for(int i = 0; i <= smaller_size; i++){
+		if(v_[i] != m.v_[i]){
+			if(v_[i].first > m.v_[i].first){ //compare first strings of set
+				return 1;
+			}
+			return -1;
+		}
+	}
+
+	if(size()>m.size()){ //calling is bigger
+		return 1;
+	}
+
+	return -1; //param is bigger
 }
 
 //join MapSets together via union
