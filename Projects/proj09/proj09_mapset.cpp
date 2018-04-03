@@ -59,7 +59,6 @@ pair<string, long> MapSet::get(string s){
 	for(auto element: v_){
 		string pair_string = element.first;
 		long pair_long = element.second;
-		//cout << pair_string << ", " << pair_long << endl;
 
 		//return pair after finding string matches
 		if(s == pair_string){
@@ -75,13 +74,18 @@ bool MapSet::update(string s, long num){
 
 	pair<string,long> item = make_pair(s,num);
 
+	if(get(s).first != ""){
+		remove(s);
+		add(item);
+		return true;
+	}
 	return false;
 }
 
 //remove value from map
 bool MapSet::remove(string s){
 
-	vector<pair<string, long> >::iterator vec_index = find_key(s); //type is a vector iterator
+	vector<pair<string, long> >::iterator vec_index = find_key(s);
 
 	if(get(s).first != ""){
 		v_.erase(vec_index); //remove item
