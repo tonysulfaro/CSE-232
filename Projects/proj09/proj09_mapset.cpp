@@ -20,6 +20,20 @@ MapSet::MapSet(initializer_list<pair<string, long> > data_list){
 	vector<pair<string, long> >::iterator find_key(string);
 }
 
+//find key, return vector iterator
+vector<pair<string, long> >::iterator MapSet::find_key(string s){
+
+	int loc = 0;
+	for(auto element: v_){
+		string key = element.first;
+		loc++;
+		if(key == s){
+			return v_.begin()+loc;
+		}
+	}
+	return v_.end();
+}
+
 //mapset size
 size_t MapSet::size(){
 	size_t amount = 0;
@@ -57,8 +71,11 @@ bool MapSet::update(string s, long num){
 
 //remove value from map
 bool MapSet::remove(string s){
+
+	vector<pair<string, long> >::iterator vec_index = find_key(s);
+
 	if(get(s).first != ""){
-		//v_.erase(v_.find(get(s)));
+		v_.erase(vec_index); //remove item
 		return true;
 	}
 	return false;
@@ -66,40 +83,37 @@ bool MapSet::remove(string s){
 
 //add to map if it doesn't exist
 bool MapSet::add(pair<string, long> item){
+
 	string s = item.first;
 	//if the first element of the pair is null
-	//indicates empty pair returned from get method
-	if(get(s).first == ""){
-		return false;
-	}
-	else{
-		v_.push_back(item); //add item to MapSet structure
+	if(get(s).first == ""){ 	//indicates key not in there yet
+		v_.push_back(item);
 		return true;
 	}
 	return false;
 }
 
 //compare items
-int MapSet::compare(MapSet &m)
-{
+int MapSet::compare(MapSet &m){
+
 	return 0;
 }
 
 //join MapSets together via union
-MapSet MapSet::mapset_union(MapSet &m)
-{
+MapSet MapSet::mapset_union(MapSet &m){
+
 	return m;
 }
 
 //join MapSets together via intersection
-MapSet MapSet::mapset_intersection(MapSet &m)
-{
+MapSet MapSet::mapset_intersection(MapSet &m){
+
 	return m;
 }
 
 //override << operator for printing mapset
-ostream &operator<<(ostream &out, MapSet &m)
-{
+ostream &operator<<(ostream &out, MapSet &m){
+
 	out << "Hello";
 	return out;
 }
