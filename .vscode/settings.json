@@ -22,6 +22,9 @@
 		"stdexcept": "cpp",
 		"typeinfo": "cpp",
 		"algorithm": "cpp",
-		"sstream": "cpp"
+		"sstream": "cpp",
+		"ratio": "cpp",
+		"tuple": "cpp",
+		"type_traits": "cpp"
 	}
 }
