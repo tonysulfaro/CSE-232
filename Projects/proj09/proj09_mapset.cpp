@@ -54,7 +54,7 @@ bool MapSet::update(string s, long num){
 //remove value from map
 bool MapSet::remove(string s){
 	if(get(s).first != ""){
-		v_.erase(v_.find(get(s)));
+		//v_.erase(v_.find(get(s)));
 		return true;
 	}
 	return false;
