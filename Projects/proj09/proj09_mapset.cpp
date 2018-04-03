@@ -13,7 +13,7 @@ using std::initializer_list;
 
 //default constructor
 MapSet::MapSet(initializer_list<pair<string, long> > data_list){
-	vector<pair<string, long> > v_;
+	v_ = data_list;
 	vector<pair<string, long> >::iterator find_key(string);
 }
 
@@ -28,7 +28,7 @@ size_t MapSet::size(){
 }
 
 //get pair from map
-pair<string, long> get(string s){
+pair<string, long> MapSet::get(string s){
 
 	for(auto element: v_){
 		string pair_string = element.first;
