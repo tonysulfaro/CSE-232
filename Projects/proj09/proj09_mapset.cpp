@@ -9,6 +9,9 @@ using std::pair; using std::make_pair;
 #include <initializer_list>
 using std::initializer_list;
 
+//debugging
+using std::cout; using std::endl;
+
 #include "proj09_mapset.h"
 
 //default constructor
@@ -33,6 +36,7 @@ pair<string, long> MapSet::get(string s){
 	for(auto element: v_){
 		string pair_string = element.first;
 		long pair_long = element.second;
+		//cout << pair_string << ", " << pair_long << endl;
 
 		//return pair after finding string matches
 		if(s == pair_string){
@@ -40,7 +44,7 @@ pair<string, long> MapSet::get(string s){
 		}
 	}
 
-	return make_pair("", 1);
+	return make_pair("", 0);
 }
 
 //update map value
@@ -69,7 +73,7 @@ bool MapSet::add(pair<string, long> item){
 		return false;
 	}
 	else{
-		v_.push_back(item); //add item to MapSet structure, should use add tho
+		v_.push_back(item); //add item to MapSet structure
 		return true;
 	}
 	return false;
