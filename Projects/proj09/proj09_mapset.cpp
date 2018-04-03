@@ -145,7 +145,20 @@ MapSet MapSet::mapset_union(MapSet &m){
 //join MapSets together via intersection
 MapSet MapSet::mapset_intersection(MapSet &m){
 
-	return m;
+	MapSet result;
+	auto iter_this = v_.begin();
+	auto iter_param = m.v_.begin();
+	long smaller_size = 0;
+
+	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
+
+	//determines if any values are not equal
+	for(int i = 0; i <= smaller_size; i++){
+		if(v_[i].first == m.v_[i].first){
+			result.add(v_[i]);
+		}
+	}
+	return result;
 }
 
 //override << operator for printing mapset
