@@ -8,6 +8,7 @@ using std::ostream;
 using std::ifstream;
 #include <sstream>
 using std::istringstream;
+using std::copy;
 
 #include "lab11_arrays.h"
 
@@ -33,7 +34,7 @@ size_t fill_from_file(long* (& ary), string f_name){
 	string value;
 	string line;
     std::ifstream inFile(f_name);
-	ary = new long[l_count]; //initialize array
+	
 
 	//error handling for no file found
     if(!inFile){
@@ -44,7 +45,8 @@ size_t fill_from_file(long* (& ary), string f_name){
         std::istringstream iss (line);
 		iss >> count_temp;
 		l_count = stol(count_temp);
-		
+		ary = new long[l_count]; //initialize array
+
 		//populate arry based on first num
 		for(int i = 0; i < l_count; i++){
 			iss >> value;
@@ -56,7 +58,13 @@ size_t fill_from_file(long* (& ary), string f_name){
 }
 
 size_t concatenate(long* (& ary1), size_t sz1, long ary2[], size_t sz2){
-	return sz1;
+	long temp_ary[sz1];
+	copy(ary1, ary1+sz1, temp_ary); //copy ar1 to temp
+	delete []ary1;
+	ary1 = new long[sz1+sz2];
+	copy(temp_ary, temp_ary+sz1, ary1);
+	copy(ary2, ary2+sz2, ary1+sz1);
+	return sz1+sz2;
 }
 
 pair<long*, size_t> copy_evens(long ary[], size_t sz){

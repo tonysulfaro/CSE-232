@@ -1,7 +1,3 @@
-//Computer Project 09
-//4/3/18
-//Section 05
-
 //iostreams
 #include <iostream>
 using std::ostream;
