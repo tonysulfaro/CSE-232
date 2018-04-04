@@ -158,10 +158,14 @@ MapSet MapSet::mapset_intersection(MapSet &m){
 		smaller_size = size();
 	}
 
-	//determines if any values are not equal
-	for(int i = 0; i < smaller_size; i++){
-		if(v_[i].first == m.v_[i].first){ //error handling
-			result.add(v_[i]);
+	//for first set
+	for(auto pair: v_){
+		for(auto param_pair: m.v_){
+			string s = pair.first;
+			string param_s = param_pair.first;
+			if(s == param_s){ //pair in both
+				result.add(pair);
+			}
 		}
 	}
 	return result;
