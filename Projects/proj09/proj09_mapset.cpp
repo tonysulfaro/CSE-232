@@ -154,9 +154,13 @@ MapSet MapSet::mapset_intersection(MapSet &m){
 
 	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
 
+	if(size()==m.size()){
+		smaller_size = size();
+	}
+
 	//determines if any values are not equal
 	for(int i = 0; i < smaller_size; i++){
-		if(v_[i].first == m.v_[i].first && v_[i].first != "" && m.v_[i].first != ""){ //error handling
+		if(v_[i].first == m.v_[i].first){ //error handling
 			result.add(v_[i]);
 		}
 	}
