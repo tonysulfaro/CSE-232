@@ -1,3 +1,7 @@
+//Computer Project 09
+//4/3/18
+//Section 05
+
 //iostreams
 #include <iostream>
 using std::ostream;
@@ -21,26 +25,26 @@ using std::cout; using std::endl;
 
 #include "proj09_mapset.h"
 
-//default constructor
+//constructor with list param
 MapSet::MapSet(initializer_list<pair<string, long> > data_list){
-	for(auto element: data_list){
+	for(auto element: data_list){ //have to use add on every item to keep it in order
 		add(element);
 	}
 	vector<pair<string, long> >::iterator find_key(string);
 }
 
-//find key, return vector iterator
+//find key from string, return vector iterator of where to insert pair
 vector<pair<string, long> >::iterator MapSet::find_key(string s){
 
 	pair<string, long> item = get(s);
 	return lower_bound(v_.begin(), v_.end(), item);
 }
 
-//mapset size
+//get mapset size
 size_t MapSet::size(){
 	size_t amount = 0;
 
-	for(auto element: v_){
+	for(auto element: v_){ //count all pairs
 		amount++;
 	}
 	return amount;
@@ -58,7 +62,6 @@ pair<string, long> MapSet::get(string s){
 			return make_pair(pair_string, pair_long);
 		}
 	}
-
 	return make_pair("", 0);
 }
 
@@ -67,7 +70,7 @@ bool MapSet::update(string s, long num){
 
 	pair<string,long> item = make_pair(s,num);
 
-	if(get(s).first != ""){
+	if(get(s).first != ""){ //if pair exists then modify it
 		remove(s);
 		add(item);
 		return true;
@@ -75,13 +78,13 @@ bool MapSet::update(string s, long num){
 	return false;
 }
 
-//remove value from map
+//remove value from vector
 bool MapSet::remove(string s){
 
 	vector<pair<string, long> >::iterator vec_index = find_key(s);
 
 	if(get(s).first != ""){
-		v_.erase(vec_index); //remove item
+		v_.erase(vec_index); //remove item from vector if it exists
 		return true;
 	}
 	return false;
@@ -103,23 +106,17 @@ bool MapSet::add(pair<string, long> item){
 //compare items
 int MapSet::compare(MapSet &m){
 	
-	//auto iter_this = v_.begin();
-	//auto iter_param = m.v_.begin();
 	long smaller_size = 0;
 
 	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
 
-	//cout << "SMALLER SIZE------------" << smaller_size << endl;
-
 	//determines if any values are not equal
-	for(int i = 0; i < smaller_size; i++){
-		//cout << "THIS: "<<v_[i].first << endl;
-		//cout << "M: "<<m.v_[i].first << endl;
-		if(v_[i].first != m.v_[i].first){
+	for(int i = 0; i < smaller_size; i++){ //through both up to smallest size
+		if(v_[i].first != m.v_[i].first){ //if elements differ
 			if(v_[i].first > m.v_[i].first){ //compare first strings of set that differ
-				return 1;
+				return 1; //calling is bigger
 			}
-			return -1;
+			return -1; //param is bigger
 		}
 	}
 
@@ -136,6 +133,7 @@ int MapSet::compare(MapSet &m){
 //join MapSets together via union
 MapSet MapSet::mapset_union(MapSet &m){
 
+	//basically tries to add all entries, duplicate keys ignored, calling list added first
 	MapSet result;
 	for(auto pair: v_){
 		result.add(pair);
@@ -150,15 +148,8 @@ MapSet MapSet::mapset_union(MapSet &m){
 MapSet MapSet::mapset_intersection(MapSet &m){
 
 	MapSet result;
-	long smaller_size = 0;
 
-	(size()<m.size()) ? (smaller_size = size()):(smaller_size = m.size());
-
-	if(size()==m.size()){
-		smaller_size = size();
-	}
-
-	//for first set
+	//compare all set values to each other
 	for(auto pair: v_){
 		for(auto param_pair: m.v_){
 			string s = pair.first;
@@ -183,7 +174,7 @@ ostream &operator<<(ostream &out, MapSet &m){
 		oss << name << ":" << num << ", ";
 	}
 	string s = oss.str();
-    s = s.substr(0,s.size()-2);
+    s = s.substr(0,s.size()-2); //remove trailing comma
     out << s;
 	return out;
 }
