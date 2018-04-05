@@ -49,6 +49,7 @@ size_t MapSet::size(){
 //get pair from map
 pair<string, long> MapSet::get(string s){
 
+	//extract pair elements to compare to in vector
 	for(auto element: v_){
 		string pair_string = element.first;
 		long pair_long = element.second;
@@ -77,7 +78,7 @@ bool MapSet::update(string s, long num){
 //remove value from vector
 bool MapSet::remove(string s){
 
-	vector<pair<string, long> >::iterator vec_index = find_key(s);
+	vector<pair<string, long> >::iterator vec_index = find_key(s); //where to remove element
 
 	if(get(s).first != ""){
 		v_.erase(vec_index); //remove item from vector if it exists
@@ -132,10 +133,10 @@ MapSet MapSet::mapset_union(MapSet &m){
 	//basically tries to add all entries, duplicate keys ignored, calling list added first
 	MapSet result;
 	for(auto pair: v_){
-		result.add(pair);
+		result.add(pair); //add elements from calling vector
 	}
 	for(auto pair: m.v_){
-		result.add(pair);
+		result.add(pair); //add elements from param vector
 	}
 	return result;
 }
@@ -163,6 +164,7 @@ ostream &operator<<(ostream &out, MapSet &m){
 
 	ostringstream oss;
 
+	//iterate through vector and print out pairs
 	for(auto element: m.v_){
 		string name = element.first;
 		long num = element.second;
