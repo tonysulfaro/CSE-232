@@ -8,7 +8,7 @@ using std::string;
 #include<vector>
 using std::vector;
 #include<utility>
-using std::pair;
+using std::pair; using std::make_pair;
 #include<initializer_list>
 using std::initializer_list;
 #include<algorithm>
@@ -36,19 +36,23 @@ struct Node {
   }
 };
 
+//pair constructor
 template<typename K, typename V>
 Node<K,V>::Node(K key, V value){
-
+	first = key;
+	second = value;
 }
 
+//which one is greater? for lower_bound
 template<typename K, typename V>
 bool Node<K,V>::operator<(const Node &n) const{
-
+	return (first == n.first);
 }
 
+//if first item in pair are the same
 template<typename K, typename V>
 bool Node<K,V>::operator==(const Node &n) const{
-	return  false;
+	return (first == n.first);
 }
 
 //
