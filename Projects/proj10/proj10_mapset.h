@@ -48,7 +48,7 @@ bool Node<K,V>::operator<(const Node &n) const{
 
 template<typename K, typename V>
 bool Node<K,V>::operator==(const Node &n) const{
-
+	return  false;
 }
 
 //

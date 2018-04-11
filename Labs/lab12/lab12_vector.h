@@ -72,18 +72,22 @@ namespace student{
 	//Takes a single parameter of template type and adds it to the end of the vector
 	template<typename T>
 	void vector<T>::push_back(T val){
-		if(size_ >= capacity_){
-			T *new_ary;
+
+		T *new_ary;
+
+		if(size_ >= (capacity_)){
 
 			new_ary = new T[capacity_*2]{};
-			copy(data_, data_+size_, new_ary);
+			copy(data_, data_+capacity_, new_ary);
 			capacity_ *= 2;
+
 			//swap the pointers
 			std::swap(new_ary,data_);
 			delete [] new_ary;
 		}
+
 		data_[++size_] = val;
-		size_++;
+		//size_++;
 	}
 
 	//takes single argument which is the index in the original call and returns a reference to the element.
