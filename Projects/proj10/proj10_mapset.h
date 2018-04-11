@@ -91,12 +91,22 @@ class MapSet{
 
 template<typename K, typename V>
 MapSet<K,V>::MapSet(int capacity){
-
+	ary_ = nullptr;
+	capacity_ = capacity;
+	last_ = 0;
 }
 
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
+	last_ = il.size();
+	capacity_ = il.size();
+	ary_ = new Node<K,V>[capacity_]; //new array of nodes
+	size_t index = 0;
 
+	//add stuff to array
+	for(auto element: il){
+		ary_[index++] = element;
+	}
 }
 
 template<typename K, typename V>
@@ -122,7 +132,23 @@ size_t MapSet<K,V>::size(){
 
 template<typename K, typename V>
 void MapSet<K,V>::grow(){
+	Node<K,V> *new_ary;
 
+  if (last_ == 0){
+    new_ary = new Node<K,V>[1]{};
+    last_ = 1;
+    // ary_ empty, just assign
+    ary_ = new_ary;
+  }
+  else{
+    // use {} to init to default
+    new_ary = new Node<K,V>[last_ * 2]{};
+    copy(ary_, ary_+capacity_, new_ary);
+    capacity_ *= 2;
+    // stl swap, not Stack swap
+    std::swap (new_ary, ary_);
+    delete [] new_ary;
+  }
 }
 
 template<typename K, typename V>
@@ -130,8 +156,10 @@ Node<K,V>* MapSet<K,V>::find_key(K key){
 
 }
 
+//add elements to array in order
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
+	auto insert_point = lower_bound(ary_, ary_+last_, n);
 
 }
 
