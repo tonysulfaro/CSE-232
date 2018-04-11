@@ -30,7 +30,7 @@ struct Node {
   bool operator==(const Node&) const;
   friend ostream& operator<<(ostream &out, const Node &n){
 
-    // WRITE YOUR CODE HERE!!!
+    out << n.first << ":" << n.second;
     
     return out;
   }
@@ -136,13 +136,14 @@ void MapSet<K,V>::grow(){
 
   if (last_ == 0){
     new_ary = new Node<K,V>[1]{};
-    last_ = 1;
+    last_ = 0;
+	capacity_ = 1;
     // ary_ empty, just assign
     ary_ = new_ary;
   }
   else{
     // use {} to init to default
-    new_ary = new Node<K,V>[last_ * 2]{};
+    new_ary = new Node<K,V>[capacity_ * 2]{};
     copy(ary_, ary_+capacity_, new_ary);
     capacity_ *= 2;
     // stl swap, not Stack swap
@@ -159,8 +160,12 @@ Node<K,V>* MapSet<K,V>::find_key(K key){
 //add elements to array in order
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
+	if(last_ >= capacity_){
+		grow();
+	}
 	auto insert_point = lower_bound(ary_, ary_+last_, n);
-
+	ary_[insert_point] = n;
+	last_++;
 }
 
 template<typename K, typename V>
