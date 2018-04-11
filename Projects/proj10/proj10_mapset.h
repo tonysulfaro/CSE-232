@@ -83,8 +83,16 @@ class MapSet{
 
   friend ostream& operator<<(ostream &out, const MapSet &ms){
 
-    // WRITE YOUR CODE HERE!!!
-    
+	ostringstream oss;
+
+    for(auto element: ms){
+		oss << element << ", ";
+	}
+
+	string s = oss.str();
+    s = s.substr(0,s.size()-2); //remove trailing comma
+    out << s;
+
     return out;
   }  
 };
@@ -105,7 +113,7 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 
 	//add stuff to array
 	for(auto element: il){
-		ary_[index++] = element;
+		add(element);
 	}
 }
 
