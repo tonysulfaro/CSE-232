@@ -85,8 +85,9 @@ class MapSet{
 
 	ostringstream oss;
 
-    for(auto element: ms){
-		oss << element << ", ";
+    for(int i = 0; i < ms.last_; i++){
+		operator<<(out, ms[i]);
+		oss << ", ";
 	}
 
 	string s = oss.str();
@@ -168,11 +169,22 @@ Node<K,V>* MapSet<K,V>::find_key(K key){
 //add elements to array in order
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
-	if(last_ >= capacity_){
+
+	//entry already in mapset
+	for(int i = 0; i < last_; i++){
+		K item = ary_[i].first;
+		if(item == n.first){
+			return false;
+		}
+	}
+
+	//add new entry into the array
+	if(last_ >= capacity_){ //grow if ary_ is too small
 		grow();
 	}
+
 	auto insert_point = lower_bound(ary_, ary_+last_, n);
-	ary_[insert_point] = n;
+
 	last_++;
 }
 
