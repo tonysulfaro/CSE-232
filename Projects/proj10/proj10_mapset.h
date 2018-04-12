@@ -28,6 +28,7 @@ struct Node {
   Node(K,V);
   bool operator<(const Node&) const;
   bool operator==(const Node&) const;
+
   friend ostream& operator<<(ostream &out, const Node &n){
 
     out << n.first << ":" << n.second;
@@ -86,7 +87,7 @@ class MapSet{
 	ostringstream oss;
 
     for(int i = 0; i < ms.last_; i++){
-		operator<<(out, ms[i]);
+		oss << operator<<(ms[i],out);
 		oss << ", ";
 	}
 
@@ -161,9 +162,18 @@ void MapSet<K,V>::grow(){
   }
 }
 
+//returns pointer to pair element
 template<typename K, typename V>
 Node<K,V>* MapSet<K,V>::find_key(K key){
 
+	for(int i = 0; i < last_; i++){
+
+		K item = ary_[i].first;
+
+		if(item == key){
+			return *ary_[i];
+		}
+	}
 }
 
 //add elements to array in order
@@ -196,6 +206,12 @@ bool MapSet<K,V>::remove(K key){
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
 
+	for(int i = 0; i < last_; i++){
+		K pair_key = ary_[i].first;
+		if(pair_key == key){
+			return ary_[i];
+		}
+	}
 }
 
 template<typename K, typename V>
