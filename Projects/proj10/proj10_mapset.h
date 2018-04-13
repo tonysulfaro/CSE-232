@@ -87,7 +87,7 @@ class MapSet{
 	ostringstream oss;
 
     for(int i = 0; i < ms.last_; i++){
-		oss << operator<<(ms[i],out);
+		oss << ms[i];
 		oss << ", ";
 	}
 
@@ -234,11 +234,22 @@ Node<K,V> MapSet<K,V>::get(K key){
 			return ary_[i];
 		}
 	}
+
+	return Node<K,V>("",0); //return empty node if not found
 }
 
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
 
+	if(get(key).first == ""){
+		return false;
+	}
+
+	for(int i = 0; i < last_; i++){
+		if(ary_[i].first == key){
+			ary_[i] = Node<K, V>(key,value); //update node value
+		}
+	}
 }
 
 template<typename K, typename V>
