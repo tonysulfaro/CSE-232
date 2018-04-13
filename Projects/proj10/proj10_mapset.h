@@ -15,6 +15,7 @@ using std::initializer_list;
 using std::sort; using std::lower_bound;
 #include<sstream>
 using std::ostringstream;
+using std::copy;
 
 
 //
@@ -87,7 +88,7 @@ class MapSet{
 	ostringstream oss;
 
     for(int i = 0; i < ms.last_; i++){
-		oss << ms[i];
+		oss << ms.ary_[i];
 		oss << ", ";
 	}
 
@@ -185,7 +186,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 		K item = ary_[i].first;
 		if(item == n.first){
 			return false;
-		}
+	}
 	}
 
 	//add new entry into the array
@@ -193,9 +194,23 @@ bool MapSet<K,V>::add(Node<K,V> n){
 		grow();
 	}
 
-	auto insert_point = lower_bound(ary_, ary_+last_, n);
+	//new array
+	Node<K,V> *new_ary; 
 
+	int insert_point =  -1;
+	for(int i = 0; i < last_; i ++){
+		if(ary_[i].first < n.first){
+			insert_point ++;
+		}
+	}
+	copy(ary_, ary_+insert_point, new_ary);
+	ary_[insert_point+1] = n;
+	copy(ary_+insert_point, last_, new_ary);
+	std::swap(new_ary,ary_);
+	delete new_ary;
 	last_++;
+
+	return true;
 }
 
 template<typename K, typename V>
@@ -235,7 +250,7 @@ Node<K,V> MapSet<K,V>::get(K key){
 		}
 	}
 
-	return Node<K,V>("",0); //return empty node if not found
+	return Node<K,V>(); //return empty node if not found
 }
 
 template<typename K, typename V>
