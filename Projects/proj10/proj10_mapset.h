@@ -132,12 +132,12 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
 
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
-
+	delete [] ary_;
 }
 
 template<typename K, typename V>
 size_t MapSet<K,V>::size(){
-
+	return last_;
 }
 
 template<typename K, typename V>
@@ -201,6 +201,28 @@ bool MapSet<K,V>::add(Node<K,V> n){
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
+	int remove_index = -1;
+
+	//find where the remove thing is at
+	for(int i = 0; i < last_; i++){
+		K item = ary_[i].first;
+		if(item == key){
+			remove_index =  i;
+		}
+	}
+
+	//item they want to remove isnt in there
+	if(remove_index == -1){
+		return false;
+	}
+
+	Node<K,V> *new_ary;
+
+	copy(ary_, ary_+remove_index-1, new_ary);
+	copy(ary_+remove_index,ary_+last_, new_ary);
+	std::swap(new_ary,ary_);
+	delete new_ary;
+	return true;
 }
 
 template<typename K, typename V>
