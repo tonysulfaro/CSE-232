@@ -267,16 +267,11 @@ Node<K,V> MapSet<K,V>::get(K key){
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
 
-	bool result;
-	auto item = (key, value);
+	bool result = false;
+	auto item = Node<K,V>(key, value);
 	result = remove(key);
-
-	if(result == false){
-		return false;
-	}
-
 	add(item);
-	return true;
+	return result;
 }
 
 template<typename K, typename V>
