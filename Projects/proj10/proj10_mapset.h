@@ -12,10 +12,9 @@ using std::pair; using std::make_pair;
 #include<initializer_list>
 using std::initializer_list;
 #include<algorithm>
-using std::sort; using std::lower_bound;
+using std::sort; using std::lower_bound; using std::copy;
 #include<sstream>
 using std::ostringstream;
-using std::copy;
 
 
 //
@@ -48,7 +47,7 @@ Node<K,V>::Node(K key, V value){
 //which one is greater? for lower_bound
 template<typename K, typename V>
 bool Node<K,V>::operator<(const Node &n) const{
-	return (first == n.first);
+	return (first < n.first);
 }
 
 //if first item in pair are the same
@@ -120,30 +119,39 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 	}
 }
 
+//mapset constructor with param mapset
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
-
+	ary_ = ms.ary_;
+	last_ = ms.last_;
+	capacity_ = ms.capacity_;
 }
 
-// copy and swap
+//assign mapset to another mapset
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
-
+	ary_ = ms.ary_;
+	last_ = ms.last_;
+	capacity_ = ms.capacity_;
 }
 
+
+//default destructor
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
 	delete [] ary_;
 }
 
+//mapset size
 template<typename K, typename V>
 size_t MapSet<K,V>::size(){
 	return last_;
 }
 
+//increase mapset capacity
 template<typename K, typename V>
 void MapSet<K,V>::grow(){
-	Node<K,V> *new_ary;
+	Node<K,V> *new_ary = nullptr;
 
   if (last_ == 0){
     new_ary = new Node<K,V>[1]{};
@@ -195,7 +203,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	}
 
 	//new array
-	Node<K,V> *new_ary; 
+	Node<K,V> *new_ary = nullptr; 
 
 	int insert_point =  -1;
 	for(int i = 0; i < last_; i ++){
@@ -205,7 +213,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	}
 	copy(ary_, ary_+insert_point, new_ary);
 	ary_[insert_point+1] = n;
-	copy(ary_+insert_point, last_, new_ary);
+	copy(ary_+insert_point, ary_+last_, new_ary);
 	std::swap(new_ary,ary_);
 	delete new_ary;
 	last_++;
@@ -213,6 +221,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	return true;
 }
 
+//remove item from MapSet
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
@@ -231,7 +240,7 @@ bool MapSet<K,V>::remove(K key){
 		return false;
 	}
 
-	Node<K,V> *new_ary;
+	Node<K,V> *new_ary = nullptr;
 
 	copy(ary_, ary_+remove_index-1, new_ary);
 	copy(ary_+remove_index,ary_+last_, new_ary);
@@ -240,6 +249,7 @@ bool MapSet<K,V>::remove(K key){
 	return true;
 }
 
+//get pair from mapset based on key
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
 
@@ -253,18 +263,20 @@ Node<K,V> MapSet<K,V>::get(K key){
 	return Node<K,V>(); //return empty node if not found
 }
 
+//update mapset value
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
 
-	if(get(key).first == ""){
+	bool result;
+	auto item = (key, value);
+	result = remove(key);
+
+	if(result == false){
 		return false;
 	}
 
-	for(int i = 0; i < last_; i++){
-		if(ary_[i].first == key){
-			ary_[i] = Node<K, V>(key,value); //update node value
-		}
-	}
+	add(item);
+	return true;
 }
 
 template<typename K, typename V>

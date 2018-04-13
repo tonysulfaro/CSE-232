@@ -10,7 +10,7 @@ using std::ostringstream;
 int main (){
   cout << boolalpha;
   Node<string,long> n1("bill", 2);
-  cout << n1 << endl;
+  cout << n1 << endl; 
   Node<string,long> n2("fred", 3);
   cout << (n1 == n2) <<":"<<(n1 < n2) << endl;
 
