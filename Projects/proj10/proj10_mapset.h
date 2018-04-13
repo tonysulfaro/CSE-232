@@ -15,6 +15,7 @@ using std::initializer_list;
 using std::sort; using std::lower_bound; using std::copy;
 #include<sstream>
 using std::ostringstream;
+using std::swap;
 
 
 //
@@ -122,17 +123,20 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 //mapset constructor with param mapset
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
-	ary_ = ms.ary_;
+	
 	last_ = ms.last_;
 	capacity_ = ms.capacity_;
+	ary_ = new Node<K,V>[capacity_];
+	copy(ms.ary_,ms.ary_+last_, ary_);
 }
 
 //assign mapset to another mapset
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
-	ary_ = ms.ary_;
-	last_ = ms.last_;
-	capacity_ = ms.capacity_;
+	swap(this-> last_, ms.last_);
+	swap(this-> capacity_, ms.capacity_);
+	swap(this-> ary_, ms.ary_);
+	return *this;
 }
 
 
@@ -215,7 +219,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	ary_[insert_point+1] = n;
 	copy(ary_+insert_point, ary_+last_, new_ary);
 	std::swap(new_ary,ary_);
-	delete new_ary;
+	delete [] new_ary;
 	last_++;
 
 	return true;
@@ -245,7 +249,7 @@ bool MapSet<K,V>::remove(K key){
 	copy(ary_, ary_+remove_index-1, new_ary);
 	copy(ary_+remove_index,ary_+last_, new_ary);
 	std::swap(new_ary,ary_);
-	delete new_ary;
+	delete [] new_ary;
 	return true;
 }
 
