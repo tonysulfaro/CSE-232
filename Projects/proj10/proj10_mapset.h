@@ -66,9 +66,9 @@ bool Node<K,V>::operator==(const Node &n) const{
 template<typename K, typename V>
 class MapSet{
  	private:
-		Node<K,V>* ary_ =  nullptr;
-		size_t last_ = 0;
-		size_t capacity_ = 1;
+		Node<K,V>* ary_;
+		size_t last_;
+		size_t capacity_;
 		Node<K,V>* find_key(K);
 		void grow ();
  	public:
@@ -298,6 +298,9 @@ bool MapSet<K,V>::update(K key, V value){
 	bool result = false;
 	auto item = Node<K,V>(key, value);
 	result = remove(key);
+	if(result == false){
+		return false;
+	}
 	add(item);
 	return result;
 }
@@ -305,6 +308,28 @@ bool MapSet<K,V>::update(K key, V value){
 template<typename K, typename V>
 int MapSet<K,V>::compare(MapSet &ms){
 
+	long smaller_size = 0;
+
+	(size()<ms.size()) ? (smaller_size = size()):(smaller_size = ms.size());
+
+	//determines if any values are not equal
+	for(int i = 0; i < smaller_size; i++){ //through both up to smallest size
+		if(ary_[i].first != ms.ary_[i].first){ //if elements differ
+			if(ary_[i].first > ms.ary_[i].first){ //compare first strings of set that differ
+				return 1; //calling is bigger
+			}
+			return -1; //param is bigger
+		}
+	}
+
+	if(size()>ms.size()){ //calling is bigger
+		return 1;
+	}
+	else if(size() == ms.size()){ //if they are the same set
+		return 0;
+	}
+
+	return -1; //param is bigger
 }
 
 template<typename K, typename V>
