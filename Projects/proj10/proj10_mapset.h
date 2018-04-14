@@ -112,17 +112,13 @@ MapSet<K,V>::MapSet(int capacity){
 
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
-	std::cout << "INITIALIZER LIST" << std::endl;
 	last_ = 0;
 	capacity_ = il.size();
-	cout << "BEFORE ARY INIT" << endl;
 	ary_ = new Node<K,V>[capacity_]; //new array of nodes
 
 	//add stuff to array
-	cout << "add to array" << endl;
 	for(auto element: il){
-		cout << "adding to array now" << endl;
-		cout << "IL ELEMENT " << element << endl;
+		cout << "ADDING ELEMENT: " << element << endl;
 		add(element);
 	}
 }
@@ -222,19 +218,36 @@ bool MapSet<K,V>::add(Node<K,V> n){
 			insert_point ++;
 		}
 	}
+	cout << "INSERT POINT " << insert_point << endl;
 	
 	//cout << "before copy" << endl;
 	
-	copy(ary_, ary_+insert_point, new_ary);
+	//copy(ary_, ary_+insert_point, new_ary);
+	for(int i =0; i < insert_point; i++){
+		new_ary[i] = ary_[i];
+	}
+	cout << "ARY first copy " << *ary_ << endl;
+
 	//cout << "after first copy" <<endl;
 	new_ary[last_] = n;
-	copy(ary_+insert_point, ary_+last_, new_ary);
+	cout << "ARY add item " << *ary_ << endl;
+	last_++;
+
+	//copy(ary_+insert_point+1, ary_+last_, new_ary);
+	for(int i = insert_point+1; i < last_; i++){
+		new_ary[i] = ary_[i];
+	}
+	cout << "ARY add trailing items " << *ary_ << endl;
+
 	//cout << "after copy" << endl;
 	std::swap(new_ary, ary_);
 	//cout << "after swap" << endl;
 	//cout << "after delete" << endl;
 	delete [] new_ary;
-	last_++;
+
+	cout << "ARY " << *ary_ << endl;
+	cout << "LAST " << last_ << endl;
+ 	
 
 	return true;
 }
