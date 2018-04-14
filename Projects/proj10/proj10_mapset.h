@@ -26,19 +26,18 @@ using std::cout; using std::endl;
 //
 template<typename K, typename V>
 struct Node {
-  K first;
-  V second;
-  Node() = default;
-  Node(K,V);
-  bool operator<(const Node&) const;
-  bool operator==(const Node&) const;
+	K first;
+	V second;
+	Node() = default;
+	Node(K,V);
+	bool operator<(const Node&) const;
+	bool operator==(const Node&) const;
 
-  friend ostream& operator<<(ostream &out, const Node &n){
-
-    out << n.first << ":" << n.second;
-    
-    return out;
-  }
+	//print node	
+	friend ostream& operator<<(ostream &out, const Node &n){
+		out << n.first << ":" << n.second;
+		return out;
+	}
 };
 
 //pair constructor
@@ -48,7 +47,7 @@ Node<K,V>::Node(K key, V value){
 	second = value;
 }
 
-//which one is greater? for lower_bound
+//is calling node < param
 template<typename K, typename V>
 bool Node<K,V>::operator<(const Node &n) const{
 	return (first < n.first);
@@ -86,21 +85,23 @@ class MapSet{
 		MapSet mapset_union (MapSet&);
 		MapSet mapset_intersection(MapSet&);
 
-  friend ostream& operator<<(ostream &out, const MapSet &ms){
+	//print mapset out
+	friend ostream& operator<<(ostream &out, const MapSet &ms){
 
-	ostringstream oss;
+		ostringstream oss;
 
-    for(int i = 0; i < ms.last_; i++){
-		oss << ms.ary_[i];
-		oss << ", ";
-	}
+		//iterate over the mapset array
+		for(int i = 0; i < ms.last_; i++){
+			oss << ms.ary_[i]; //print out the nodes
+			oss << ", ";
+		}
 
-	string s = oss.str();
-    s = s.substr(0,s.size()-2); //remove trailing comma
-    out << s;
+		string s = oss.str();
+		s = s.substr(0,s.size()-2); //remove trailing comma
+		out << s;
 
-    return out;
-  }  
+		return out;
+	}  
 };
 
 //capacity constructor
@@ -111,6 +112,7 @@ MapSet<K,V>::MapSet(int capacity){
 	last_ = 0;
 }
 
+//initializer list mapset constructor
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 	last_ = 0;
@@ -126,16 +128,17 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 //mapset constructor with param mapset
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
-	
+	//assign this values to parameter ones
 	last_ = ms.last_;
 	capacity_ = ms.capacity_;
 	ary_ = new Node<K,V>[capacity_];
-	copy(ms.ary_,ms.ary_+last_, ary_);
+	copy(ms.ary_,ms.ary_+last_, ary_); //copy ary values to ms.ary
 }
 
 //assign mapset to another mapset
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
+	//swap values and return this
 	swap(this-> last_, ms.last_);
 	swap(this-> capacity_, ms.capacity_);
 	swap(this-> ary_, ms.ary_);
@@ -162,35 +165,38 @@ template<typename K, typename V>
 void MapSet<K,V>::grow(){
 	Node<K,V> *new_ary;
 
-  if (capacity_ == 0){
-    new_ary = new Node<K,V>[1]{};
-    last_ = 0;
-	capacity_ = 1;
-    // ary_ empty, just assign
-    std::swap (new_ary, ary_);
-    delete [] new_ary;
-  }
-  else{
-    // use {} to init to default
-    new_ary = new Node<K,V>[capacity_ * 2]{};
-    copy(ary_, ary_+capacity_, new_ary);
-    capacity_ *= 2;
-    // stl swap, not Stack swap
-    std::swap (new_ary, ary_);
-    delete [] new_ary;
-  }
+	//for empty ary
+	if (capacity_ == 0){
+		new_ary = new Node<K,V>[1]{};
+		last_ = 0;
+		capacity_ = 1;
+		// ary_ empty, just assign
+		std::swap (new_ary, ary_);
+		delete [] new_ary;
+	}
+	//if ary already has values in it
+	else{
+		// use {} to init to default
+		new_ary = new Node<K,V>[capacity_ * 2]{};
+		copy(ary_, ary_+capacity_, new_ary);
+		capacity_ *= 2;
+		// stl swap, not Stack swap
+		std::swap (new_ary, ary_);
+		delete [] new_ary;
+	}
 }
 
 //returns pointer to pair element
 template<typename K, typename V>
 Node<K,V>* MapSet<K,V>::find_key(K key){
 
+	//iterate over map and find matching keys
 	for(int i = 0; i < last_; i++){
 
 		K item = ary_[i].first;
 
 		if(item == key){
-			return *ary_[i];
+			return *ary_[i]; //return node pointer
 		}
 	}
 	return nullptr;
@@ -221,9 +227,8 @@ bool MapSet<K,V>::add(Node<K,V> n){
 			insert_point ++;
 		}
 	}
-
+	//insert item to new array
 	new_ary[insert_point] = n;
-	//cout << "ARY add item " << *ary_ << endl;
 	last_++;
 
 	//add items before index
@@ -248,9 +253,6 @@ bool MapSet<K,V>::remove(K key){
 
 	int remove_index = -1;
 
-	cout << endl;
-	cout << "KEY: " <<key << endl;
-
 	//find where the remove thing is at
 	for(int i = 0; i < last_; i++){
 		K item = ary_[i].first;
@@ -259,14 +261,10 @@ bool MapSet<K,V>::remove(K key){
 		}
 	}
 
-	cout << "remove index: " <<remove_index << endl;
-
 	//item they want to remove isnt in there
 	if(remove_index == -1){
 		return false;
 	}
-
-	cout << "ary: " <<*ary_ << endl;
 
 	//new array to hold elements - remove item
 	last_--;
@@ -284,8 +282,6 @@ bool MapSet<K,V>::remove(K key){
 		new_ary[i] = ary_[i+1];
 		cout << ary_[i] << endl;
 	}
-
-	cout << "new_ary: " <<*new_ary << endl;
 
 	swap(new_ary,ary_);
 	delete [] new_ary;
@@ -305,7 +301,6 @@ Node<K,V> MapSet<K,V>::get(K key){
 			return ary_[i]; 
 		}
 	}
-
 	return Node<K,V>(); //return empty node if not found
 }
 
