@@ -305,6 +305,7 @@ bool MapSet<K,V>::update(K key, V value){
 	return result;
 }
 
+//see which mapset is larger 1 for this, -1 for param, 0 for same set
 template<typename K, typename V>
 int MapSet<K,V>::compare(MapSet &ms){
 
@@ -332,9 +333,19 @@ int MapSet<K,V>::compare(MapSet &ms){
 	return -1; //param is bigger
 }
 
+//get union of all mapset elements
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
 
+	//basically tries to add all entries, duplicate keys ignored, calling list added first
+	MapSet result;
+	for(auto pair: ary_){
+		result.add(pair); //add elements from calling vector
+	}
+	for(auto pair: ms.ary){
+		result.add(pair); //add elements from param vector
+	}
+	return result;
 }
 
 template<typename K, typename V>
