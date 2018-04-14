@@ -14,5 +14,7 @@ int main(){
 
 	size_t result = ms.size();
 	size_t ans = 3;
-	std::cout << (result == ans) << std::endl;
+	std::cout << ms << std::endl;
+	//std::cout << (result == ans) << std::endl;
+	std::cout << result << std::endl;
 }

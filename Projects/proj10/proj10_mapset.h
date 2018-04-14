@@ -257,16 +257,21 @@ bool MapSet<K,V>::remove(K key){
 		return false;
 	}
 
-	Node<K,V> *new_ary = nullptr;
+	//new array to hold elements - remove item
+	last_--;
+	Node<K,V> *new_ary;
+	new_ary = new Node<K,V>[capacity_-1];
 
 	//add everything up to the remove element
 	for(int i = 0; i < remove_index; i++){
 		new_ary[i] = ary_[i];
+		cout << ary_[i] << endl;
 	}
 
 	//add everthing after the point
 	for(int i = remove_index; i < last_; i++){
-		new_ary[i] = ary_[i];
+		new_ary[i] = ary_[i+1];
+		cout << ary_[i] << endl;
 	}
 
 	swap(new_ary,ary_);
@@ -297,7 +302,9 @@ bool MapSet<K,V>::update(K key, V value){
 
 	bool result = false;
 	auto item = Node<K,V>(key, value);
+	cout << "before remove" << endl;
 	result = remove(key);
+	cout << "after remove" << endl;
 	if(result == false){
 		return false;
 	}
