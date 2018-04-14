@@ -122,6 +122,7 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 	cout << "add to array" << endl;
 	for(auto element: il){
 		cout << "adding to array now" << endl;
+		cout << "IL ELEMENT " << element << endl;
 		add(element);
 	}
 }
@@ -201,19 +202,19 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
 	//entry already in mapset
 
-	cout << "BEFORE GROW" << endl;
+	//cout << "BEFORE GROW" << endl;
 	//add new entry into the array
 	if(last_ == capacity_){ //grow if ary_ is too small
 		grow();
 	}
-	cout << "CAPACITY " << capacity_ << endl;
-	cout << "last " << last_ <<endl;
+	//cout << "CAPACITY " << capacity_ << endl;
+	//cout << "last " << last_ <<endl;
 
 	//new array
 	Node<K,V> *new_ary;
 	new_ary = new Node<K, V>[capacity_]; 
 
-	cout << "FIND INSERT POINT" <<endl;
+	//cout << "FIND INSERT POINT" <<endl;
 
 	int insert_point = 0;
 	for(int i = 0; i < last_; i++){
@@ -222,16 +223,17 @@ bool MapSet<K,V>::add(Node<K,V> n){
 		}
 	}
 	
-	cout << "before copy" << endl;
+	//cout << "before copy" << endl;
 	
 	copy(ary_, ary_+insert_point, new_ary);
-	cout << "after first copy" <<endl;
-	ary_[last_] = n;
+	//cout << "after first copy" <<endl;
+	new_ary[last_] = n;
 	copy(ary_+insert_point, ary_+last_, new_ary);
-	cout << "after copy" << endl;
+	//cout << "after copy" << endl;
 	std::swap(new_ary, ary_);
-	cout << "after swap" << endl;
-	cout << "after delete" << endl;
+	//cout << "after swap" << endl;
+	//cout << "after delete" << endl;
+	delete [] new_ary;
 	last_++;
 
 	return true;
