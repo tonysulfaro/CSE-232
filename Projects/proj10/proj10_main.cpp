@@ -8,16 +8,14 @@ using std::ostringstream;
 #include "proj10_mapset.h"
 
 int main (){
+	
   cout << boolalpha;
   Node<string,long> n1("bill", 2);
   cout << n1 << endl; 
   Node<string,long> n2("fred", 3);
   cout << (n1 == n2) <<":"<<(n1 < n2) << endl;
-  cout << "before list" << endl;
   MapSet<string,long> ms({ {"bill", 1}, {"fred", 2}, {"alan", 3}, {"bob", 4} });
-	cout << "before copy" << endl;
   MapSet<string, long> ms_copy(ms);
-	cout << "after copy" << endl;
 
   cout << "ms:"<<ms<<endl;
   cout << "add ed: " << ms.add({"ed", 5}) << endl;
