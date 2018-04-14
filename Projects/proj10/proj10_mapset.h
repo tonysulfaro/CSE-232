@@ -17,6 +17,9 @@ using std::sort; using std::lower_bound; using std::copy;
 using std::ostringstream;
 using std::swap;
 
+//debugging
+using std::cout; using std::endl;
+
 
 //
 // Node
@@ -109,13 +112,16 @@ MapSet<K,V>::MapSet(int capacity){
 
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
-	last_ = il.size();
+	std::cout << "INITIALIZER LIST" << std::endl;
+	last_ = 0;
 	capacity_ = il.size();
+	cout << "BEFORE ARY INIT" << endl;
 	ary_ = new Node<K,V>[capacity_]; //new array of nodes
-	size_t index = 0;
 
 	//add stuff to array
+	cout << "add to array" << endl;
 	for(auto element: il){
+		cout << "adding to array now" << endl;
 		add(element);
 	}
 }
@@ -155,9 +161,9 @@ size_t MapSet<K,V>::size(){
 //increase mapset capacity
 template<typename K, typename V>
 void MapSet<K,V>::grow(){
-	Node<K,V> *new_ary = nullptr;
+	Node<K,V> *new_ary;
 
-  if (last_ == 0){
+  if (capacity_ == 0){
     new_ary = new Node<K,V>[1]{};
     last_ = 0;
 	capacity_ = 1;
@@ -194,32 +200,38 @@ template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
 	//entry already in mapset
-	for(int i = 0; i < last_; i++){
-		K item = ary_[i].first;
-		if(item == n.first){
-			return false;
-	}
-	}
 
+	cout << "BEFORE GROW" << endl;
 	//add new entry into the array
-	if(last_ >= capacity_){ //grow if ary_ is too small
+	if(last_ == capacity_){ //grow if ary_ is too small
 		grow();
 	}
+	cout << "CAPACITY " << capacity_ << endl;
+	cout << "last " << last_ <<endl;
 
 	//new array
-	Node<K,V> *new_ary = nullptr; 
+	Node<K,V> *new_ary;
+	new_ary = new Node<K, V>[capacity_]; 
 
-	int insert_point =  -1;
-	for(int i = 0; i < last_; i ++){
-		if(ary_[i].first < n.first){
+	cout << "FIND INSERT POINT" <<endl;
+
+	int insert_point = 0;
+	for(int i = 0; i < last_; i++){
+		if(ary_[i] < n){
 			insert_point ++;
 		}
 	}
+	
+	cout << "before copy" << endl;
+	
 	copy(ary_, ary_+insert_point, new_ary);
-	ary_[insert_point+1] = n;
+	cout << "after first copy" <<endl;
+	ary_[last_] = n;
 	copy(ary_+insert_point, ary_+last_, new_ary);
-	std::swap(new_ary,ary_);
-	delete [] new_ary;
+	cout << "after copy" << endl;
+	std::swap(new_ary, ary_);
+	cout << "after swap" << endl;
+	cout << "after delete" << endl;
 	last_++;
 
 	return true;
