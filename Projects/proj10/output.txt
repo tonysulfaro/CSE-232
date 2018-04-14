@@ -6,27 +6,20 @@ add bob: false
 ms: alan:3, bill:1, bob:4, ed:5, fred:2
 get fred:fred:2
 get irving::0
-bob update:alan:3
-bill:1
-bob:4
-ed:5
-true
-bob updated: alan:3, bill:1, bob:4, ed:5  //should be bob:100
+bob update:true
+bob updated: alan:3, bill:1, bob:100, ed:5, fred:2
 george update:false
-ms: alan:3, bill:1, bob:4, ed:5
+ms: alan:3, bill:1, bob:100, ed:5, fred:2
 copy:alan:3, bill:1, bob:4, fred:2
-remove fred: alan:3
-bill:1
-bob:4
-true
+remove fred: true
 remove george: false
-ms:alan:3, bill:1, bob:4, ed:5
+ms:alan:3, bill:1, bob:100, ed:5, fred:2
 copy:alan:3, bill:1, bob:4
 copy2ms: -1
 ms2copy: 1
 ms2ms: 0
-union: alan:3, bill:1, bob:4, ed:5
-intersection: alan:3, bill:1, bob:4
+union: alan:3, bill:1, bob:100, ed:5, fred:2
+intersection: alan:3, bill:1, bob:100
 Mtest:e:2, q:4, x:3, z:1
 test1::0
 test2:q:4

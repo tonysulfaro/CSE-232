@@ -274,13 +274,11 @@ bool MapSet<K,V>::remove(K key){
 	//add everything up to the remove element
 	for(int i = 0; i < remove_index; i++){
 		new_ary[i] = ary_[i];
-		cout << ary_[i] << endl;
 	}
 
 	//add everthing after the point
 	for(int i = remove_index; i < last_; i++){
 		new_ary[i] = ary_[i+1];
-		cout << ary_[i] << endl;
 	}
 
 	swap(new_ary,ary_);
