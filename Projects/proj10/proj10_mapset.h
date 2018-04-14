@@ -65,26 +65,26 @@ bool Node<K,V>::operator==(const Node &n) const{
 // 
 template<typename K, typename V>
 class MapSet{
- private:
-  Node<K,V>* ary_;
-  size_t last_;
-  size_t capacity_;
-  Node<K,V>* find_key(K);
-  void grow ();
- public:
-  MapSet(int sz = 2);
-  MapSet(initializer_list< Node<K,V> >);
-  MapSet (const MapSet&);
-  MapSet operator=(MapSet);
-  ~MapSet();
-  size_t size();
-  bool remove (K);  
-  bool add(Node<K,V>);
-  Node<K,V> get(K);
-  bool update(K,V);  
-  int compare(MapSet&);
-  MapSet mapset_union (MapSet&);
-  MapSet mapset_intersection(MapSet&);
+ 	private:
+		Node<K,V>* ary_ =  nullptr;
+		size_t last_ = 0;
+		size_t capacity_ = 1;
+		Node<K,V>* find_key(K);
+		void grow ();
+ 	public:
+		MapSet(int sz = 2);
+		MapSet(initializer_list< Node<K,V> >);
+		MapSet (const MapSet&);
+		MapSet operator=(MapSet);
+		~MapSet();
+		size_t size();
+		bool remove (K);  
+		bool add(Node<K,V>);
+		Node<K,V> get(K);
+		bool update(K,V);  
+		int compare(MapSet&);
+		MapSet mapset_union (MapSet&);
+		MapSet mapset_intersection(MapSet&);
 
   friend ostream& operator<<(ostream &out, const MapSet &ms){
 
@@ -103,6 +103,7 @@ class MapSet{
   }  
 };
 
+//capacity constructor
 template<typename K, typename V>
 MapSet<K,V>::MapSet(int capacity){
 	ary_ = nullptr;
@@ -258,9 +259,17 @@ bool MapSet<K,V>::remove(K key){
 
 	Node<K,V> *new_ary = nullptr;
 
-	copy(ary_, ary_+remove_index-1, new_ary);
-	copy(ary_+remove_index,ary_+last_, new_ary);
-	std::swap(new_ary,ary_);
+	//add everything up to the remove element
+	for(int i = 0; i < remove_index; i++){
+		new_ary[i] = ary_[i];
+	}
+
+	//add everthing after the point
+	for(int i = remove_index; i < last_; i++){
+		new_ary[i] = ary_[i];
+	}
+
+	swap(new_ary,ary_);
 	delete [] new_ary;
 	return true;
 }
@@ -269,10 +278,13 @@ bool MapSet<K,V>::remove(K key){
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
 
+	//look for matching key in ary_
 	for(int i = 0; i < last_; i++){
 		K pair_key = ary_[i].first;
+
+		//return key if it matches
 		if(pair_key == key){
-			return ary_[i];
+			return ary_[i]; 
 		}
 	}
 
