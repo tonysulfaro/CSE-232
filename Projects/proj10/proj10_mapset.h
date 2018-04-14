@@ -106,7 +106,7 @@ class MapSet{
 //capacity constructor
 template<typename K, typename V>
 MapSet<K,V>::MapSet(int capacity){
-	ary_ = nullptr;
+	ary_ = new Node<K, V>[capacity];
 	capacity_ = capacity;
 	last_ = 0;
 }
@@ -147,8 +147,8 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
 	delete [] ary_;
-    capacity_=0;
-    last_=0;
+    //capacity_=0;
+    //last_=0;
 }
 
 //mapset size
@@ -167,7 +167,8 @@ void MapSet<K,V>::grow(){
     last_ = 0;
 	capacity_ = 1;
     // ary_ empty, just assign
-    ary_ = new_ary;
+    std::swap (new_ary, ary_);
+    delete [] new_ary;
   }
   else{
     // use {} to init to default
@@ -304,9 +305,7 @@ bool MapSet<K,V>::update(K key, V value){
 
 	bool result = false;
 	auto item = Node<K,V>(key, value);
-	cout << "before remove" << endl;
 	result = remove(key);
-	cout << "after remove" << endl;
 	if(result == false){
 		return false;
 	}
