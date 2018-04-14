@@ -68,7 +68,7 @@ class MapSet{
  	private:
 		Node<K,V>* ary_;
 		size_t last_;
-		size_t capacity_;
+		size_t capacity_ = 0;
 		Node<K,V>* find_key(K);
 		void grow ();
  	public:
@@ -147,6 +147,8 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
 	delete [] ary_;
+    capacity_=0;
+    last_=0;
 }
 
 //mapset size
@@ -270,7 +272,7 @@ bool MapSet<K,V>::remove(K key){
 
 	//add everthing after the point
 	for(int i = remove_index; i < last_; i++){
-		new_ary[i] = ary_[i+1];
+		new_ary[i] = ary_[i];
 		cout << ary_[i] << endl;
 	}
 
