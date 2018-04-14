@@ -222,14 +222,14 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	
 	//cout << "before copy" << endl;
 	
-	//copy(ary_, ary_+insert_point, new_ary);
+	copy(ary_, ary_+insert_point, new_ary); /*
 	for(int i =0; i < insert_point; i++){
 		new_ary[i] = ary_[i];
-	}
+	} */
 	cout << "ARY first copy " << *ary_ << endl;
 
 	//cout << "after first copy" <<endl;
-	new_ary[last_] = n;
+	new_ary[insert_point] = n;
 	cout << "ARY add item " << *ary_ << endl;
 	last_++;
 
@@ -247,7 +247,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
 	cout << "ARY " << *ary_ << endl;
 	cout << "LAST " << last_ << endl;
- 	
 
 	return true;
 }
