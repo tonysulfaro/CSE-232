@@ -27,7 +27,7 @@ int main (){
 	n2 = ms.get("irving");
 	cout << "get irving:"<< n2 << endl;
 	
-	cout << "bob update:" << ms.update("bob", 100) << endl;
+	cout << "bob update:" << ms.update("bob", 100) << endl; //problem
 	cout << "bob updated: " << ms << endl;
 	cout <<  "george update:" << ms.update("george", 10) << endl;
 	

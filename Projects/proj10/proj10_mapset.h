@@ -193,6 +193,7 @@ Node<K,V>* MapSet<K,V>::find_key(K key){
 			return *ary_[i];
 		}
 	}
+	return nullptr;
 }
 
 //add elements to array in order
@@ -247,6 +248,9 @@ bool MapSet<K,V>::remove(K key){
 
 	int remove_index = -1;
 
+	cout << endl;
+	cout << "KEY: " <<key << endl;
+
 	//find where the remove thing is at
 	for(int i = 0; i < last_; i++){
 		K item = ary_[i].first;
@@ -255,10 +259,14 @@ bool MapSet<K,V>::remove(K key){
 		}
 	}
 
+	cout << "remove index: " <<remove_index << endl;
+
 	//item they want to remove isnt in there
 	if(remove_index == -1){
 		return false;
 	}
+
+	cout << "ary: " <<*ary_ << endl;
 
 	//new array to hold elements - remove item
 	last_--;
@@ -273,9 +281,11 @@ bool MapSet<K,V>::remove(K key){
 
 	//add everthing after the point
 	for(int i = remove_index; i < last_; i++){
-		new_ary[i] = ary_[i];
+		new_ary[i] = ary_[i+1];
 		cout << ary_[i] << endl;
 	}
+
+	cout << "new_ary: " <<*new_ary << endl;
 
 	swap(new_ary,ary_);
 	delete [] new_ary;
@@ -303,14 +313,15 @@ Node<K,V> MapSet<K,V>::get(K key){
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
 
-	bool result = false;
 	auto item = Node<K,V>(key, value);
-	result = remove(key);
-	if(result == false){
+
+	//if value not in there
+	if(get(key)== Node<K, V>()){
 		return false;
 	}
+	remove(key);
 	add(item);
-	return result;
+	return true;
 }
 
 //see which mapset is larger 1 for this, -1 for param, 0 for same set
@@ -374,4 +385,3 @@ MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
 }
 
 #endif
-  
