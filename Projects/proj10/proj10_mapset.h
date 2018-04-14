@@ -339,18 +339,30 @@ MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
 
 	//basically tries to add all entries, duplicate keys ignored, calling list added first
 	MapSet result;
-	for(auto pair: ary_){
-		result.add(pair); //add elements from calling vector
+	for(int i = 0; i < last_; i++){
+		result.add(ary_[i]); //add elements from calling vector
 	}
-	for(auto pair: ms.ary){
-		result.add(pair); //add elements from param vector
+	for(int i = 0; i < ms.last_; i++){
+		result.add(ms.ary_[i]); //add elements from param vector
 	}
 	return result;
 }
 
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
+	MapSet result;
 
+	//compare all set values to each other
+	for(int i = 0; i < last_; i++){
+		for(int j = 0; j < ms.last_; j++){
+			K s = ary_[i].first;
+			K param_s = ms.ary_[j].first;
+			if(s == param_s){ //pair in both
+				result.add(ary_[i]);
+			}
+		}
+	}
+	return result;
 }
 
 #endif
