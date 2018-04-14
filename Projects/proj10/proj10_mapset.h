@@ -230,7 +230,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	}
 
 	//add items after index
-	for(int i = insert_point; i < last_; i++){
+	for(int i = insert_point; i < last_-1; i++){
 		new_ary[i+1] = ary_[i];
 	}
 

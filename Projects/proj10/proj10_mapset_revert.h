@@ -147,6 +147,8 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet<K,V> ms){
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
 	delete [] ary_;
+    capacity_=0;
+    last_=0;
 }
 
 //mapset size
@@ -197,14 +199,16 @@ template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
 	//entry already in mapset
+	for(int i =0; i< last_; i++){
+		if(ary_[i].first == n.first){
+			return false;
+		}
+	}
 
-	//cout << "BEFORE GROW" << endl;
 	//add new entry into the array
 	if(last_ == capacity_){ //grow if ary_ is too small
 		grow();
 	}
-	//cout << "CAPACITY " << capacity_ << endl;
-	//cout << "last " << last_ <<endl;
 
 	//new array
 	Node<K,V> *new_ary;
@@ -218,35 +222,19 @@ bool MapSet<K,V>::add(Node<K,V> n){
 			insert_point ++;
 		}
 	}
-	cout << "INSERT POINT " << insert_point << endl;
 	
-	//cout << "before copy" << endl;
-	
-	copy(ary_, ary_+insert_point, new_ary); /*
-	for(int i =0; i < insert_point; i++){
-		new_ary[i] = ary_[i];
-	} */
-	cout << "ARY first copy " << *ary_ << endl;
+	copy(ary_, ary_+insert_point, new_ary); 
 
-	//cout << "after first copy" <<endl;
 	new_ary[insert_point] = n;
-	cout << "ARY add item " << *ary_ << endl;
 	last_++;
 
-	//copy(ary_+insert_point+1, ary_+last_, new_ary);
-	for(int i = insert_point+1; i < last_; i++){
-		new_ary[i] = ary_[i];
+	//add items after index
+	for(int i = insert_point; i < last_-1; i++){
+		new_ary[i+1] = ary_[i];
 	}
-	cout << "ARY add trailing items " << *ary_ << endl;
 
-	//cout << "after copy" << endl;
 	std::swap(new_ary, ary_);
-	//cout << "after swap" << endl;
-	//cout << "after delete" << endl;
 	delete [] new_ary;
-
-	cout << "ARY " << *ary_ << endl;
-	cout << "LAST " << last_ << endl;
 
 	return true;
 }
