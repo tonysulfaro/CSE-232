@@ -105,6 +105,7 @@ class MapSet{
 };
 
 //capacity constructor
+//param: 	int capacity
 template<typename K, typename V>
 MapSet<K,V>::MapSet(int capacity){
 	ary_ = new Node<K, V>[capacity];
@@ -113,6 +114,7 @@ MapSet<K,V>::MapSet(int capacity){
 }
 
 //initializer list mapset constructor
+//param: initializer_list il
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 	last_ = 0;
@@ -125,7 +127,8 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 	}
 }
 
-//mapset constructor with param mapset
+//mapset 	constructor with param mapset
+//param: 	Mapset &ms
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
 	//assign this values to parameter ones
@@ -187,6 +190,8 @@ void MapSet<K,V>::grow(){
 }
 
 //returns pointer to pair element
+//param: K key
+//return: Node<K,V>*
 template<typename K, typename V>
 Node<K,V>* MapSet<K,V>::find_key(K key){
 
@@ -203,6 +208,8 @@ Node<K,V>* MapSet<K,V>::find_key(K key){
 }
 
 //add elements to array in order
+//param: 	Node<K,V> n
+//return: 	bool
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
@@ -248,6 +255,8 @@ bool MapSet<K,V>::add(Node<K,V> n){
 }
 
 //remove item from MapSet
+//param: 	K key
+//return:	bool
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
@@ -287,6 +296,8 @@ bool MapSet<K,V>::remove(K key){
 }
 
 //get pair from mapset based on key
+//param:	K key
+//return: 	Node<K,V>
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
 
@@ -303,6 +314,8 @@ Node<K,V> MapSet<K,V>::get(K key){
 }
 
 //update mapset value
+//param: 	K key, V value
+//return:	bool
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
 
@@ -318,6 +331,8 @@ bool MapSet<K,V>::update(K key, V value){
 }
 
 //see which mapset is larger 1 for this, -1 for param, 0 for same set
+//param:	MapSet &ms
+//return:	int comparision_result
 template<typename K, typename V>
 int MapSet<K,V>::compare(MapSet &ms){
 
@@ -346,6 +361,8 @@ int MapSet<K,V>::compare(MapSet &ms){
 }
 
 //get union of all mapset elements
+//param:	MapSet &ms
+//return:	MapSet result
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
 
@@ -360,15 +377,18 @@ MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
 	return result;
 }
 
+//mapset intersection
+//param:	MapSet &ms
+//return:	MapSet result
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
 	MapSet result;
 
 	//compare all set values to each other
-	for(int i = 0; i < last_; i++){
-		for(int j = 0; j < ms.last_; j++){
-			K s = ary_[i].first;
-			K param_s = ms.ary_[j].first;
+	for(int i = 0; i < last_; i++){ //this.mapset
+		for(int j = 0; j < ms.last_; j++){ //ms.mapset
+			K s = ary_[i].first; //key of node in this.ary_
+			K param_s = ms.ary_[j].first; //key of node in ms.ary_
 			if(s == param_s){ //pair in both
 				result.add(ary_[i]);
 			}
