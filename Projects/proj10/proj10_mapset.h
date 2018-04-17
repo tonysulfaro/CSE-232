@@ -228,12 +228,18 @@ bool MapSet<K,V>::add(Node<K,V> n){
 	Node<K,V> *new_ary;
 	new_ary = new Node<K, V>[capacity_]; 
 
+	/*
 	int insert_point = 0;
 	for(int i = 0; i < last_; i++){
 		if(ary_[i] < n){
 			insert_point ++;
 		}
-	}
+	} */
+
+	//find where to insert the next thing
+	auto pt = lower_bound(ary_, ary_+last_, n);
+	int insert_point = std::distance(ary_, pt);
+
 	//insert item to new array
 	new_ary[insert_point] = n;
 	last_++;
@@ -260,6 +266,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
+	/*
 	int remove_index = -1;
 
 	//find where the remove thing is at
@@ -268,12 +275,16 @@ bool MapSet<K,V>::remove(K key){
 		if(item == key){
 			remove_index =  i;
 		}
-	}
+	} */
 
 	//item they want to remove isnt in there
-	if(remove_index == -1){
+	if(get(key) ==  Node<K, V>()){
 		return false;
 	}
+
+	//find where the element to remove is
+	auto pt = lower_bound(ary_, ary_+last_, get(key));
+	int remove_index = std::distance(ary_, pt);
 
 	//new array to hold elements - remove item
 	last_--;
@@ -281,9 +292,11 @@ bool MapSet<K,V>::remove(K key){
 	new_ary = new Node<K,V>[capacity_-1];
 
 	//add everything up to the remove element
-	for(int i = 0; i < remove_index; i++){
-		new_ary[i] = ary_[i];
-	}
+	//for(int i = 0; i < remove_index; i++){
+	//	new_ary[i] = ary_[i];
+	//}
+
+	copy(ary_, ary_+remove_index, new_ary);
 
 	//add everthing after the point
 	for(int i = remove_index; i < last_; i++){
