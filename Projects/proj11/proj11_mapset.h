@@ -36,7 +36,7 @@ template<typename K, typename V>
 Node<K,V>::Node(K key, V value){
 	first = key;
 	second = value;
-	*next = nullptr;
+	Node<K, V> *next = nullptr;
 }
 
 template<typename K, typename V>
@@ -59,7 +59,7 @@ class MapSet{
 		Node<K,V>* head_ = nullptr;
 		Node<K,V>* tail_ = nullptr;  
 		size_t sz_ = 0;
-		SOMETYPE find_key(K);
+		Node<K,V> find_key(K);
 
 	public:
 		MapSet()=default;
@@ -79,8 +79,8 @@ class MapSet{
 		friend ostream& operator<<(ostream &out, const MapSet &ms){
 
 			ostringstream oss;
-			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr.next_){
-				oss << ptr->data_ << ",";
+			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->ms.next_){
+				oss << ptr->ms.data_ << ",";
 			}
 			string s = oss.str();
 			s = s.substr(0,s.size()-2); //remove trailing comma
@@ -109,7 +109,7 @@ template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
 	head_ = ms.head_;
 	tail_ = ms.tail_;
-	sz_ = ms.size;
+	sz_ = ms.sz_;
 }
 
 //assingment operator
@@ -124,7 +124,7 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
 // delete each node in turn, the set head_ and tail_
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
-	Node* to_del = head_;
+	Node <K,V>* to_del = head_;
 	
     while (to_del !=nullptr){
 		head_ = head_->next_;
@@ -140,22 +140,21 @@ size_t MapSet<K,V>::size(){
 
 	size_t count = 0;
 
-	for(auto ptr = head_; ptr != nullptr; ptr = ptr.next_){
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
 		count ++;
 	}
 	return count;
 }
 
 template<typename K, typename V>
-SOMETYPE MapSet<K,V>::find_key(K key){
+Node<K,V> MapSet<K,V>::find_key(K key){
 
-	for(auto ptr = head_; ptr != nullptr; ptr = ptr.next_){
-		if (key == ptr.data_.first){
-			n = ptr;
-			return true;
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if (key == ptr->data_.first){
+			return ptr;
 		}
 	}
-    return false;
+    return Node<K,V>();
 }
 
 template<typename K, typename V>
