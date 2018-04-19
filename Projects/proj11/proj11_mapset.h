@@ -191,13 +191,14 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
 	cout << "INSERT ELEMENT INTO LINKED LIST" << endl;
 	//initialize very first value of linked list
+	/*
 	if(head_ == nullptr){
 		head_ = &n;
 		tail_ = &n;
 		sz_++;
 		return true;
 	}
-	
+	*/
 	//find insert point
 	int insert_point = 0;
 	for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
@@ -262,12 +263,32 @@ template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
 	MapSet result;
 
+	//add elements from this
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		result.add(*ptr);
+	}
+
+	//add elements from param
+	for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
+		result.add(*ptr);
+	}
+
 	return result;
 }
 
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
 	MapSet result;
+
+	for(auto itr = head_; itr != nullptr; itr = itr->next_){
+		for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
+			K s = itr->first;
+			K param_s = ptr->first;
+			if(s == param_s){
+				result.add(*itr);
+			}
+		}
+	}
 
 	return result;
 }
