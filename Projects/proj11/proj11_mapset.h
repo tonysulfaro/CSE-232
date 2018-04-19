@@ -20,7 +20,7 @@ template<typename K, typename V>
 struct Node {
 	K first;
 	V second;
-	Node *next = nullptr;
+	Node<K,V> *next = nullptr;
 	
 	Node() = default;
 	Node(K,V);
@@ -107,9 +107,25 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 //mapset constructor (mapset as param)
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
-	head_ = ms.head_;
-	tail_ = ms.tail_;
-	sz_ = ms.sz_;
+
+	if(ms.head_ == nullptr){
+		head_ = nullptr;
+		tail_ = nullptr;
+		sz_ = 0;
+	}
+	//initialize mapset param to current mapset
+	else{
+		head_ = new Node<K,V>(ms.head_->first,ms.head_->second);
+		tail_ = head_;
+		Node<K, V>* sl_ptr = ms.head_->next_;
+		Node<K, V>* new_node;
+		while(sl_ptr != nullptr){
+			new_node = new Node<K,V>(sl_ptr->first, sl_ptr->second); //new k,v in node
+			tail_ -> next_ = new_node;
+			sl_ptr = sl_ptr->next_;
+			tail_ = new_node;
+		}
+	}
 }
 
 //assingment operator
