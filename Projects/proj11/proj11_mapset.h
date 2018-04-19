@@ -27,7 +27,7 @@ struct Node {
 	bool operator<(const Node&) const;
 	bool operator==(const Node&) const;
 	friend ostream& operator<<(ostream &out, const Node &n){
-		// YOUR CODE HERE
+		out << n.first << ":" << n.second;
 		return out;
 	}
 };
@@ -77,23 +77,42 @@ class MapSet{
 		MapSet mapset_intersection(MapSet&);
 
 		friend ostream& operator<<(ostream &out, const MapSet &ms){
-		// YOUR CODE HERE
+
+			ostringstream oss;
+			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr.next_){
+				oss << ptr->data_ << ",";
+			}
+			string s = oss.str();
+			s = s.substr(0,s.size()-2); //remove trailing comma
+			out << s;
+
+			return out;
 		}  
 };
 
+//initializer list constructor
 template<typename K, typename V>
 MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 
+	head_ = nullptr;
+	tail_ = nullptr;
+	sz_ = 0;
+
+	//add elements to linked list
 	for(auto element: il){
 		add(element);
 	}
 }
 
+//mapset constructor (mapset as param)
 template<typename K, typename V>
 MapSet<K,V>::MapSet(const MapSet &ms){
-
+	head_ = ms.head_;
+	tail_ = ms.tail_;
+	sz_ = ms.size;
 }
 
+//assingment operator
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
 	swap(head_, ms.head_);
@@ -106,10 +125,11 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
 	Node* to_del = head_;
+	
     while (to_del !=nullptr){
-	head_ = head_->next_;
-	delete to_del;
-	to_del = head_;
+		head_ = head_->next_;
+		delete to_del;
+		to_del = head_;
     }
     head_ = nullptr;
     tail_ = nullptr;
@@ -120,14 +140,16 @@ size_t MapSet<K,V>::size(){
 
 	size_t count = 0;
 
-	for(Node* ptr = head_; ptr!= nullptr; ptr = ptr.next_){
-
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr.next_){
+		count ++;
 	}
+	return count;
 }
 
 template<typename K, typename V>
 SOMETYPE MapSet<K,V>::find_key(K key){
-	for(Node<K,V>* ptr = head_; ptr != nullptr; ptr = ptr.next_){
+
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr.next_){
 		if (key == ptr.data_.first){
 			n = ptr;
 			return true;
@@ -148,6 +170,8 @@ bool MapSet<K,V>::remove(K key){
 
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
+
+}
 
 
 template<typename K, typename V>
