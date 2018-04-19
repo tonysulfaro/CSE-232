@@ -139,17 +139,17 @@ DoubleLink<T>::~DoubleLink(){
 template<typename T>
 void DoubleLink<T>::append_back(Node<T> &n){
     if (tail_ != nullptr){
-	tail_->next_ = &n;
-	n.prev_ = tail_;
-	n.next_ = nullptr;
-	tail_ = &n;
+		tail_->next_ = &n;
+		n.prev_ = tail_;
+		n.next_ = nullptr;
+		tail_ = &n;
     
     }
     else {
-	// cout << "first node";
-	// n.print_node(cout)<<endl;
-	head_=&n;
-	tail_=&n;
+		// cout << "first node";
+		// n.print_node(cout)<<endl;
+		head_=&n;
+		tail_=&n;
     }
 }
 

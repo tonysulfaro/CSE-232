@@ -12,6 +12,8 @@ using std::initializer_list;
 #include<sstream>
 using std::ostringstream;
 
+//debugging
+using std::cout; using std::endl;
 
 //
 // Node
@@ -36,7 +38,7 @@ template<typename K, typename V>
 Node<K,V>::Node(K key, V value){
 	first = key;
 	second = value;
-	Node<K, V> *next = nullptr;
+	Node<K, V> *next_ = nullptr;
 }
 
 template<typename K, typename V>
@@ -79,8 +81,8 @@ class MapSet{
 		friend ostream& operator<<(ostream &out, const MapSet &ms){
 
 			ostringstream oss;
-			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
-				oss << ptr << ",";
+			for(auto *ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
+				oss << *ptr << ",";
 			}
 			string s = oss.str();
 			s = s.substr(0,s.size()-2); //remove trailing comma
@@ -100,6 +102,8 @@ MapSet<K,V>::MapSet(initializer_list< Node<K,V> > il){
 
 	//add elements to linked list
 	for(auto element: il){
+		cout << "ADDING TO LIST" << endl;
+		cout << element << endl;
 		add(element);
 	}
 }
@@ -177,23 +181,18 @@ Node<K,V> MapSet<K,V>::find_key(K key){
 
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
-	Node<K, V>* found_node;
-	Node<K, V> found_it = find_key(n.first);
-
-	if(found_it == Node<K, V>() || found_node == tail_){ //node not in list
-		if(tail_ != nullptr){
-			tail_ -> next_ = &n;
-			tail_ = &n;
-		}
-		else{
-			head_ = &n;
-			tail_ = &n;
-		}
+	
+	cout << "ADD" << endl;
+	if(tail_ != nullptr){
+		tail_->next_ = &n;
+		n.next_ = nullptr;
+		tail_ = &n;
 	}
 	else{
-		n.next_ = found_node->next_;
-		found_node->next_ = &n;
+		head_= &n;
+		tail_ = &n;
 	}
+
 	return true;
 }
 

@@ -15,6 +15,7 @@ int main (){
 	Node<string,long> n2("fred", 3);
 	cout << (n1 == n2) <<":"<<(n1 < n2) << endl;
 	MapSet<string,long> ms({ {"bill", 1}, {"fred", 2}, {"alan", 3}, {"bob", 4} });
+	cout << ms << endl;
 	MapSet<string, long> ms_copy(ms);
 
 	cout << "ms:"<<ms<<endl;
