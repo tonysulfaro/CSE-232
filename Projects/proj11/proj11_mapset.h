@@ -183,52 +183,42 @@ template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 	
 	cout << "ADD" << endl;
-
+	cout << "before check if is in already" << endl;
 	//element already in the linked list
-	for(Node<K,V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		cout << "COMPARE N AND PTR" << endl;
-		cout << "PTR Value: " << ptr->first << endl;
-		cout << "N Value: " << n.first << endl;
-		if(ptr->first == n.first){
-			return false;
-		}
+	if(get(n.first).first != Node<K, V>().first){
+		return false;
 	}
-	node *temp=new node;
-    temp=head;
-    while(temp!=NULL)
-    {
-      cout<<temp->data<<"\t";
-      temp=temp->next;
-    }
 
-	cout << "AFTER FIND_KEY" << endl;
- 
-	int insert_position = 0;
-
-	for(auto *ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		cout << "FIND INSERT POS" << endl;
+	cout << "INSERT ELEMENT INTO LINKED LIST" << endl;
+	//initialize very first value of linked list
+	if(head_ == nullptr){
+		head_ = &n;
+		tail_ = &n;
+		sz_++;
+		return true;
+	}
+	
+	//find insert point
+	int insert_point = 0;
+	for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
 		if(ptr->first < n.first){
-		
-			insert_position ++;
+			insert_point++;
 		}
 	}
-	cout << "INSERT POSITION: " << insert_position << endl;
+	cout << "INSERT POINT: " << insert_point;
 
-	//add element to linked list
-	Node<K, V> *pre=new Node<K, V>();
-	Node<K, V> *cur=new Node<K, V>();
-    Node<K, V> *temp=new Node<K, V>();
-    cur=head_;
+	//goes at the front of the list
+	if(insert_point == 0){
+		n.next_ = head_;
+		head_ = &n;
+	}
 
-    for(int i=1;i<insert_position;i++)
-    {
-      pre=cur;
-      cur=cur->next_;
-    }
-    temp->first = n.first;
-	temp->second = n.second;
-    pre->next_=temp;	
-    temp->next_=cur;
+	//goes at the end of the list
+	if(insert_point == sz_){
+		tail_->next_ = &n;
+		n.next_ = nullptr;
+		tail_ = &n;
+	}
 
 	return true;
 }
