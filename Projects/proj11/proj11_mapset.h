@@ -204,13 +204,27 @@ bool MapSet<K,V>::remove(K key){
 
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
-
+	
+	for(auto *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first == key){
+			return *ptr;
+		}
+	}
+	return Node<K, V>();
 }
 
 
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
+	auto item = Node<K,V>(key, value);
 
+	//if value not in there
+	if(get(key)== Node<K, V>()){
+		return false;
+	}
+	remove(key);
+	add(item);
+	return true;
 }
 
 template<typename K, typename V>
