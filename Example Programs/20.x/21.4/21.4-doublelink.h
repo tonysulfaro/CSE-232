@@ -186,7 +186,7 @@ Node<T> * DoubleLink<T>::find(T dat){
   Node<T> *result = nullptr;
   for(Node<T> *n = head_; n != nullptr; n = n->next_){
     if (n->data_ == dat){
-      result = n;
+      result = n;      
       break;
     } // of if
   } // of for
