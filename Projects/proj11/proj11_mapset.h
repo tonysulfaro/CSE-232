@@ -20,7 +20,7 @@ template<typename K, typename V>
 struct Node {
 	K first;
 	V second;
-	Node<K,V> *next = nullptr;
+	Node<K,V>* next_ = nullptr;
 	
 	Node() = default;
 	Node(K,V);
@@ -79,8 +79,8 @@ class MapSet{
 		friend ostream& operator<<(ostream &out, const MapSet &ms){
 
 			ostringstream oss;
-			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->ms.next_){
-				oss << ptr->ms.data_ << ",";
+			for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
+				oss << ptr << ",";
 			}
 			string s = oss.str();
 			s = s.substr(0,s.size()-2); //remove trailing comma
@@ -119,9 +119,10 @@ MapSet<K,V>::MapSet(const MapSet &ms){
 		tail_ = head_;
 		Node<K, V>* sl_ptr = ms.head_->next_;
 		Node<K, V>* new_node;
+		//do until end of linked list
 		while(sl_ptr != nullptr){
 			new_node = new Node<K,V>(sl_ptr->first, sl_ptr->second); //new k,v in node
-			tail_ -> next_ = new_node;
+			tail_ -> next_ = new_node; //add node onto end of linked list
 			sl_ptr = sl_ptr->next_;
 			tail_ = new_node;
 		}
@@ -133,6 +134,7 @@ template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
 	swap(head_, ms.head_);
     swap(tail_, ms.tail_);
+	swap(sz_, ms.sz_);
     return *this;
 }	
 
@@ -166,8 +168,8 @@ template<typename K, typename V>
 Node<K,V> MapSet<K,V>::find_key(K key){
 
 	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if (key == ptr->data_.first){
-			return ptr;
+		if (key == ptr->first){
+			return *ptr;
 		}
 	}
     return Node<K,V>();
@@ -175,7 +177,24 @@ Node<K,V> MapSet<K,V>::find_key(K key){
 
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
+	Node<K, V>* found_node;
+	Node<K, V> found_it = find_key(n.first);
 
+	if(found_it == Node<K, V>() || found_node == tail_){ //node not in list
+		if(tail_ != nullptr){
+			tail_ -> next_ = &n;
+			tail_ = &n;
+		}
+		else{
+			head_ = &n;
+			tail_ = &n;
+		}
+	}
+	else{
+		n.next_ = found_node->next_;
+		found_node->next_ = &n;
+	}
+	return true;
 }
 
 template<typename K, typename V>
