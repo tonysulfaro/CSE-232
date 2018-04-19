@@ -117,13 +117,13 @@ MapSet<K,V>::MapSet(const MapSet &ms){
 	else{
 		head_ = new Node<K,V>(ms.head_->first,ms.head_->second);
 		tail_ = head_;
-		Node<K, V>* sl_ptr = ms.head_->next_;
+		Node<K, V>* ms_ptr = ms.head_->next_;
 		Node<K, V>* new_node;
 		//do until end of linked list
-		while(sl_ptr != nullptr){
-			new_node = new Node<K,V>(sl_ptr->first, sl_ptr->second); //new k,v in node
+		while(ms_ptr != nullptr){
+			new_node = new Node<K,V>(ms_ptr->first, ms_ptr->second); //new k,v in node
 			tail_ -> next_ = new_node; //add node onto end of linked list
-			sl_ptr = sl_ptr->next_;
+			ms_ptr = ms_ptr->next_;
 			tail_ = new_node;
 		}
 	}
@@ -220,12 +220,16 @@ int MapSet<K,V>::compare(MapSet &ms){
 
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
+	MapSet result;
 
+	return result;
 }
 
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
- 
+	MapSet result;
+
+	return result;
 }
 
 #endif
