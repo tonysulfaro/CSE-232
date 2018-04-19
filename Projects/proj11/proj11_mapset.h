@@ -183,15 +183,52 @@ template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 	
 	cout << "ADD" << endl;
-	if(tail_ != nullptr){
-		tail_->next_ = &n;
-		n.next_ = nullptr;
-		tail_ = &n;
+
+	//element already in the linked list
+	for(Node<K,V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		cout << "COMPARE N AND PTR" << endl;
+		cout << "PTR Value: " << ptr->first << endl;
+		cout << "N Value: " << n.first << endl;
+		if(ptr->first == n.first){
+			return false;
+		}
 	}
-	else{
-		head_= &n;
-		tail_ = &n;
+	node *temp=new node;
+    temp=head;
+    while(temp!=NULL)
+    {
+      cout<<temp->data<<"\t";
+      temp=temp->next;
+    }
+
+	cout << "AFTER FIND_KEY" << endl;
+ 
+	int insert_position = 0;
+
+	for(auto *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		cout << "FIND INSERT POS" << endl;
+		if(ptr->first < n.first){
+		
+			insert_position ++;
+		}
 	}
+	cout << "INSERT POSITION: " << insert_position << endl;
+
+	//add element to linked list
+	Node<K, V> *pre=new Node<K, V>();
+	Node<K, V> *cur=new Node<K, V>();
+    Node<K, V> *temp=new Node<K, V>();
+    cur=head_;
+
+    for(int i=1;i<insert_position;i++)
+    {
+      pre=cur;
+      cur=cur->next_;
+    }
+    temp->first = n.first;
+	temp->second = n.second;
+    pre->next_=temp;	
+    temp->next_=cur;
 
 	return true;
 }
