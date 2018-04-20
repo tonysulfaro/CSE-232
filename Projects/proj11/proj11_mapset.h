@@ -203,9 +203,9 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
     //insert after test,
     //can it just add stuff to the end ffs
-    tail_->next_ = &n;
-    n.next_ = nullptr;
-    tail_ = &n;
+    tail_->next_ = item;
+    item->next_ = nullptr;
+    tail_ = item;
     sz_++;
     return true;
 
