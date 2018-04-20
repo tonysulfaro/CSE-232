@@ -187,11 +187,13 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
 	//cout << "BEFORE INSERT POINT" << endl;
 
+	Node<K, V>* item = new Node<K, V>(n.first, n.second);
+
     //find insert point
-    Node<K, V>* insert_point;
+    Node<K, V>* insert_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
-		K key= ptr->first;
-		K param_key = n.first;
+		K key = ptr->first;
+		K param_key = item->first;
 		if(key == param_key){
 			return false;
 		}
@@ -204,16 +206,28 @@ bool MapSet<K,V>::add(Node<K,V> n){
 		}
     }
 
-	//cout << "AFTER FIND INSERT POINT: " << endl;
-
 	//insert value
 	if (insert_point != nullptr){
-		n.next_ = insert_point->next_;
-		insert_point->next_ = &n;
-
-		if (insert_point == tail_){
-			tail_ = &n; 
+		//insert beginning
+		if(insert_point == head_){
+			n.next_ = head_;
+			head_ = &n;
+		}
+		//insert end
+		else if(insert_point == tail_){
+			tail_->next_ = &n;
+			n.next_ = nullptr;
+			tail_ = &n;
+		}
+		//insert after
+		else{
+			n.next_ = insert_point->next_;
+			insert_point->next_ = &n;
+			if(insert_point == tail_){
+				tail_ = &n;
 			}
+		}
+		
     }
 	else{
 		head_ = &n;
