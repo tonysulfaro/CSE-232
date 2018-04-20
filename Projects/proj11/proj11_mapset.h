@@ -193,24 +193,15 @@ bool MapSet<K,V>::add(Node<K,V> n){
     Node<K, V>* item = new Node<K, V>(n.first, n.second);
 
 
-    if(sz_ == 0){
-        head_ = item;
-        tail_ = item;
-        sz_++;
-        return true;
-    }
-
-
-    //insert after test,
-    //can it just add stuff to the end ffs
-    tail_->next_ = &n;
-    n.next_ = nullptr;
-    tail_ = &n;
+	this->next_ = n;
+	n.next_ = nullptr;
+    
+    
     sz_++;
     return true;
 
-    //find insert point
-    Node<K, V>* insert_point = nullptr;
+    //find insert point before
+    Node<K, V>* before_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
         cout << "loop" << endl;
         K key = ptr->first;
@@ -219,37 +210,44 @@ bool MapSet<K,V>::add(Node<K,V> n){
         //	return false;
         //}
         if(key < param_key){
-            insert_point = ptr;
+            before_point = ptr;
             continue;
         }
         else{
-            //insert_point = ptr;
+            //before_point = ptr;
             break;
         }
     }
-    cout << "INSERT POINT" << insert_point << endl;
+
+	//find insert point after
+	Node<K, V>* after_point = nullptr;
+	for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
+		
+	}
+
+    cout << "INSERT POINT" << before_point << endl;
 
     cout << "AFTER FIND INSERT POINT" << endl;
 
     //insert value
-    if (insert_point != nullptr){
+    if (before_point != nullptr){
         cout << "Not Null Ptr" << endl;
         //insert beginning
-        if(insert_point == head_){
+        if(before_point == head_){
             n.next_ = head_;
             head_ = &n;
         }
             //insert end
-        else if(insert_point == tail_){
+        else if(before_point == tail_){
             tail_->next_ = &n;
             n.next_ = nullptr;
             tail_ = &n;
         }
             //insert after
         else{
-            n.next_ = insert_point->next_;
-            insert_point->next_ = &n;
-            if(insert_point == tail_){
+            n.next_ = before_point->next_;
+            before_point->next_ = &n;
+            if(before_point == tail_){
                 tail_ = &n;
             }
         }
