@@ -183,16 +183,10 @@ Node<K,V> MapSet<K,V>::find_key(K key){
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
-    //cout << "ADD" << endl;
-
-    //cout << "INSERT ELEMENT INTO LINKED LIST" << endl;
-    //cout << "LIST SIZE: " << sz_ << endl;
-
-    //cout << "BEFORE INSERT POINT" << endl;
-
+	//new item to insert into linked list
     Node<K, V>* item = new Node<K, V>(n.first, n.second);
 
-
+	//initialize linked list if empty
     if(sz_ == 0){
         head_ = item;
         tail_ = item;
@@ -201,8 +195,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
     }
 
 
-    //insert after test,
-    //can it just add stuff to the end ffs
+    //insert after items in list
     tail_->next_ = item;
     item->next_ = nullptr;
     tail_ = item;
@@ -241,9 +234,11 @@ bool MapSet<K,V>::add(Node<K,V> n){
         }
             //insert end
         else if(insert_point == tail_){
-            tail_->next_ = &n;
-            n.next_ = nullptr;
-            tail_ = &n;
+            tail_->next_ = item;
+			item->next_ = nullptr;
+			tail_ = item;
+			sz_++;
+			return true;
         }
             //insert after
         else{
@@ -260,7 +255,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
         head_ = &n;
         tail_ = &n;
     }
-    sz_++;
     cout << sz_ << endl;
 
     return true;
