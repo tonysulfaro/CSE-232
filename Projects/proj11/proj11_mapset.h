@@ -155,7 +155,6 @@ MapSet<K,V>::~MapSet(){
     tail_ = nullptr;
 }
 
-//get mapset size
 template<typename K, typename V>
 size_t MapSet<K,V>::size(){
 
@@ -167,7 +166,6 @@ size_t MapSet<K,V>::size(){
     return count;
 }
 
-//return node value based on key
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::find_key(K key){
 
@@ -179,7 +177,6 @@ Node<K,V> MapSet<K,V>::find_key(K key){
     return Node<K,V>();
 }
 
-//add entry to mapset
 template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
@@ -188,8 +185,9 @@ bool MapSet<K,V>::add(Node<K,V> n){
     //cout << "INSERT ELEMENT INTO LINKED LIST" << endl;
     //cout << "LIST SIZE: " << sz_ << endl;
 
-    //cout << "BEFORE INSERT POINT" << endl;
+	//cout << "BEFORE INSERT POINT" << endl;
 
+<<<<<<< HEAD
     Node<K, V>* item = new Node<K, V>(n.first, n.second);
 
 
@@ -199,17 +197,20 @@ bool MapSet<K,V>::add(Node<K,V> n){
     
     sz_++;
     return true;
+=======
+	Node<K, V>* item = new Node<K, V>(n.first, n.second);
+>>>>>>> parent of 82191e3... add is grabbing the first and last values of initializer list
 
     //find insert point before
     Node<K, V>* before_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
-        cout << "loop" << endl;
-        K key = ptr->first;
-        K param_key = item->first;
-        //if(key == param_key){
-        //	return false;
-        //}
+		K key = ptr->first;
+		K param_key = item->first;
+		if(key == param_key){
+			return false;
+		}
         if(key < param_key){
+<<<<<<< HEAD
             before_point = ptr;
             continue;
         }
@@ -257,20 +258,53 @@ bool MapSet<K,V>::add(Node<K,V> n){
         cout << "Is null ptr" << endl;
         head_ = &n;
         tail_ = &n;
+=======
+            continue;
+        }
+		else{
+			insert_point = ptr;
+			break;
+		}
     }
-    sz_++;
-    cout << sz_ << endl;
+
+	//insert value
+	if (insert_point != nullptr){
+		//insert beginning
+		if(insert_point == head_){
+			n.next_ = head_;
+			head_ = &n;
+		}
+		//insert end
+		else if(insert_point == tail_){
+			tail_->next_ = &n;
+			n.next_ = nullptr;
+			tail_ = &n;
+		}
+		//insert after
+		else{
+			n.next_ = insert_point->next_;
+			insert_point->next_ = &n;
+			if(insert_point == tail_){
+				tail_ = &n;
+			}
+		}
+		
+>>>>>>> parent of 82191e3... add is grabbing the first and last values of initializer list
+    }
+	else{
+		head_ = &n;
+		tail_ = &n;
+	}
+	sz_++;
 
     return true;
 }
 
-//remove entry from linked list
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
 }
 
-//get node based on key
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::get(K key){
 
@@ -282,7 +316,7 @@ Node<K,V> MapSet<K,V>::get(K key){
     return Node<K, V>();
 }
 
-//update value in list
+
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
     auto item = Node<K,V>(key, value);
@@ -296,13 +330,11 @@ bool MapSet<K,V>::update(K key, V value){
     return true;
 }
 
-//compare to mapsets
 template<typename K, typename V>
 int MapSet<K,V>::compare(MapSet &ms){
 
 }
 
-//union of mapset items
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
     MapSet result;
@@ -320,7 +352,6 @@ MapSet<K,V> MapSet<K,V>::mapset_union(MapSet<K,V> &ms){
     return result;
 }
 
-//intersection of mapset items
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
     MapSet result;
