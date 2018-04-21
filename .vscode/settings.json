@@ -28,6 +28,7 @@
 		"type_traits": "cpp",
 		"iostream": "cpp",
 		"ios": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"cstddef": "cpp"
 	}
 }

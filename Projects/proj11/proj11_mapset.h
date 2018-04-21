@@ -11,6 +11,7 @@ using std::pair;
 using std::initializer_list;
 #include<sstream>
 using std::ostringstream;
+using std::swap;
 
 //debugging
 using std::cout; using std::endl;
@@ -194,15 +195,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
         return true;
     }
 
-
-    //insert after items in list 
-	/*
-    tail_->next_ = item;
-    item->next_ = nullptr;
-    tail_ = item;
-    sz_++;
-    return true; */
-
     //find insert point
     Node<K, V>* insert_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
@@ -221,9 +213,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
             break;
         }
     }
-    //cout << "INSERT POINT" << insert_point << endl;
-
-    //cout << "AFTER FIND INSERT POINT" << endl;
 
     //insert value
     if (sz_ != 0){
@@ -274,6 +263,45 @@ bool MapSet<K,V>::add(Node<K,V> n){
 template<typename K, typename V>
 bool MapSet<K,V>::remove(K key){
 
+	//item not in mapset
+	if(find_key(key) == Node<K, V>()){
+		return false;
+	}
+
+	//find insert point before
+	Node<K, V>* before_point = nullptr;
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first_ < key){
+			before_point = ptr;
+		}
+		else{
+			break;
+		}
+	}
+
+	//find after insert point
+	Node<K, V>* after_point = nullptr;
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first_ == key){
+			continue;
+		}
+		else{
+			after_point = ptr;
+			break;
+		}
+	}
+
+	//remove item from linked list
+	before_point->next_ = after_point;
+	
+	//delete entry
+	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first_ == key){
+			delete ptr;
+		}
+	}
+
+	return true;
 }
 
 //get node based on key
