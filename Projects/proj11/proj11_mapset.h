@@ -209,9 +209,9 @@ bool MapSet<K,V>::add(Node<K,V> n){
         //cout << "loop" << endl;
         K key = ptr->first;
         K param_key = item->first;
-        //if(key == param_key){
-        //	return false;
-        //}
+        if(key == param_key){
+        	return false;
+        }
         if(key < param_key){
             insert_point = ptr;
             continue;
@@ -229,14 +229,14 @@ bool MapSet<K,V>::add(Node<K,V> n){
     if (insert_point != nullptr){
         //cout << "Not Null Ptr" << endl;
         //insert beginning
-        if(insert_point == head_){
+        if(item < head_){
             item->next_ = head_;
-            head_ = item;
+			head_ = item;
 			sz_++;
 			return true;
         }
             //insert end
-        else if(insert_point == tail_){
+        else if(item > tail_){
             tail_->next_ = item;
 			item->next_ = nullptr;
 			tail_ = item;
@@ -246,10 +246,10 @@ bool MapSet<K,V>::add(Node<K,V> n){
             //insert after
         else{
             item->next_ = insert_point->next_;
-            insert_point->next_ = item;
-            if(insert_point == tail_){
-                tail_ = item;
-            }
+			insert_point->next_ = item;
+			if (insert_point == tail_){
+				tail_ = &n;
+			}
 			sz_++;
 			return true;
         }
