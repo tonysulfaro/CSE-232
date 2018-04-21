@@ -195,17 +195,18 @@ bool MapSet<K,V>::add(Node<K,V> n){
     }
 
 
-    //insert after items in list
+    //insert after items in list 
+	/*
     tail_->next_ = item;
     item->next_ = nullptr;
     tail_ = item;
     sz_++;
-    return true;
+    return true; */
 
     //find insert point
     Node<K, V>* insert_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
-        cout << "loop" << endl;
+        //cout << "loop" << endl;
         K key = ptr->first;
         K param_key = item->first;
         //if(key == param_key){
@@ -220,17 +221,19 @@ bool MapSet<K,V>::add(Node<K,V> n){
             break;
         }
     }
-    cout << "INSERT POINT" << insert_point << endl;
+    //cout << "INSERT POINT" << insert_point << endl;
 
-    cout << "AFTER FIND INSERT POINT" << endl;
+    //cout << "AFTER FIND INSERT POINT" << endl;
 
     //insert value
     if (insert_point != nullptr){
-        cout << "Not Null Ptr" << endl;
+        //cout << "Not Null Ptr" << endl;
         //insert beginning
         if(insert_point == head_){
-            n.next_ = head_;
-            head_ = &n;
+            item->next_ = head_;
+            head_ = item;
+			sz_++;
+			return true;
         }
             //insert end
         else if(insert_point == tail_){
@@ -242,22 +245,26 @@ bool MapSet<K,V>::add(Node<K,V> n){
         }
             //insert after
         else{
-            n.next_ = insert_point->next_;
-            insert_point->next_ = &n;
+            item->next_ = insert_point->next_;
+            insert_point->next_ = item;
             if(insert_point == tail_){
-                tail_ = &n;
+                tail_ = item;
             }
+			sz_++;
+			return true;
         }
 
     }
     else{
-        cout << "Is null ptr" << endl;
-        head_ = &n;
-        tail_ = &n;
+        //cout << "Is null ptr" << endl;
+        head_ = item;
+        tail_ = item;
+		sz_++;
+		return true;
     }
-    cout << sz_ << endl;
+    //cout << sz_ << endl;
 
-    return true;
+    return false;
 }
 
 //remove entry from linked list
