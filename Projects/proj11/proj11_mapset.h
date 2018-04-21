@@ -226,17 +226,19 @@ bool MapSet<K,V>::add(Node<K,V> n){
     //cout << "AFTER FIND INSERT POINT" << endl;
 
     //insert value
-    if (insert_point != nullptr){
+    if (sz_ != 0){
         //cout << "Not Null Ptr" << endl;
         //insert beginning
-        if(item < head_){
+        if(*item < *head_){
+			//cout << "insert beginning" <<  endl;
             item->next_ = head_;
 			head_ = item;
 			sz_++;
 			return true;
         }
             //insert end
-        else if(item > tail_){
+        else if(*tail_ < *item){
+			//cout << "insert end" <<  endl;
             tail_->next_ = item;
 			item->next_ = nullptr;
 			tail_ = item;
@@ -245,6 +247,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
         }
             //insert after
         else{
+			//cout << "INSERT AFter" << insert_point << endl;
             item->next_ = insert_point->next_;
 			insert_point->next_ = item;
 			if (insert_point == tail_){
