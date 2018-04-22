@@ -11,11 +11,10 @@ int main (){
 
 	cout << boolalpha;
 	Node<string,long> n1("bill", 2);
-	//cout << n1 << endl; 
+	cout << n1 << endl; 
 	Node<string,long> n2("fred", 3);
-	//cout << (n1 == n2) <<":"<<(n1 < n2) << endl;
+	cout << (n1 == n2) <<":"<<(n1 < n2) << endl;
 	MapSet<string,long> ms({ {"bill", 1}, {"fred", 2}, {"alan", 3}, {"bob", 4} });
-	cout << ms << endl;
 	MapSet<string, long> ms_copy(ms);
 
 	cout << "ms:"<<ms<<endl;

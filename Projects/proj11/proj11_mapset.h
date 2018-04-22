@@ -39,7 +39,7 @@ template<typename K, typename V>
 Node<K,V>::Node(K key, V value){
     first = key;
     second = value;
-    Node<K, V> *next_ = nullptr;
+    //Node<K, V> *next_ = nullptr;
 }
 
 template<typename K, typename V>
@@ -269,13 +269,12 @@ bool MapSet<K,V>::remove(K key){
 	}
 
 	//node in mapset
-	//auto item = get(key);
 	Node<K, V>* p = nullptr;
 	Node<K, V>* q = nullptr;
 	q = head_;
 	p = head_->next_;
 
-	//node at head
+	//remove node at head
 	if(q->first == key){
 		head_ = p;
 		delete(q);
@@ -287,73 +286,17 @@ bool MapSet<K,V>::remove(K key){
 			q = q->next_;
 		}
 	}
-	if(p->next_ == nullptr){ //last node
+	if(p->next_ == nullptr){ //remove last node
 		q->next_ = nullptr;
 		delete(p);
 		return true;
 	}
-	else{ //middle node
+	else{ //remove middle node
 		q->next_ = p->next_;
 		delete(p);
 		return true;
 	}
-
-	//find insert point before
-	Node<K, V>* before_point = nullptr;
-	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first < key){
-			before_point = ptr;
-		}
-		else{
-			break;
-		}
-	}
-
-	//find after insert point
-	Node<K, V>* after_point = nullptr;
-	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first == key){
-			continue;
-		}
-		else{
-			after_point = ptr;
-			break;
-		}
-	}
-
-	//delete entry
-	Node<K, V>* item = nullptr;
-	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first == key){
-			item = ptr;
-			break;
-		}
-	}
-
-	//removal cases
-
-	//remove in in front
-	if(item == head_){
-		item->next_ = head_;
-		delete item;
-		return true;
-	}
-
-	//item is tail
-	if(item == tail_){
-		before_point->next_ = nullptr;
-		before_point = tail_;
-		delete item;
-		return true;
-	}
-
-	//somewhere in the middle
-
-	//remove item from linked list
-	before_point->next_ = after_point;
-	delete item;
-
-	return true;
+	return false;
 }
 
 //get node based on key
@@ -386,6 +329,31 @@ bool MapSet<K,V>::update(K key, V value){
 template<typename K, typename V>
 int MapSet<K,V>::compare(MapSet &ms){
 
+	long smaller_size = 0;
+	Node<K, V> *p = head_;
+	Node<K, V> *q = ms.head_;
+
+	(size()<ms.size()) ? (smaller_size = size()):(smaller_size = ms.size());
+
+	for(int i = 0; i < smaller_size; i++){ //through both up to smaller size one
+		if(p->first != q->first){ //if they differ
+			if(p->first > q->first){ //which one is larger
+				return 1; //calling is bigger
+			}
+			return -1; //param is bigger
+		}
+		p = p->next_; //go to next items
+		q = q->next_;
+	}
+
+	if(size()>ms.size()){ //calling is bigger
+		return 1;
+	}
+	else if(size() == ms.size()){ //if they are the same set
+		return 0;
+	}
+
+	return -1; //param is bigger
 }
 
 //union of mapset items
@@ -411,16 +379,16 @@ template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::mapset_intersection(MapSet<K,V> &ms){
     MapSet result;
 
-    for(auto itr = head_; itr != nullptr; itr = itr->next_){
-        for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
-            K s = itr->first;
+    for(auto itr = head_; itr != nullptr; itr = itr->next_){ //go through this items
+        for(auto ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){ //go through param items
+			//extract keys from this and parameter
+            K s = itr->first; 
             K param_s = ptr->first;
-            if(s == param_s){
+            if(s == param_s){ //keys match, both in mapsets
                 result.add(*itr);
             }
         }
     }
-
     return result;
 }
 
