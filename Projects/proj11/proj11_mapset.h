@@ -185,54 +185,56 @@ template<typename K, typename V>
 bool MapSet<K,V>::add(Node<K,V> n){
 
 	//new item to insert into linked list
-    Node<K, V>* item = new Node<K, V>(n.first, n.second);
+    Node<K, V>* param_item = new Node<K, V>(n.first, n.second);
 
 	//initialize linked list if empty
     if(sz_ == 0){
-        head_ = item;
-        tail_ = item;
+        head_ = param_item;
+        tail_ = param_item;
         sz_++;
         return true;
     }
 
-    //find insert point
-    Node<K, V>* insert_point = nullptr;
-    for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
-        K key = ptr->first;
-        K param_key = item->first;
-        if(key == param_key){
+	//check if its already in the mapset, can't add if it is
+	for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
+        if(ptr->first == param_item->first){
         	return false;
         }
-        if(key < param_key){
+	}
+
+    //find insert point at lower bound
+    Node<K, V>* insert_point = nullptr;
+    for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
+        if(ptr->first < param_item->first){
             insert_point = ptr;
             continue;
         }
         else{
-            break;
+            break; //item found is larger than the this->first
         }
     }
 
     //insert value if there is already one item in the mapset
     if (sz_ != 0){
         //insert beginning
-        if(*item < *head_){
-            item->next_ = head_;
-			head_ = item;
+        if(*param_item < *head_){
+            param_item->next_ = head_;
+			head_ = param_item;
 			sz_++;
 			return true;
         }
             //insert end
-        else if(*tail_ < *item){
-            tail_->next_ = item;
-			item->next_ = nullptr;
-			tail_ = item;
+        else if(*tail_ < *param_item){
+            tail_->next_ = param_item;
+			param_item->next_ = nullptr;
+			tail_ = param_item;
 			sz_++;
 			return true;
         }
             //insert after certain item
         else{
-            item->next_ = insert_point->next_; //link items before and after to new item
-			insert_point->next_ = item; 
+            param_item->next_ = insert_point->next_; //link items before and after to new item
+			insert_point->next_ = param_item; 
 			if (insert_point == tail_){ //link to end if its at the end
 				tail_ = &n;
 			}
@@ -243,12 +245,12 @@ bool MapSet<K,V>::add(Node<K,V> n){
     }
     else{
 		//is nullptr because no items are in the mapset yet
-        head_ = item;
-        tail_ = item;
+        head_ = param_item;
+        tail_ = param_item;
 		sz_++;
 		return true;
     }
-
+	//base case, could not add item to mapset
     return false;
 }
 
@@ -298,19 +300,19 @@ Node<K,V> MapSet<K,V>::get(K key){
 
     for(auto *ptr = head_; ptr != nullptr; ptr = ptr->next_){
         if(ptr->first == key){
-            return *ptr;
+            return *ptr; //return found node
         }
     }
-    return Node<K, V>();
+    return Node<K, V>(); //empty node if not found
 }
 
 //update value in list
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
-	
-    auto item = Node<K,V>(key, value);
 
-    //if value not in there
+    auto item = Node<K,V>(key, value); //new node from key and value to update
+
+    //cannot update what is not there
     if(get(key)== Node<K, V>()){
         return false;
     }
