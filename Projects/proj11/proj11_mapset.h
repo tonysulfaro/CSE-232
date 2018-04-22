@@ -145,12 +145,10 @@ MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
 // delete each node in turn, the set head_ and tail_
 template<typename K, typename V>
 MapSet<K,V>::~MapSet(){
-    Node <K,V>* to_del = head_;
 
-    while (to_del !=nullptr){
-        head_ = head_->next_;
+	//go through and delete all the nodes
+    for(auto *to_del = head_; to_del !=nullptr; to_del = to_del->next_){
         delete to_del;
-        to_del = head_;
     }
     head_ = nullptr;
     tail_ = nullptr;
