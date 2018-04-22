@@ -13,9 +13,6 @@ using std::initializer_list;
 using std::ostringstream;
 using std::swap;
 
-//debugging
-using std::cout; using std::endl;
-
 //
 // Node
 //
@@ -51,7 +48,6 @@ template<typename K, typename V>
 bool Node<K,V>::operator==(const Node &n) const{
     return (first == n.first);
 }
-
 
 //
 // MapSet
@@ -198,7 +194,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
     //find insert point
     Node<K, V>* insert_point = nullptr;
     for(auto *ptr = head_; ptr!=nullptr; ptr = ptr->next_){
-        //cout << "loop" << endl;
         K key = ptr->first;
         K param_key = item->first;
         if(key == param_key){
@@ -216,10 +211,8 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
     //insert value
     if (sz_ != 0){
-        //cout << "Not Null Ptr" << endl;
         //insert beginning
         if(*item < *head_){
-			//cout << "insert beginning" <<  endl;
             item->next_ = head_;
 			head_ = item;
 			sz_++;
@@ -227,7 +220,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
         }
             //insert end
         else if(*tail_ < *item){
-			//cout << "insert end" <<  endl;
             tail_->next_ = item;
 			item->next_ = nullptr;
 			tail_ = item;
@@ -236,7 +228,6 @@ bool MapSet<K,V>::add(Node<K,V> n){
         }
             //insert after
         else{
-			//cout << "INSERT AFter" << insert_point << endl;
             item->next_ = insert_point->next_;
 			insert_point->next_ = item;
 			if (insert_point == tail_){
@@ -248,13 +239,12 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
     }
     else{
-        //cout << "Is null ptr" << endl;
+		//is nullptr
         head_ = item;
         tail_ = item;
 		sz_++;
 		return true;
     }
-    //cout << sz_ << endl;
 
     return false;
 }
@@ -281,7 +271,7 @@ bool MapSet<K,V>::remove(K key){
 		return true;
 	}
 	else{
-		while(p->first != key){ //move nodes over
+		while(p->first != key){ //move nodes over past key
 			p = p->next_;
 			q = q->next_;
 		}
