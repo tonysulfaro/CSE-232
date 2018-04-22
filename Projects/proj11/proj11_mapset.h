@@ -268,10 +268,13 @@ bool MapSet<K,V>::remove(K key){
 		return false;
 	}
 
+	//node in mapset
+	//auto item = get(key);
+
 	//find insert point before
 	Node<K, V>* before_point = nullptr;
-	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first_ < key){
+	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first < key){
 			before_point = ptr;
 		}
 		else{
@@ -281,8 +284,8 @@ bool MapSet<K,V>::remove(K key){
 
 	//find after insert point
 	Node<K, V>* after_point = nullptr;
-	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first_ == key){
+	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first == key){
 			continue;
 		}
 		else{
@@ -291,15 +294,37 @@ bool MapSet<K,V>::remove(K key){
 		}
 	}
 
-	//remove item from linked list
-	before_point->next_ = after_point;
-	
 	//delete entry
-	for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
-		if(ptr->first_ == key){
-			delete ptr;
+	Node<K, V>* item = nullptr;
+	for(Node<K, V> *ptr = head_; ptr != nullptr; ptr = ptr->next_){
+		if(ptr->first == key){
+			item = ptr;
+			break;
 		}
 	}
+
+	//removal cases
+
+	//remove in in front
+	if(item == head_){
+		item->next_ = head_;
+		delete item;
+		return true;
+	}
+
+	//item is tail
+	if(item == tail_){
+		before_point->next_ = nullptr;
+		before_point = tail_;
+		delete item;
+		return true;
+	}
+
+	//somewhere in the middle
+
+	//remove item from linked list
+	before_point->next_ = after_point;
+	delete item;
 
 	return true;
 }

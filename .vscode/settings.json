@@ -29,6 +29,7 @@
 		"iostream": "cpp",
 		"ios": "cpp",
 		"random": "cpp",
-		"cstddef": "cpp"
+		"cstddef": "cpp",
+		"list": "cpp"
 	}
 }
