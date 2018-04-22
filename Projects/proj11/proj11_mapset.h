@@ -270,6 +270,33 @@ bool MapSet<K,V>::remove(K key){
 
 	//node in mapset
 	//auto item = get(key);
+	Node<K, V>* p = nullptr;
+	Node<K, V>* q = nullptr;
+	q = head_;
+	p = head_->next_;
+
+	//node at head
+	if(q->first == key){
+		head_ = p;
+		delete(q);
+		return true;
+	}
+	else{
+		while(p->first != key){ //move nodes over
+			p = p->next_;
+			q = q->next_;
+		}
+	}
+	if(p->next_ == nullptr){ //last node
+		q->next_ = nullptr;
+		delete(p);
+		return true;
+	}
+	else{ //middle node
+		q->next_ = p->next_;
+		delete(p);
+		return true;
+	}
 
 	//find insert point before
 	Node<K, V>* before_point = nullptr;
