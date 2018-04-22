@@ -14,7 +14,7 @@ using std::ostringstream;
 using std::swap;
 
 //
-// Node
+// Node structure
 //
 template<typename K, typename V>
 struct Node {
@@ -27,11 +27,12 @@ struct Node {
     bool operator<(const Node&) const;
     bool operator==(const Node&) const;
     friend ostream& operator<<(ostream &out, const Node &n){
-        out << n.first << ":" << n.second;
+        out << n.first << ":" << n.second; //print node key and value out
         return out;
     }
 };
 
+//constructor for node given key and value
 template<typename K, typename V>
 Node<K,V>::Node(K key, V value){
     first = key;
@@ -39,18 +40,20 @@ Node<K,V>::Node(K key, V value){
     //Node<K, V> *next_ = nullptr;
 }
 
+//operator < overload for node 
 template<typename K, typename V>
 bool Node<K,V>::operator<(const Node &n) const{
     return (first < n.first);
 }
 
+//operator == overload for node
 template<typename K, typename V>
 bool Node<K,V>::operator==(const Node &n) const{
     return (first == n.first);
 }
 
 //
-// MapSet
+// MapSet class
 //
 template<typename K, typename V>
 class MapSet{
@@ -78,8 +81,8 @@ public:
     friend ostream& operator<<(ostream &out, const MapSet &ms){
 
         ostringstream oss;
-        for(auto *ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){
-            oss << *ptr << ", ";
+        for(auto *ptr = ms.head_; ptr != nullptr; ptr = ptr->next_){ //print out mapset
+            oss << *ptr << ", "; //comma between mapset items
         }
         string s = oss.str();
         s = s.substr(0,s.size()-2); //remove trailing comma
@@ -112,15 +115,16 @@ MapSet<K,V>::MapSet(const MapSet &ms){
         tail_ = nullptr;
         sz_ = 0;
     }
-        //initialize mapset param to current mapset
+    //initialize mapset param to current mapset
     else{
+		//go through and transfer param values to new node
         head_ = new Node<K,V>(ms.head_->first,ms.head_->second);
         tail_ = head_;
         Node<K, V>* ms_ptr = ms.head_->next_;
         Node<K, V>* new_node;
         //do until end of linked list
         while(ms_ptr != nullptr){
-            new_node = new Node<K,V>(ms_ptr->first, ms_ptr->second); //new k,v in node
+            new_node = new Node<K,V>(ms_ptr->first, ms_ptr->second); //new k,v node in this mapset
             tail_ -> next_ = new_node; //add node onto end of linked list
             ms_ptr = ms_ptr->next_;
             tail_ = new_node;
@@ -128,7 +132,7 @@ MapSet<K,V>::MapSet(const MapSet &ms){
     }
 }
 
-//assingment operator
+//assingment operator overload for mapsets
 template<typename K, typename V>
 MapSet<K,V> MapSet<K,V>::operator=(MapSet ms){
     swap(head_, ms.head_);
@@ -158,7 +162,7 @@ size_t MapSet<K,V>::size(){
 
     size_t count = 0;
 
-    for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+    for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){ //count mapset items
         count ++;
     }
     return count;
@@ -168,12 +172,12 @@ size_t MapSet<K,V>::size(){
 template<typename K, typename V>
 Node<K,V> MapSet<K,V>::find_key(K key){
 
-    for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){
+    for(auto ptr = head_; ptr != nullptr; ptr = ptr->next_){ //look for node in mapset based on key
         if (key == ptr->first){
-            return *ptr;
+            return *ptr; //return node 
         }
     }
-    return Node<K,V>();
+    return Node<K,V>(); //empty node if not found
 }
 
 //add entry to mapset
@@ -204,12 +208,11 @@ bool MapSet<K,V>::add(Node<K,V> n){
             continue;
         }
         else{
-            //insert_point = ptr;
             break;
         }
     }
 
-    //insert value
+    //insert value if there is already one item in the mapset
     if (sz_ != 0){
         //insert beginning
         if(*item < *head_){
@@ -226,11 +229,11 @@ bool MapSet<K,V>::add(Node<K,V> n){
 			sz_++;
 			return true;
         }
-            //insert after
+            //insert after certain item
         else{
-            item->next_ = insert_point->next_;
-			insert_point->next_ = item;
-			if (insert_point == tail_){
+            item->next_ = insert_point->next_; //link items before and after to new item
+			insert_point->next_ = item; 
+			if (insert_point == tail_){ //link to end if its at the end
 				tail_ = &n;
 			}
 			sz_++;
@@ -239,7 +242,7 @@ bool MapSet<K,V>::add(Node<K,V> n){
 
     }
     else{
-		//is nullptr
+		//is nullptr because no items are in the mapset yet
         head_ = item;
         tail_ = item;
 		sz_++;
@@ -304,6 +307,7 @@ Node<K,V> MapSet<K,V>::get(K key){
 //update value in list
 template<typename K, typename V>
 bool MapSet<K,V>::update(K key, V value){
+	
     auto item = Node<K,V>(key, value);
 
     //if value not in there
